@@ -24,7 +24,7 @@ public class SpringLoaderImpl implements SpringLoader, ApplicationContextAware {
         return initAppContext(contextFiles);
     }
 
-    public static SpringLoader initialise(final String[] contextFiles) {
+    public static SpringLoader initialise(final String ... contextFiles) {
         return initAppContext(Arrays.asList(contextFiles));
     }
 
