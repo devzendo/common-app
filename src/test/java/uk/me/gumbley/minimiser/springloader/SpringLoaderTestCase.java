@@ -4,24 +4,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 
-import uk.me.gumbley.minimiser.springloader.SpringLoader;
-import uk.me.gumbley.minimiser.springloader.SpringLoaderImpl;
+import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
 /**
- * A base class for Junit 4 test cases that specify a set of Spring application context XML files to be used by the
- * ClassPathApplicationContextLoader using an annotation.
+ * A base class for Junit 4 test cases that specify a set of Spring application
+ * context XML files to be used by the ClassPathApplicationContextLoader using
+ * the
  * 
+ * @ApplicationContext annotation.
  * @author matt
  */
-public class SpringLoaderTestCase {
+public abstract class SpringLoaderTestCase extends LoggingTestCase {
     private SpringLoader springLoader;
 
+    /**
+     * Set up the SpringLoader with all application context files given in any
+     * 
+     * @ApplicatonContext annotations on this test class, and any in its
+     *                    inheritance hierarchy.
+     */
     @Before
     public void initApplicationContexts() {
-        List <String> contextList = new ArrayList <String>();
-        Class <? extends Object> clazz = this.getClass();
+        List<String> contextList = new ArrayList<String>();
+        Class<? extends Object> clazz = this.getClass();
         // scan up to root of object hierarchy finding our annotation
         while (clazz != null) {
             ApplicationContext ac = clazz.getAnnotation(ApplicationContext.class);
@@ -30,9 +38,20 @@ public class SpringLoaderTestCase {
             }
             clazz = clazz.getSuperclass();
         }
-        springLoader = SpringLoaderImpl.initialise(contextList);
+        springLoader = SpringLoaderFactory.initialise(contextList);
+    }
+    
+    /**
+     * Cleans up the SpringLoader
+     */
+    @After
+    public void closeSpringLoader() {
+        springLoader.close();
     }
 
+    /**
+     * @return the SpringLoader to use in all subclasses of this.
+     */
     public SpringLoader getSpringLoader() {
         return springLoader;
     }
