@@ -46,7 +46,9 @@ public abstract class SpringLoaderTestCase extends LoggingTestCase {
      */
     @After
     public void closeSpringLoader() {
-        springLoader.close();
+        if (springLoader != null) {
+            springLoader.close();
+        }
     }
 
     /**
