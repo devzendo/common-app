@@ -3,10 +3,10 @@ package uk.me.gumbley.minimiser.springloader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-
+import uk.me.gumbley.commoncode.string.StringUtils;
 import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
 /**
@@ -18,6 +18,8 @@ import uk.me.gumbley.minimiser.logging.LoggingTestCase;
  * @author matt
  */
 public abstract class SpringLoaderTestCase extends LoggingTestCase {
+    private static final Logger LOGGER = Logger
+            .getLogger(SpringLoaderTestCase.class);
     private SpringLoader springLoader;
 
     /**
@@ -28,6 +30,7 @@ public abstract class SpringLoaderTestCase extends LoggingTestCase {
      */
     @Before
     public void initApplicationContexts() {
+        LOGGER.info(">>> initApplicationContexts");
         List<String> contextList = new ArrayList<String>();
         Class<? extends Object> clazz = this.getClass();
         // scan up to root of object hierarchy finding our annotation
@@ -38,7 +41,10 @@ public abstract class SpringLoaderTestCase extends LoggingTestCase {
             }
             clazz = clazz.getSuperclass();
         }
+        LOGGER.info(String.format("Initialising SpringLoader with contexts [%s]", 
+            StringUtils.join(contextList, ", ")));
         springLoader = SpringLoaderFactory.initialise(contextList);
+        LOGGER.info("<<< initApplicationContexts");
     }
     
     /**
@@ -46,9 +52,11 @@ public abstract class SpringLoaderTestCase extends LoggingTestCase {
      */
     @After
     public void closeSpringLoader() {
+        LOGGER.info(">>> closeSpringLoader");
         if (springLoader != null) {
             springLoader.close();
         }
+        LOGGER.info("<<< closeSpringLoader");
     }
 
     /**
