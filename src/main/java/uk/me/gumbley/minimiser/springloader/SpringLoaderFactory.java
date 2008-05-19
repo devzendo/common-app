@@ -7,9 +7,27 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * Factory / helper class for obtaining a SpringLoader
+ * 
+ * @author matt
+ *
+ */
 public final class SpringLoaderFactory {
     private static SpringLoader instance;
+    
+    /**
+     * Thou shalt not instantiate
+     */
+    private SpringLoaderFactory() {
+        // do nothing
+    }
 
+    /**
+     * @return the singleton instance of the SpringLoader, instantiated
+     * with no application contexts.
+     * This should be the only singleton in the system.
+     */
     public static synchronized SpringLoader getInstance() {
         if (instance == null) {
             initAppContext(new ArrayList <String>());
@@ -17,10 +35,20 @@ public final class SpringLoaderFactory {
         return instance;
     }
 
+    /**
+     * @param contextFiles a list of application context files with which
+     * to initialise the SpringLoader
+     * @return the SpringLoader
+     */
     public static SpringLoader initialise(final List <String> contextFiles) {
         return initAppContext(contextFiles);
     }
 
+    /**
+     * @param contextFiles a list of application context files with which
+     * to initialise the SpringLoader
+     * @return the SpringLoader
+     */
     public static SpringLoader initialise(final String... contextFiles) {
         return initAppContext(Arrays.asList(contextFiles));
     }
