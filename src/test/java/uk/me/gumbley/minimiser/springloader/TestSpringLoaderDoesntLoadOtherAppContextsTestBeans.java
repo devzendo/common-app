@@ -12,7 +12,7 @@ import org.junit.Test;
  *
  */
 public class TestSpringLoaderDoesntLoadOtherAppContextsTestBeans extends
-        SpringLoaderTestCase {
+        SpringLoaderUnittestCase {
     private static final Logger LOGGER = Logger
             .getLogger(TestSpringLoaderDoesntLoadOtherAppContextsTestBeans.class);
     /**
@@ -23,8 +23,8 @@ public class TestSpringLoaderDoesntLoadOtherAppContextsTestBeans extends
         SpringLoader sl = getSpringLoader();
         Assert.assertNotNull(sl);
         try {
-            SpringLoaderTestBean o1 = sl.getBean("testBean",
-                SpringLoaderTestBean.class);
+            SpringLoadedBean o1 = sl.getBean("testBean",
+                SpringLoadedBean.class);
             LOGGER.info("We created a " + o1);
             Assert.fail("Should not have been able to load up a bean defined"
                     + " in a bean definition file that isn't annotated against"

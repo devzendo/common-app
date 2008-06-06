@@ -7,12 +7,12 @@ import org.apache.log4j.Logger;
  * @author matt
  *
  */
-public class SpringLoaderTestBean {
-    private static final Logger LOGGER = Logger.getLogger(SpringLoaderTestBean.class);
+public class SpringLoadedBean {
+    private static final Logger LOGGER = Logger.getLogger(SpringLoadedBean.class);
     /**
      * Just say hello
      */
-    public SpringLoaderTestBean() {
+    public SpringLoadedBean() {
         LOGGER.info("Hello from SpringLoaderTestBean");
     }
 }

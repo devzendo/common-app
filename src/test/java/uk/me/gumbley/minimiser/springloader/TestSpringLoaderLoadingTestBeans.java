@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author matt
  */
 @ApplicationContext("uk/me/gumbley/minimiser/springloader/TestSpringLoaderLoadingTestBeans.xml")
-public class TestSpringLoaderLoadingTestBeans extends SpringLoaderTestCase {
+public class TestSpringLoaderLoadingTestBeans extends SpringLoaderUnittestCase {
 
     /**
      * Load up a bean twice, and test its singletonness.
@@ -19,14 +19,14 @@ public class TestSpringLoaderLoadingTestBeans extends SpringLoaderTestCase {
     public void testSpringLoaderLoadingTestBeans() {
         SpringLoader sl = getSpringLoader();
         Assert.assertNotNull(sl);
-        SpringLoaderTestBean o1 = sl.getBean("testBean",
-            SpringLoaderTestBean.class);
+        SpringLoadedBean o1 = sl.getBean("testBean",
+            SpringLoadedBean.class);
         Assert.assertNotNull(o1);
-        Assert.assertTrue(o1 instanceof SpringLoaderTestBean);
-        SpringLoaderTestBean o2 = sl.getBean("testBean",
-            SpringLoaderTestBean.class);
+        Assert.assertTrue(o1 instanceof SpringLoadedBean);
+        SpringLoadedBean o2 = sl.getBean("testBean",
+            SpringLoadedBean.class);
         Assert.assertNotNull(o2);
-        Assert.assertTrue(o2 instanceof SpringLoaderTestBean);
+        Assert.assertTrue(o2 instanceof SpringLoadedBean);
         Assert.assertEquals(o1, o2);
     }
 }

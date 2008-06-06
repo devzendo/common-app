@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class TestSpringLoader extends SpringLoaderTestCase {
+public class TestSpringLoader extends SpringLoaderUnittestCase {
     private static final Logger LOGGER = Logger.getLogger(TestSpringLoader.class);
     @Test
     public void testGetSpringLoader() {

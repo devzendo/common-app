@@ -17,9 +17,9 @@ import uk.me.gumbley.minimiser.logging.LoggingTestCase;
  * @ApplicationContext annotation.
  * @author matt
  */
-public abstract class SpringLoaderTestCase extends LoggingTestCase {
+public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
     private static final Logger LOGGER = Logger
-            .getLogger(SpringLoaderTestCase.class);
+            .getLogger(SpringLoaderUnittestCase.class);
     private SpringLoader springLoader;
 
     /**
