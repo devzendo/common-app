@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 import uk.me.gumbley.minimiser.springloader.ApplicationContext;
-import uk.me.gumbley.minimiser.springloader.SpringLoaderTestCase;
+import uk.me.gumbley.minimiser.springloader.SpringLoaderUnittestCase;
 
 /**
  * Test the Prefs FactoryBean
@@ -13,7 +13,7 @@ import uk.me.gumbley.minimiser.springloader.SpringLoaderTestCase;
  *
  */
 @ApplicationContext("uk/me/gumbley/minimiser/prefs/PrefsTestCase.xml")
-public final class TestPrefsFactory extends SpringLoaderTestCase {
+public final class TestPrefsFactory extends SpringLoaderUnittestCase {
     
     /**
      * @throws IOException on failure
