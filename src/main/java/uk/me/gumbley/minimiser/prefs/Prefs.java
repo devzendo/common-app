@@ -27,18 +27,24 @@ public final class Prefs {
     
     /**
      * Obtain the stored Window Geometry
+     * @param windowName a window name
      * @return a String of the form x,y,width,height.
      */
-    public String getWindowGeometry() {
-        return iniFile.getValue(SECTION_UI, UI_GEOMETRY, "0,0,640,480");
+    public String getWindowGeometry(final String windowName) {
+        return iniFile.getValue(SECTION_UI, formWindowGeometryKey(windowName), "0,0,640,480");
+    }
+
+    private String formWindowGeometryKey(final String windowName) {
+        return UI_GEOMETRY + "_" + windowName;
     }
 
     /**
      * Store the Window Geometry
+     * @param windowName a window name
      * @param geometry a String of the form x,y,width,height.
      */
-    public void setWindowGeometry(final String geometry) {
-        iniFile.setValue(SECTION_UI, UI_GEOMETRY, geometry);
+    public void setWindowGeometry(final String windowName, final String geometry) {
+        iniFile.setValue(SECTION_UI, formWindowGeometryKey(windowName), geometry);
     }
 
     /**
