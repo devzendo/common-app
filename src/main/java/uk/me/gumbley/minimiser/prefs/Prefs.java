@@ -31,7 +31,7 @@ public final class Prefs {
      * @return a String of the form x,y,width,height.
      */
     public String getWindowGeometry(final String windowName) {
-        return iniFile.getValue(SECTION_UI, formWindowGeometryKey(windowName), "0,0,640,480");
+        return iniFile.getValue(SECTION_UI, formWindowGeometryKey(windowName), "");
     }
 
     private String formWindowGeometryKey(final String windowName) {
