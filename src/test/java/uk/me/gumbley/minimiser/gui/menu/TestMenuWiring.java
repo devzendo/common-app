@@ -1,4 +1,4 @@
-package uk.me.gumbley.minimiser.gui.mm;
+package uk.me.gumbley.minimiser.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.me.gumbley.minimiser.gui.mm.Menu.MenuIdentifier;
+import uk.me.gumbley.minimiser.gui.menu.MenuWiring;
+import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 
 /**
