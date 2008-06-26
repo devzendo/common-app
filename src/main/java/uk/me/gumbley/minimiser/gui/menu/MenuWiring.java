@@ -1,4 +1,4 @@
-package uk.me.gumbley.minimiser.gui.mm;
+package uk.me.gumbley.minimiser.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.swing.JMenuItem;
 
-import uk.me.gumbley.minimiser.gui.mm.Menu.MenuIdentifier;
+import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 /**
  * Provides wiring between MenuItems (referenced via MenuIdentifiers) and their
