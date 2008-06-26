@@ -1,46 +1,37 @@
 package uk.me.gumbley.minimiser.gui;
 
-import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.event.AWTEventListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import uk.me.gumbley.minimiser.prefs.Prefs;
 
-public class WindowGeometryStore implements AWTEventListener {
+/**
+ * Stores the geometry of Windows in the Prefs, and allows
+ * them to be restored on creation.
+ * 
+ * @author matt
+ *
+ */
+public final class WindowGeometryStore {
     private static final Logger LOGGER = Logger
             .getLogger(WindowGeometryStore.class);
-    private final Map<String, JFrame> windowStore = new HashMap<String, JFrame>();
     private final Prefs prefs;
-    // WOZERE this doesn't work as I was expecting it to - consult swing hacks book again.
+
+    /**
+     * Create the WindowGeometryStore
+     * @param preferences the preferences used for storage
+     */
     public WindowGeometryStore(final Prefs preferences) {
         this.prefs = preferences;
     }
-    public void startListener() {
-        Toolkit.getDefaultToolkit().addAWTEventListener(this,
-            AWTEvent.WINDOW_EVENT_MASK);
-    }
-    public void eventDispatched(final AWTEvent event) {
-        if (event instanceof ComponentEvent && event.getID() == WindowEvent.WINDOW_OPENED) {
-            final ComponentEvent componentEvent = (ComponentEvent) event;
-            final Component component = componentEvent.getComponent();
-            if (component instanceof JFrame) {
-                JFrame frame = (JFrame) component;
-                loadGeometry(frame);
-            }
-        }
-    }
 
+    /**
+     * Does this frame have any geometry stored? Use this on
+     * creating your frame. If there is no stored geometry,
+     * you may want to set a default, or pack();
+     * @param frame the frame to check for geometry storage.
+     * @return true if this frame has had its geometry stored.
+     */
     public boolean hasStoredGeometry(final JFrame frame) {
         final String name = frame.getName();
         LOGGER.debug("Trying to load stored geometry for JFrame '" + name + "'");
@@ -48,7 +39,11 @@ public class WindowGeometryStore implements AWTEventListener {
         return (!geomStr.equals(""));
     }
     
-    private void loadGeometry(final JFrame frame) {
+    /**
+     * Load and set the geometry for this frame, if there is any stored.
+     * @param frame the frame whose geometry should be loaded and set.
+     */
+    public void loadGeometry(final JFrame frame) {
         final String name = frame.getName();
         LOGGER.debug("Trying to load stored geometry for JFrame '" + name + "'");
         final String geomStr = prefs.getWindowGeometry(name);
@@ -56,40 +51,29 @@ public class WindowGeometryStore implements AWTEventListener {
             LOGGER.debug("No geometry stored for JFrame '" + name + "'");
             return;
         }
-        synchronized (windowStore) {
-            windowStore.put(name, frame);
-            LOGGER.debug("Starting geometry is " + geomStr);
-            // x,y,width,height
-            final String[] geomNumStrs = geomStr.split(",");
-            final int[] geomNums = new int[geomNumStrs.length];
-            for (int i = 0; i < geomNumStrs.length; i++) {
-                geomNums[i] = Integer.parseInt(geomNumStrs[i]);
-            }
-            frame.setLocation(geomNums[0], geomNums[1]);
-            frame.setSize(new Dimension(geomNums[2], geomNums[3]));
-            frame.validate();
-            LOGGER.debug("Starting geometry set for window '" + name + "'");
+        LOGGER.debug("Setting starting geometry is " + geomStr);
+        // x,y,width,height
+        final String[] geomNumStrs = geomStr.split(",");
+        final int[] geomNums = new int[geomNumStrs.length];
+        for (int i = 0; i < geomNumStrs.length; i++) {
+            geomNums[i] = Integer.parseInt(geomNumStrs[i]);
         }
+        frame.setBounds(geomNums[0], geomNums[1], geomNums[2], geomNums[3]);
+        LOGGER.debug("Starting geometry set for window '" + name + "'");
     }
 
-    public void watchWindow(final String name) {
-        LOGGER.debug("We will store geometry for JFrame '" + name + "'");
-        synchronized (windowStore) {
-            windowStore.put(name, null);
-        }
-    }
-
-    public void saveGeometry(final JFrame window) {
-        final String windowName = window.getName();
+    /**
+     * Store this frame's geometry for later restoration.
+     * Typically called when the frame is about to close.
+     * @param frame the frame whose geometry will be stored.
+     */
+    public void saveGeometry(final JFrame frame) {
+        final String windowName = frame.getName();
         LOGGER.debug("should we store window " + windowName);
-        synchronized (windowStore) {
-            if (windowStore.containsKey(windowName)) {
-                final Rectangle rect = window.getBounds();
-                final String geomStr = String.format("%d,%d,%d,%d",
-                    rect.x, rect.y, rect.width, rect.height);
-                LOGGER.debug("Storing window '" + windowName + "' geometry " + geomStr);
-                prefs.setWindowGeometry(windowName, geomStr);
-            }
-        }
+        final Rectangle rect = frame.getBounds();
+        final String geomStr = String.format("%d,%d,%d,%d",
+            rect.x, rect.y, rect.width, rect.height);
+        LOGGER.debug("Storing window '" + windowName + "' geometry " + geomStr);
+        prefs.setWindowGeometry(windowName, geomStr);
     }
 }
