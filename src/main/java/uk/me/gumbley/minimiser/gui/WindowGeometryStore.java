@@ -3,7 +3,8 @@ package uk.me.gumbley.minimiser.gui;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
 import org.apache.log4j.Logger;
-import uk.me.gumbley.minimiser.prefs.Prefs;
+
+import uk.me.gumbley.minimiser.prefs.IPrefs;
 
 /**
  * Stores the geometry of Windows in the Prefs, and allows
@@ -15,13 +16,13 @@ import uk.me.gumbley.minimiser.prefs.Prefs;
 public final class WindowGeometryStore {
     private static final Logger LOGGER = Logger
             .getLogger(WindowGeometryStore.class);
-    private final Prefs prefs;
+    private final IPrefs prefs;
 
     /**
      * Create the WindowGeometryStore
      * @param preferences the preferences used for storage
      */
-    public WindowGeometryStore(final Prefs preferences) {
+    public WindowGeometryStore(final IPrefs preferences) {
         this.prefs = preferences;
     }
 

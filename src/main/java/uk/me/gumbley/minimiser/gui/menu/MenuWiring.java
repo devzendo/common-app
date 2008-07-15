@@ -16,7 +16,7 @@ import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
  * @author matt
  *
  */
-public class MenuWiring {
+public final class MenuWiring {
 
     /**
      * A stash for JMenuItems and their ActionListeners
@@ -77,7 +77,7 @@ public class MenuWiring {
      */
     public ActionListener getActionListener(final MenuIdentifier menuIdentifier) {
         synchronized (menuDetailsMap) {
-            MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+            final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
             if (menuDetails == null) {
                 return null;
             }
@@ -93,7 +93,7 @@ public class MenuWiring {
      */
     public JMenuItem getMenuItem(final MenuIdentifier menuIdentifier) {
         synchronized (menuDetailsMap) {
-            MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+            final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
             if (menuDetails == null) {
                 return null;
             }
@@ -116,11 +116,11 @@ public class MenuWiring {
         return new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 synchronized (menuDetailsMap) {
-                    MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+                    final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
                     if (menuDetails == null) {
                         return;
                     }
-                    ActionListener actionListener = menuDetails.getActionListener();
+                    final ActionListener actionListener = menuDetails.getActionListener();
                     if (actionListener != null) {
                         actionListener.actionPerformed(e);
                     }
@@ -153,7 +153,7 @@ public class MenuWiring {
      */
     public void setActionListener(final MenuIdentifier menuIdentifier, final ActionListener actionListener) {
         synchronized (menuDetailsMap) {
-            MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+            final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
             if (menuDetails != null) {
                 menuDetails.setActionListener(actionListener);
             }
@@ -167,7 +167,7 @@ public class MenuWiring {
      */
     void injectActionEvent(final MenuIdentifier menuIdentifier, final ActionEvent event) {
         synchronized (menuDetailsMap) {
-            MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+            final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
             if (menuDetails != null && menuDetails.getMenuItem() != null) {
                 for (final ActionListener actionListener : menuDetails.getMenuItem().getActionListeners()) {
                     actionListener.actionPerformed(event);
