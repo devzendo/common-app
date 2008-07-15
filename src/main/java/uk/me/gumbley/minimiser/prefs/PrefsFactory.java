@@ -10,7 +10,7 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public final class PrefsFactory implements FactoryBean {
     private static final Logger LOGGER = Logger.getLogger(PrefsFactory.class);
-    private Prefs factoryPrefs;
+    private IPrefs factoryPrefs;
 
     /**
      * {@inheritDoc}

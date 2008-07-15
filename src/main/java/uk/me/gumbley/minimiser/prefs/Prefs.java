@@ -8,7 +8,7 @@ import uk.me.gumbley.commoncode.file.INIFile;
  * @author matt
  *
  */
-public final class Prefs {
+public final class Prefs implements IPrefs {
     private String prefsFilePath;
     private INIFile iniFile;
 
@@ -17,6 +17,7 @@ public final class Prefs {
     private static final String WIZARD_PANEL_SIZE = "wizard_panel_size";
     private static final String SECTION_UI = "ui";
     private static final String SECTION_WIZARD = "wizard";
+    private static final String SECTION_RECENTFILES = "recentfiles";
 
     /**
      * Create a Prefs object backed by a file
@@ -28,9 +29,7 @@ public final class Prefs {
     }
     
     /**
-     * Obtain the stored Window Geometry
-     * @param windowName a window name
-     * @return a String of the form x,y,width,height.
+     * {@inheritDoc}
      */
     public String getWindowGeometry(final String windowName) {
         return iniFile.getValue(SECTION_UI, formWindowGeometryKey(windowName), "");
@@ -41,17 +40,14 @@ public final class Prefs {
     }
 
     /**
-     * Store the Window Geometry
-     * @param windowName a window name
-     * @param geometry a String of the form x,y,width,height.
+     * {@inheritDoc}
      */
     public void setWindowGeometry(final String windowName, final String geometry) {
         iniFile.setValue(SECTION_UI, formWindowGeometryKey(windowName), geometry);
     }
 
     /**
-     * Where is the prefs file?
-     * @return the absolute path of the prefs file
+     * {@inheritDoc}
      */
     public String getAbsolutePath() {
         return prefsFilePath;
@@ -65,20 +61,30 @@ public final class Prefs {
     }
 
     /**
-     * What is the size we want our wizard panels to be? It takes time to
-     * compute this, so we do it once and store it.
-     * @return A String in the form "width,height", or "" if it hasn't been
-     * computed and stored yet.
+     * {@inheritDoc}
      */
     public String getWizardPanelSize() {
         return iniFile.getValue(SECTION_WIZARD, WIZARD_PANEL_SIZE, "");
     }
 
     /**
-     * Store the computed size of wizard panels.
-     * @param size A String of the form "width,height", e.g. "200,300".
+     * {@inheritDoc}
      */
     public void setWizardPanelSize(final String size) {
         iniFile.setValue(SECTION_WIZARD, WIZARD_PANEL_SIZE, size);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getRecentFiles() {
+        return iniFile.getArray(SECTION_RECENTFILES);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setRecentFiles(final String[] paths) {
+        iniFile.setArray(SECTION_RECENTFILES, paths);
     }
 }
