@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 
-import uk.me.gumbley.minimiser.prefs.IPrefs;
+import uk.me.gumbley.minimiser.prefs.Prefs;
 
 /**
  * Stores the geometry of Windows in the Prefs, and allows
@@ -16,13 +16,13 @@ import uk.me.gumbley.minimiser.prefs.IPrefs;
 public final class WindowGeometryStore {
     private static final Logger LOGGER = Logger
             .getLogger(WindowGeometryStore.class);
-    private final IPrefs prefs;
+    private final Prefs prefs;
 
     /**
      * Create the WindowGeometryStore
      * @param preferences the preferences used for storage
      */
-    public WindowGeometryStore(final IPrefs preferences) {
+    public WindowGeometryStore(final Prefs preferences) {
         this.prefs = preferences;
     }
 
