@@ -21,7 +21,7 @@ public final class TestPrefsLocation extends LoggingTestCase {
      */
     @Test
     public void testNonexistantPrefsLocation() {
-        PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
     }
     
@@ -30,7 +30,7 @@ public final class TestPrefsLocation extends LoggingTestCase {
      */
     @Test
     public void testPrefsDirCreationFails() {
-        PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.createPrefsDirectory());
     }
     
@@ -39,14 +39,14 @@ public final class TestPrefsLocation extends LoggingTestCase {
      */
     @Test
     public void testPrefsDirCreationOk() throws IOException {
-        File tempDirFile = File.createTempFile("minimiser-unit-test-dir", "dir");
+        final File tempDirFile = File.createTempFile("minimiser-unit-test-dir", "dir");
         tempDirFile.deleteOnExit();
-        String tempDir = tempDirFile.getParent();
+        final String tempDir = tempDirFile.getParent();
         LOGGER.info("Temporary directory is " + tempDir);
-        PrefsLocation prefsLocation = new PrefsLocation(tempDir);
+        final PrefsLocation prefsLocation = new PrefsLocation(tempDir);
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
-        File prefsDir = prefsLocation.getPrefsDir();
-        File prefsFile = prefsLocation.getPrefsFile();
+        final File prefsDir = prefsLocation.getPrefsDir();
+        final File prefsFile = prefsLocation.getPrefsFile();
         LOGGER.info("Temp prefs dir is " + prefsDir.getAbsolutePath());
         LOGGER.info("Temp prefs file is " + prefsFile.getAbsolutePath());
         Assert.assertFalse(prefsDir.exists());
