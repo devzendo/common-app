@@ -10,7 +10,7 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public final class PrefsFactory implements FactoryBean {
     private static final Logger LOGGER = Logger.getLogger(PrefsFactory.class);
-    private IPrefs factoryPrefs;
+    private Prefs factoryPrefs;
 
     /**
      * {@inheritDoc}
@@ -24,7 +24,7 @@ public final class PrefsFactory implements FactoryBean {
      * {@inheritDoc}
      */
     public Class getObjectType() {
-        return Prefs.class;
+        return DefaultPrefsImpl.class;
     }
 
     /**
@@ -40,6 +40,6 @@ public final class PrefsFactory implements FactoryBean {
      */
     public void setPrefs(final String prefsPath) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefsPath));
-        factoryPrefs = new Prefs(prefsPath);
+        factoryPrefs = new DefaultPrefsImpl(prefsPath);
     }
 }

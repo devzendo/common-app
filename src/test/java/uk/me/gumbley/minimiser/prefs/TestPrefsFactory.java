@@ -28,7 +28,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         Assert.assertNotNull(prefsFactory);
         prefsFactory.setPrefs(tempFile.getAbsolutePath());
         
-        IPrefs prefs = getPrefs();
+        Prefs prefs = getPrefs();
         Assert.assertNotNull(prefs);
         
         Assert.assertEquals(tempFile.getAbsolutePath(), prefs.getAbsolutePath());
@@ -43,13 +43,13 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         tempFile.deleteOnExit();
         getPrefsFactory().setPrefs(tempFile.getAbsolutePath());
         
-        IPrefs prefs1 = getPrefs();
-        IPrefs prefs2 = getPrefs();
+        Prefs prefs1 = getPrefs();
+        Prefs prefs2 = getPrefs();
         Assert.assertSame(prefs1, prefs2);
     }
 
-    private IPrefs getPrefs() {
-        return getSpringLoader().getBean("prefs", Prefs.class);
+    private Prefs getPrefs() {
+        return getSpringLoader().getBean("prefs", DefaultPrefsImpl.class);
     }
 
     private PrefsFactory getPrefsFactory() {
