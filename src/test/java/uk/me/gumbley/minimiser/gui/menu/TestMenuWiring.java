@@ -2,14 +2,10 @@ package uk.me.gumbley.minimiser.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JMenuItem;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import uk.me.gumbley.minimiser.gui.menu.MenuWiring;
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 
@@ -19,7 +15,7 @@ import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
  * @author matt
  *
  */
-public class TestMenuWiring {
+public final class TestMenuWiring {
     private MenuWiring menuWiring;
 
     /**
@@ -51,7 +47,7 @@ public class TestMenuWiring {
      */
     @Test
     public void testReturnMenuItem() {
-        JMenuItem menuItem = new JMenuItem();
+        final JMenuItem menuItem = new JMenuItem();
         menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem);
         Assert.assertEquals(menuItem, menuWiring.getMenuItem(MenuIdentifier.FileClose));
     }
@@ -61,7 +57,7 @@ public class TestMenuWiring {
      */
     @Test
     public void testEmptyInitialActionListener() {
-        JMenuItem menuItem = new JMenuItem();
+        final JMenuItem menuItem = new JMenuItem();
         menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem);
         Assert.assertNull(menuWiring.getActionListener(MenuIdentifier.FileClose));
     }
@@ -71,7 +67,7 @@ public class TestMenuWiring {
      */
     @Test
     public void testSetActionListener() {
-        JMenuItem menuItem = new JMenuItem();
+        final JMenuItem menuItem = new JMenuItem();
         menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
@@ -86,7 +82,7 @@ public class TestMenuWiring {
      */
     @Test
     public void testGeneratedActionListenerDispatches() {
-        JMenuItem menuItem = new JMenuItem();
+        final JMenuItem menuItem = new JMenuItem();
         menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem);
         final ActionEvent[] result = new ActionEvent[] {null};
         ActionListener actionListener = new ActionListener() {
@@ -96,7 +92,7 @@ public class TestMenuWiring {
         };
         menuWiring.setActionListener(MenuIdentifier.FileClose, actionListener);
         Assert.assertNull(result[0]);
-        ActionEvent event = new ActionEvent(menuItem, 69, "wahey");
+        final ActionEvent event = new ActionEvent(menuItem, 69, "wahey");
         menuWiring.injectActionEvent(MenuIdentifier.FileClose, event);
         Assert.assertEquals(event.getSource(), result[0].getSource());
         // does not match for some reason Assert.assertEquals(event.getID(), result[0].getID());
