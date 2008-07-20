@@ -55,12 +55,12 @@ public final class SpringLoaderFactory {
 
     private static synchronized SpringLoader initAppContext(final List <String> contextFiles) {
         // add ourselves in to the list of application contexts
-        List <String> expandContextFiles = new ArrayList <String>(contextFiles);
+        final List <String> expandContextFiles = new ArrayList <String>(contextFiles);
         expandContextFiles.add("uk/me/gumbley/minimiser/springloader/SpringLoader.xml");
         // Can't just stash the newly created ClassPathXmlApplicationContext
         // in the SpringLoaderImpl, since this is a static method, so that's
         // why we're ApplicationContextAware.
-        ApplicationContext aC = new ClassPathXmlApplicationContext(expandContextFiles.toArray(new String[0]));
+        final ApplicationContext aC = new ClassPathXmlApplicationContext(expandContextFiles.toArray(new String[0]));
         // use the application context to instantiate a SpringLoader (one of these classes)
         instance = (SpringLoader) aC.getBean("springLoader");
         return instance;
