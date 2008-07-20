@@ -11,7 +11,7 @@ import javax.swing.ListCellRenderer;
  * @author matt
  *
  */
-public class StripyListCellRenderer extends DefaultListCellRenderer implements ListCellRenderer  {
+public final class StripyListCellRenderer extends DefaultListCellRenderer implements ListCellRenderer  {
     private static final long serialVersionUID = -471403224429769232L;
 
     /**
