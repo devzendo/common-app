@@ -29,13 +29,13 @@ public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
      *                    inheritance hierarchy.
      */
     @Before
-    public void initApplicationContexts() {
+    public final void initApplicationContexts() {
         LOGGER.info(">>> initApplicationContexts");
-        List<String> contextList = new ArrayList<String>();
+        final List<String> contextList = new ArrayList<String>();
         Class<? extends Object> clazz = this.getClass();
         // scan up to root of object hierarchy finding our annotation
         while (clazz != null) {
-            ApplicationContext ac = clazz.getAnnotation(ApplicationContext.class);
+            final ApplicationContext ac = clazz.getAnnotation(ApplicationContext.class);
             if (ac != null) {
                 contextList.addAll(Arrays.asList(ac.value()));
             }
@@ -51,7 +51,7 @@ public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
      * Cleans up the SpringLoader
      */
     @After
-    public void closeSpringLoader() {
+    public final void closeSpringLoader() {
         LOGGER.info(">>> closeSpringLoader");
         if (springLoader != null) {
             springLoader.close();
@@ -62,7 +62,7 @@ public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
     /**
      * @return the SpringLoader to use in all subclasses of this.
      */
-    public SpringLoader getSpringLoader() {
+    public final SpringLoader getSpringLoader() {
         return springLoader;
     }
 }

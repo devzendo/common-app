@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author matt
  *
  */
-public class TestSpringLoaderDoesntLoadOtherAppContextsTestBeans extends
+public final class TestSpringLoaderDoesntLoadOtherAppContextsTestBeans extends
         SpringLoaderUnittestCase {
     private static final Logger LOGGER = Logger
             .getLogger(TestSpringLoaderDoesntLoadOtherAppContextsTestBeans.class);
@@ -20,16 +20,16 @@ public class TestSpringLoaderDoesntLoadOtherAppContextsTestBeans extends
      */
     @Test
     public void testSpringLoaderDoesntLoadOthersTestBeans() {
-        SpringLoader sl = getSpringLoader();
+        final SpringLoader sl = getSpringLoader();
         Assert.assertNotNull(sl);
         try {
-            SpringLoadedBean o1 = sl.getBean("testBean",
+            final SpringLoadedBean o1 = sl.getBean("testBean",
                 SpringLoadedBean.class);
             LOGGER.info("We created a " + o1);
             Assert.fail("Should not have been able to load up a bean defined"
                     + " in a bean definition file that isn't annotated against"
                     + " this test or its superclasses");
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             LOGGER.info("Correctly caught exception", t);
         }
     }
