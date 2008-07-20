@@ -5,8 +5,16 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class TestSpringLoader extends SpringLoaderUnittestCase {
+/**
+ * Test the SpringLoader
+ * @author matt
+ *
+ */
+public final class TestSpringLoader extends SpringLoaderUnittestCase {
     private static final Logger LOGGER = Logger.getLogger(TestSpringLoader.class);
+    /**
+     * 
+     */
     @Test
     public void testGetSpringLoader() {
         Assert.assertNotNull(getSpringLoader());
