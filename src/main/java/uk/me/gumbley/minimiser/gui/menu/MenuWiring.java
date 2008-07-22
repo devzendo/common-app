@@ -138,7 +138,10 @@ public final class MenuWiring {
      */
     public void storeMenuItem(final MenuIdentifier menuIdentifier, final JMenuItem menuItem) {
         synchronized (menuDetailsMap) {
-            menuDetailsMap.put(menuIdentifier, new MenuDetails(menuItem));
+            final MenuDetails existingMenuDetails = menuDetailsMap.get(menuIdentifier);
+            if (existingMenuDetails == null) {
+                menuDetailsMap.put(menuIdentifier, new MenuDetails(menuItem));
+            }
             menuItem.addActionListener(generateDirectActionListener(menuIdentifier));
         }
     }
