@@ -11,7 +11,7 @@ import org.springframework.beans.factory.FactoryBean;
  * @author matt
  *
  */
-public class MainFrameFactory implements FactoryBean {
+public final class MainFrameFactory implements FactoryBean {
     private static final Logger LOGGER = Logger
             .getLogger(MainFrameFactory.class);
     private Frame factoryMainFrame;
