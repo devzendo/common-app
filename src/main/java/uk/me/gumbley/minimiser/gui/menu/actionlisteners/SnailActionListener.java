@@ -30,14 +30,11 @@ public abstract class SnailActionListener implements ActionListener {
     /**
      * {@inheritDoc}
      */
-    @Override
     public final void actionPerformed(final ActionEvent e) {
         cursorManager.hourglass();
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 GUIUtils.invokeLaterOnEventThread(new Runnable() {
-                    @Override
                     public void run() {
                         actionPerformedSlowly(e);
                     }
@@ -48,8 +45,15 @@ public abstract class SnailActionListener implements ActionListener {
     
     /**
      * Perform the action. One of your tasks MUST be to set the cursor back to
-     * normal.
+     * normal, using getCursorManager().
      * @param e the ActionEvent to process.
      */
     public abstract void actionPerformedSlowly(final ActionEvent e);
+
+    /**
+     * @return the cursor manager
+     */
+    protected CursorManager getCursorManager() {
+        return cursorManager;
+    }
 }

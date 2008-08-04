@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.JMenuItem;
-
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 /**
