@@ -54,4 +54,16 @@ public interface Prefs {
      * @param paths an array of path names to databases
      */
     void setRecentFiles(String[] paths);
+
+    /**
+     * Store the open files list
+     * @param paths an array of path names to databases
+     */
+    void setOpenFiles(String[] paths);
+
+    /**
+     * Obtain the open files list
+     * @return an array of path names to databases
+     */
+    String[] getOpenFiles();
 }
