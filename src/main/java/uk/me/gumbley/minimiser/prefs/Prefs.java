@@ -66,4 +66,16 @@ public interface Prefs {
      * @return an array of path names to databases
      */
     String[] getOpenFiles();
+
+    /**
+     * Store the name of the last active database in the open list
+     * @param name the database name
+     */
+    void setLastActiveFile(final String name);
+
+    /**
+     * Obtain the name of the last active database
+     * @return the last active database's name
+     */
+    String getLastActiveFile();
 }
