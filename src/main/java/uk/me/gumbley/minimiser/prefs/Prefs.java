@@ -78,4 +78,9 @@ public interface Prefs {
      * @return the last active database's name
      */
     String getLastActiveFile();
+
+    /**
+     * There is now no last active file, so clear the record of it.
+     */
+    void clearLastActiveFile();
 }
