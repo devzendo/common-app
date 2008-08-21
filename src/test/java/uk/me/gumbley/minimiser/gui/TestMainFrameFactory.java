@@ -22,14 +22,14 @@ public final class TestMainFrameFactory extends SpringLoaderUnittestCase {
     public void testStoreMainFrame() {
         final Frame testFrame = new Frame(); 
 
-        final MainFrameFactory prefsFactory = getMainFrameFactory();
-        Assert.assertNotNull(prefsFactory);
-        prefsFactory.setMainFrame(testFrame);
+        final MainFrameFactory mainFrameFactory = getMainFrameFactory();
+        Assert.assertNotNull(mainFrameFactory);
+        mainFrameFactory.setMainFrame(testFrame);
         
-        final Frame prefs = getMainFrame();
-        Assert.assertNotNull(prefs);
+        final Frame mainFrame = getMainFrame();
+        Assert.assertNotNull(mainFrame);
         
-        Assert.assertEquals(testFrame, prefs);
+        Assert.assertEquals(testFrame, mainFrame);
     }
     
     /**
