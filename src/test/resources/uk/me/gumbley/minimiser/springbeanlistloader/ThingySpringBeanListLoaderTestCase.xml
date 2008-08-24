@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true">
+
+	<!-- simple tests -->
+	<bean id="simpleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+		<property name="sourceList">
+			<list>
+			    <value>one</value>
+				<value>two</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="beanListLoader" class="uk.me.gumbley.minimiser.springbeanlistloader.ThingySpringBeanListLoader">
+		<constructor-arg ref="springLoader" />
+		<constructor-arg ref="simpleList" />	
+	</bean>
+
+	<bean id="one" class="uk.me.gumbley.minimiser.springbeanlistloader.OneThingy">
+	</bean>
+	
+	<bean id="two" class="uk.me.gumbley.minimiser.springbeanlistloader.TwoThingy">
+	</bean>
+	
+	<!-- uninstantiatable beans don't get used -->
+	<bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+		<property name="sourceList">
+			<list>
+				<value>nonexistant</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="badLoadLifecycleManager" class="uk.me.gumbley.minimiser.springbeanlistloader.ThingySpringBeanListLoader">
+		<constructor-arg ref="springLoader" />
+		<constructor-arg ref="badLoadLifecycleList" />	
+	</bean>
+
+</beans>
