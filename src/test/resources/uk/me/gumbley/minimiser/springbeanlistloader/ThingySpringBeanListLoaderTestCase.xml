@@ -29,7 +29,9 @@
 	<bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
 		<property name="sourceList">
 			<list>
+			    <value>one</value>
 				<value>nonexistant</value>
+				<value>two</value>
 			</list>
 		</property>
 	</bean>

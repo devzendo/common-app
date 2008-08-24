@@ -14,7 +14,7 @@ import uk.me.gumbley.minimiser.springloader.SpringLoaderUnittestCase;
  *
  */
 @ApplicationContext("uk/me/gumbley/minimiser/springbeanlistloader/ThingySpringBeanListLoaderTestCase.xml")
-public class TestThingySpringBeanListLoader extends SpringLoaderUnittestCase {
+public final class TestThingySpringBeanListLoader extends SpringLoaderUnittestCase {
     
     private ThingySpringBeanListLoader beanListLoader;
 
@@ -84,13 +84,19 @@ public class TestThingySpringBeanListLoader extends SpringLoaderUnittestCase {
     }
     
     /**
-     * this lifecycle manager has a bad bean - nonexistant 
+     * this lifecycle manager has a bad bean - nonexistant - but the others
+     * load OK
      */
     @Test
     public void dontStartupBadBeans() {
         beanListLoader = getSpringLoader().getBean("badLoadLifecycleManager", ThingySpringBeanListLoader.class);
         Assert.assertNotNull(beanListLoader);
-        Assert.assertEquals(0, beanListLoader.getBeanNames().size());
+        Assert.assertEquals(2, beanListLoader.getBeanNames().size());
+
+        final List<Thingy> list = beanListLoader.getBeans();
+        Assert.assertEquals(2, list.size());
+        Assert.assertTrue(list.get(0) instanceof OneThingy);
+        Assert.assertTrue(list.get(1) instanceof TwoThingy);
     }
     
 }
