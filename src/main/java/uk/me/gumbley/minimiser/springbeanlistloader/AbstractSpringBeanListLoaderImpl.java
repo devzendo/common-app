@@ -67,7 +67,6 @@ public abstract class AbstractSpringBeanListLoaderImpl<B> implements SpringBeanL
     
     /**
      * {@inheritDoc}
-     * TODO need to add tests for this WOZERE 
      */
     public final List<B> getBeans() {
         final List<B> list = new ArrayList<B>();
