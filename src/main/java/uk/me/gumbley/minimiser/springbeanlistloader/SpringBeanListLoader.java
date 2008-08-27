@@ -4,12 +4,12 @@ import java.util.List;
 
 /**
  * Loads a list of beans from the application context.
- * @param <B> the bean type
+ * @param <T> the bean type
  * 
  * @author matt
  *
  */
-public interface SpringBeanListLoader<B> {
+public interface SpringBeanListLoader<T> {
 
     /**
      * Obtain a list of bean names
@@ -22,11 +22,11 @@ public interface SpringBeanListLoader<B> {
      * @param beanName the bean name
      * @return a bean
      */
-    B getBean(String beanName);
+    T getBean(String beanName);
     
     /**
      * Obtain the list of loaded of beans
      * @return a list of loaded beans, in the order they were loaded
      */
-    List<B> getBeans();
+    List<T> getBeans();
 }
