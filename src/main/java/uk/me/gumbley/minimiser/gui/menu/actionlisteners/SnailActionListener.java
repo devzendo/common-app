@@ -53,7 +53,7 @@ public abstract class SnailActionListener implements ActionListener {
     /**
      * @return the cursor manager
      */
-    protected CursorManager getCursorManager() {
+    protected final CursorManager getCursorManager() {
         return cursorManager;
     }
 }
