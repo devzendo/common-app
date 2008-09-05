@@ -69,9 +69,9 @@ public interface Prefs {
 
     /**
      * Store the name of the last active database in the open list
-     * @param name the database name
+     * @param databaseName the database name
      */
-    void setLastActiveFile(final String name);
+    void setLastActiveFile(final String databaseName);
 
     /**
      * Obtain the name of the last active database
@@ -83,4 +83,18 @@ public interface Prefs {
      * There is now no last active file, so clear the record of it.
      */
     void clearLastActiveFile();
+
+    /**
+     * Get the list of open tab names for a given database
+     * @param databaseName the database name
+     * @return the list of open tabs' names, always an array, never null
+     */
+    String[] getOpenTabs(String databaseName);
+
+    /**
+     * Store the names of the open tabs for a given database
+     * @param databaseName the database name
+     * @param tabNames the names of the open tabs
+     */
+    void setOpenTabs(String databaseName, String[] tabNames);
 }
