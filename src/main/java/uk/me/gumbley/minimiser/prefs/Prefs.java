@@ -97,4 +97,26 @@ public interface Prefs {
      * @param tabNames the names of the open tabs
      */
     void setOpenTabs(String databaseName, String[] tabNames);
+
+    /**
+     * Is the named tab hidden?
+     * @param tabName the name of the tab, taken from TabIdentifier::toString,
+     * not TabIdentifier::getDisplayableName
+     * @return true iff the tab is hidden 
+     */
+    boolean isTabHidden(final String tabName);
+
+    /**
+     * Indicate that the named tab is hidden.
+     * @param tabName the name of the tab, taken from TabIdentifier::toString,
+     * not TabIdentifier::getDisplayableName
+     */
+    void setTabHidden(final String tabName);
+
+    /**
+     * Indicate that the named tab is shown, i.e. not hidden.
+     * @param tabName the name of the tab, taken from TabIdentifier::toString,
+     * not TabIdentifier::getDisplayableName
+     */
+    void clearTabHidden(final String tabName);
 }
