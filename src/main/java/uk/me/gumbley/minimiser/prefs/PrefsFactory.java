@@ -23,7 +23,7 @@ public final class PrefsFactory implements FactoryBean {
     /**
      * {@inheritDoc}
      */
-    public Class getObjectType() {
+    public Class<?> getObjectType() {
         return DefaultPrefsImpl.class;
     }
 
