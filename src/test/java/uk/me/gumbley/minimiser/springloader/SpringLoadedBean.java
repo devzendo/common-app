@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  * @author matt
  *
  */
-public class SpringLoadedBean {
+public final class SpringLoadedBean {
     private static final Logger LOGGER = Logger.getLogger(SpringLoadedBean.class);
     /**
      * Just say hello
