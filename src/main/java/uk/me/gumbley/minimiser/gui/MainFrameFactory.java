@@ -27,7 +27,7 @@ public final class MainFrameFactory implements FactoryBean {
     /**
      * {@inheritDoc}
      */
-    public Class getObjectType() {
+    public Class<?> getObjectType() {
         return Frame.class;
     }
 
