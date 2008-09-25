@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JMenuItem;
+import org.apache.log4j.Logger;
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 /**
@@ -15,7 +16,7 @@ import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
  *
  */
 public final class MenuWiring {
-
+    private static final Logger LOGGER = Logger.getLogger(MenuWiring.class);
     /**
      * A stash for JMenuItems and their ActionListeners
      * 
@@ -175,5 +176,61 @@ public final class MenuWiring {
                 }
             }
         }
+    }
+
+    /**
+     * Is the menu item for this identifier enabled?
+     * <p>
+     * If no menu item has been stored for this menu identifier, an 
+     * IllegalStateException will be thrown.
+     * 
+     * @param menuIdentifier the menu identifier to check for enabledness
+     * @return true iff the menu item is enabled
+     */
+    public boolean isMenuItemEnabled(final MenuIdentifier menuIdentifier) {
+        return getMenuItemThrowingIfNull(menuIdentifier).isEnabled();
+    }
+
+    private JMenuItem getMenuItemThrowingIfNull(final MenuIdentifier menuIdentifier) {
+        final JMenuItem menuItem = getMenuItem(menuIdentifier);
+        if (menuItem == null) {
+            throw new IllegalStateException("No menu item stored against menu identifier " + menuIdentifier);
+        }
+        return menuItem;
+    }
+
+    /**
+     * Disable a menu item identified by a menu identifier.
+     * <p>
+     * If no menu item has been stored for this menu identifier, an 
+     * IllegalStateException will be thrown.
+     * @param menuIdentifier the menu identifier to disable
+     */
+    public void disableMenuItem(final MenuIdentifier menuIdentifier) {
+        setMenuItemEnabled(menuIdentifier, false);
+    }
+
+    /**
+     * Enable a menu item identified by a menu identifier.
+     * <p>
+     * If no menu item has been stored for this menu identifier, an 
+     * IllegalStateException will be thrown.
+     * @param menuIdentifier the menu identifier to enable
+     */
+    public void enableMenuItem(final MenuIdentifier menuIdentifier) {
+        setMenuItemEnabled(menuIdentifier, true);
+    }
+
+    /**
+     * Enable or disable a menu item identified by a menu identifier.
+     * <p>
+     * If no menu item has been stored for this menu identifier, an 
+     * IllegalStateException will be thrown.
+     * @param menuIdentifier the menu identifier to enable
+     * @param enable true to enable; false to disable
+     */
+    public void setMenuItemEnabled(final MenuIdentifier menuIdentifier, final boolean enable) {
+        LOGGER.debug((enable ? "Enabling " : "Disabling ") + menuIdentifier);
+        getMenuItemThrowingIfNull(menuIdentifier).setEnabled(enable);
     }
 }

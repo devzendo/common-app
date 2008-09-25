@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
+import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
 
 /**
@@ -15,7 +16,7 @@ import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
  * @author matt
  *
  */
-public final class TestMenuWiring {
+public final class TestMenuWiring extends LoggingTestCase {
     private MenuWiring menuWiring;
 
     /**
@@ -144,5 +145,60 @@ public final class TestMenuWiring {
         Assert.assertEquals(event.getSource(), result[0].getSource());
         // does not match for some reason Assert.assertEquals(event.getID(), result[0].getID());
         Assert.assertEquals(event.getActionCommand(), result[0].getActionCommand());
+    }
+    
+    /**
+     * 
+     */
+    @Test(expected = IllegalStateException.class)
+    public void enableWithNoMenuItemThrows() {
+        menuWiring.enableMenuItem(MenuIdentifier.FileClose);
+    }
+
+    /**
+     * 
+     */
+    @Test(expected = IllegalStateException.class)
+    public void setEnabledWithNoMenuItemThrows() {
+        menuWiring.setMenuItemEnabled(MenuIdentifier.FileClose, false);
+    }
+
+    /**
+     * 
+     */
+    @Test(expected = IllegalStateException.class)
+    public void disableWithNoMenuItemThrows() {
+        menuWiring.disableMenuItem(MenuIdentifier.FileClose);
+    }
+    
+    /**
+     * 
+     */
+    @Test(expected = IllegalStateException.class)
+    public void isEnabledWithNoMenuItemThrows() {
+        menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose);
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void menuItemsCanBeDisabledAndEnabled() {
+        final JMenuItem menuItem1 = new JMenuItem();
+        menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem1);
+        
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
+        
+        menuWiring.disableMenuItem(MenuIdentifier.FileClose);
+        Assert.assertFalse(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
+
+        menuWiring.enableMenuItem(MenuIdentifier.FileClose);
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
+
+        menuWiring.setMenuItemEnabled(MenuIdentifier.FileClose, false);
+        Assert.assertFalse(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
+
+        menuWiring.setMenuItemEnabled(MenuIdentifier.FileClose, true);
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
     }
 }
