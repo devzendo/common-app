@@ -233,4 +233,28 @@ public final class MenuWiring {
         LOGGER.debug((enable ? "Enabling " : "Disabling ") + menuIdentifier);
         getMenuItemThrowingIfNull(menuIdentifier).setEnabled(enable);
     }
+
+    /**
+     * Create a JMenuItem for the given menu identifier, item text and
+     * mnemonic and store it in the wiring map, or, of one already exists for
+     * this identifier in the wiring map, return that one (i.e., only create
+     * once and cache it).
+     * 
+     * @param menuIdentifier the MenuIdentifier
+     * @param menuItemText the text for this menu item
+     * @param mnemonic the mnemonic
+     * @return the JMenuItem for this identifier
+     */
+    public JMenuItem createMenuItem(final MenuIdentifier menuIdentifier,
+           final String menuItemText, final char mnemonic) {
+        final JMenuItem existingMenuItem = getMenuItem(menuIdentifier);
+        if (existingMenuItem != null) {
+            return existingMenuItem;
+        } else {
+            final JMenuItem menuItem = new JMenuItem(menuItemText);
+            menuItem.setMnemonic(mnemonic);
+            storeMenuItem(menuIdentifier, menuItem);
+            return menuItem;
+        }
+    }
 }

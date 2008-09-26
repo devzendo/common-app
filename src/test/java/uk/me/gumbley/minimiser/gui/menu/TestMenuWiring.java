@@ -201,4 +201,14 @@ public final class TestMenuWiring extends LoggingTestCase {
         menuWiring.setMenuItemEnabled(MenuIdentifier.FileClose, true);
         Assert.assertTrue(menuWiring.isMenuItemEnabled(MenuIdentifier.FileClose));
     }
+    
+    /**
+     * 
+     */
+    @Test
+    public void createNonExistantMenuItemGetsNewMenuItemThenReturnsSame() {
+        Assert.assertNull(menuWiring.getMenuItem(MenuIdentifier.FileClose));
+        final JMenuItem newMI = menuWiring.createMenuItem(MenuIdentifier.FileClose, "Close", 'C');
+        Assert.assertSame(newMI, menuWiring.createMenuItem(MenuIdentifier.FileClose, "Close", 'C'));
+    }
 }
