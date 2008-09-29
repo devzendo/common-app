@@ -15,35 +15,23 @@ import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 public abstract class AbstractMenuGroup {
     private final MenuWiring menuWiring;
     private final MenuState menuState;
-    private final MenuImpl mainMenu;
 
     /**
      * Construct given the main menu, which subclasses will probably use to
      * cause updates to other parts of the menu system.
      * @param wiring the menu wiring
      * @param state the menu state
-     * @param menu the main menu
      */
-    public AbstractMenuGroup(final MenuWiring wiring, final MenuState state, final MenuImpl menu) {
+    public AbstractMenuGroup(final MenuWiring wiring, final MenuState state) {
         this.menuWiring = wiring;
         this.menuState = state;
-        this.mainMenu = menu;
-        
-    }
-
-    /**
-     * Get the main menu
-     * @return the main menu
-     */
-    protected final MenuImpl getMainMenu() {
-        return mainMenu;
     }
     
     /**
      * Get the menu state
      * @return the menu state
      */
-    protected final MenuState getMenuState() {
+    protected final MenuState getXMenuState() {
         return menuState;
     }
     
