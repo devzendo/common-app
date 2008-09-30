@@ -26,12 +26,12 @@ public abstract class AbstractSpringBeanListLoaderImpl<T> implements SpringBeanL
     
     /**
      * @param springLoader the Spring loader
-     * @param lifecycleBeanNames the list of Lifecycle beans to manage.
+     * @param beanNameList the list of beans to manage.
      */
-    public AbstractSpringBeanListLoaderImpl(final SpringLoader springLoader, final List<String> lifecycleBeanNames) {
+    public AbstractSpringBeanListLoaderImpl(final SpringLoader springLoader, final List<String> beanNameList) {
         this.loader = springLoader;
         beanMap = new HashMap<String, T>();
-        this.beanNames = instantiateBeans(lifecycleBeanNames);
+        this.beanNames = instantiateBeans(beanNameList);
     }
     
     @SuppressWarnings("unchecked")
@@ -46,6 +46,7 @@ public abstract class AbstractSpringBeanListLoaderImpl<T> implements SpringBeanL
                 loadedNames.add(beanName);
             } catch (final RuntimeException re) {
                 LOGGER.warn("Could not load '" + beanName + ": " + re.getMessage(), re);
+                // TODO pass this on to an injected ProblemReporter?
             }
         }
         LOGGER.info("Beans loaded");
