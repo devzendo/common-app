@@ -51,29 +51,36 @@ public abstract class AbstractSnailDialog extends JDialog {
         lock = new Object();
         workers = new ArrayList<SwingWorker>();
         
-        cursorManager.hourglassViaEventThread();
+        /*cursorManager.hourglassViaEventThread();
         setContentPane(getMainComponent());
         initialise();
-        //addCursorNormalWorker();
+        addCursorNormalWorker();
         
         // Load and display the about texts after the window has been
         // made visible. Performance legerdemain...
         awtEventListener = new AWTEventListener() {
                             public void eventDispatched(final AWTEvent event) {
-                                if (event.getID() == WindowEvent.WINDOW_OPENED) {
+                                if (event.getID() == WindowEvent.WINDOW_OPENED && event.getSource() == AbstractSnailDialog.this) {
                                     synchronized (lock) {
-                                        LOGGER.debug("executing all swing workers");
-                                        for (SwingWorker worker : workers) {
-                                            LOGGER.debug("executing swing worker");
-                                            worker.start();
-                                            LOGGER.debug("executed swing worker");
-                                        }
-                                        LOGGER.debug("executed all swing workers");
+                                        final Thread swingWorkerExecutorThread = new Thread(new Runnable() {
+                                            public void run() {
+                                                LOGGER.debug("executing all swing workers");
+                                                for (SwingWorker worker : workers) {
+                                                    LOGGER.debug("executing swing worker");
+                                                    worker.start();
+                                                    LOGGER.debug("executed swing worker");
+                                                }
+                                                LOGGER.debug("executed all swing workers");
+                                            }
+                                        });
+                                        swingWorkerExecutorThread.setName("SwingWorkerExecutor");
+                                        swingWorkerExecutorThread.start();
                                     }
                                 }
                             }
                             };
         Toolkit.getDefaultToolkit().addAWTEventListener(awtEventListener, AWTEvent.WINDOW_EVENT_MASK);
+        */
     }
     
     /**
@@ -89,10 +96,12 @@ public abstract class AbstractSnailDialog extends JDialog {
 
             @Override
             public Object construct() {
+                LOGGER.debug("Normal Cursor SwingWorker - construct");
                 return null;
             }
             
             public void finished() {
+                LOGGER.debug("Normal Cursor SwingWorker - finished");
                 cursorManager.normal();
             }
         });

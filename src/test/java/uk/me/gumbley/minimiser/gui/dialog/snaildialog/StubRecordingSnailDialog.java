@@ -1,6 +1,7 @@
 package uk.me.gumbley.minimiser.gui.dialog.snaildialog;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
 import javax.swing.JPanel;
@@ -39,7 +40,9 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
     @Override
     protected Container getMainComponent() {
         LOGGER.debug("getMainComponent called");
-        return new JPanel();
+        final JPanel panel = new JPanel();
+        panel.setMinimumSize(new Dimension(200, 200));
+        return panel;
     }
 
     /**
@@ -52,13 +55,13 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
         final SwingWorker worker = new SwingWorker() {
             @Override
             public Object construct() {
-                LOGGER.debug("construct called");
+                LOGGER.debug("StubRecordingSnailDialog SwingWorker - construct called");
                 isConstructedOnNonEventThread = !EventQueue.isDispatchThread();
                 return new Object();
             }
             
             public void finished() {
-                LOGGER.debug("finished called");
+                LOGGER.debug("StubRecordingSnailDialog SwingWorker - finished called");
                 isFinishedOnEventThread = EventQueue.isDispatchThread();
             }
         };
