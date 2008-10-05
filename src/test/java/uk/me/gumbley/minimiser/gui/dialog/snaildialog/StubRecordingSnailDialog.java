@@ -38,7 +38,7 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
      * {@inheritDoc}
      */
     @Override
-    protected Container getMainComponent() {
+    protected Container createMainComponent() {
         LOGGER.debug("getMainComponent called");
         final JPanel panel = new JPanel();
         panel.setMinimumSize(new Dimension(200, 200));
