@@ -15,10 +15,9 @@ public abstract class AbstractRebuildableMenuGroup extends AbstractMenuGroup {
      * cause updates to other parts of the menu system.
      * 
      * @param wiring the menu wiring
-     * @param state the menu state
      */
-    public AbstractRebuildableMenuGroup(final MenuWiring wiring, final MenuState state) {
-        super(wiring, state);
+    public AbstractRebuildableMenuGroup(final MenuWiring wiring) {
+        super(wiring);
     }
     
     /**
