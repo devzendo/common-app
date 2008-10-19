@@ -6,7 +6,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import uk.me.gumbley.commoncode.concurrency.ThreadUtils;
@@ -21,8 +20,6 @@ import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 public final class TestSnailDialog extends LoggingTestCase {
     private static final Logger LOGGER = Logger
             .getLogger(TestSnailDialog.class);
-
-    private Object lock = new Object();
 
     //private volatile StubRecordingSnailDialog snailDialog;
 
@@ -79,7 +76,7 @@ public final class TestSnailDialog extends LoggingTestCase {
                         LOGGER.debug("counting down visibleLatch");
                         visibleLatch.countDown();
                         LOGGER.debug("Counted down visibleLatch");
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         LOGGER.error("Caught unexpected "
                                 + t.getClass().getSimpleName(), t);
                     }

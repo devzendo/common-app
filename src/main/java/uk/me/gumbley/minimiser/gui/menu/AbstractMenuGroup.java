@@ -28,7 +28,7 @@ public abstract class AbstractMenuGroup {
      * Get the menu wiring
      * @return the menu wiring
      */
-    protected MenuWiring getMenuWiring() {
+    protected final MenuWiring getMenuWiring() {
         return menuWiring;
     }
     
