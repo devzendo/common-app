@@ -2,10 +2,15 @@ package uk.me.gumbley.minimiser.gui;
 
 import java.awt.Component;
 import java.awt.Cursor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 import javax.swing.JFrame;
 import javax.swing.JRootPane;
 import org.apache.log4j.Logger;
 import uk.me.gumbley.commoncode.gui.GUIUtils;
+import uk.me.gumbley.commoncode.string.StringUtils;
 
 /**
  * Handlings make benefit great user interaction of hourglass/normal cursor.
@@ -18,11 +23,28 @@ public final class CursorManager {
     private static final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
     private JFrame frame = null;
 
+    private AtomicBoolean hourglass = new AtomicBoolean(false);
+    private AtomicLong hourglassSetTime = new AtomicLong(0);
+    private Thread stuckDetector;
+    private Object lock;
+    private List<Exception> hourglassCallers;
+    
+
     /**
      * Instantiate the CursorManager, which won't be able to effect change
      * of the cursor until a main component has been set.
      */
     public CursorManager() {
+        startStuckDetector();
+    }
+
+    private void startStuckDetector() {
+        lock = new Object();
+        hourglassCallers = new ArrayList<Exception>();
+        stuckDetector = new Thread(new StuckHourGlassDetector());
+        stuckDetector.setDaemon(true);
+        stuckDetector.setName("Stuck Hourglass Detector");
+        stuckDetector.start();
     }
     
     /**
@@ -41,6 +63,12 @@ public final class CursorManager {
         LOGGER.debug("Setting hourglass cursor");
         if (frame != null) {
             frame.setCursor(HOURGLASS);
+            hourglassCallers.add(new RuntimeException());
+            hourglass.set(true);
+            hourglassSetTime.set(System.currentTimeMillis());
+            synchronized (lock) {
+                lock.notify();
+            }
         }
         final Component glassPane = getGlassPane();
         if (glassPane != null) {
@@ -70,6 +98,11 @@ public final class CursorManager {
         LOGGER.debug("Setting normal cursor");
         if (frame != null) {
             frame.setCursor(NORMAL);
+            hourglass.set(false);
+            hourglassSetTime.set(0);
+            synchronized (lock) {
+                lock.notify();
+            }
         }
         final Component glassPane = getGlassPane();
         if (glassPane != null) {
@@ -108,5 +141,63 @@ public final class CursorManager {
             LOGGER.warn("GlassPane is null");
         }
         return glassPane;
+    }
+    
+    /**
+     * If the hourglass is present for more than 30s, it's most likely a
+     * problem.
+     * @author matt
+     *
+     */
+    private class StuckHourGlassDetector implements Runnable {      
+        public void run() {
+            while (Thread.currentThread().isAlive()) {
+                if (hourglass.get()) {
+                    // hourglass
+                    try {
+                        LOGGER.debug("waiting a while for hourglass to get stuck");
+                        synchronized (lock) {
+                            lock.wait(30000);
+                        }
+                        if (hourglass.get()) {
+                            LOGGER.debug("in hourglass state");
+                            if (hourglassSetTime.get() != 0) {
+                                final long stuckFor = System.currentTimeMillis() - hourglassSetTime.get();
+                                if (stuckFor > 28000) {
+                                    LOGGER.warn("The hourglass cursor appears to have been stuck for " + StringUtils.translateTimeDuration(stuckFor));
+                                    for (Exception e : hourglassCallers) {
+                                        LOGGER.warn("----");
+                                        for (StackTraceElement ste : e.getStackTrace()) {
+                                            LOGGER.warn("    " + ste.toString());
+                                        }
+                                    }
+                                } else {
+                                    LOGGER.debug("Only been in hourglass for " + StringUtils.translateTimeDuration(stuckFor));
+                                }
+                            } else {
+                                LOGGER.debug("hourglass set time if zero");
+                            }
+                        } else {
+                            LOGGER.debug("in normal state");
+                        }
+                    } catch (final InterruptedException e) {
+                        LOGGER.debug("interrupted in hourglass state");
+                        // nothing
+                    }
+                } else {
+                    // normal
+                    try {
+                        LOGGER.debug("waiting for hourglass...");
+                        synchronized (lock) {
+                            lock.wait();
+                        }
+                        LOGGER.debug("out of wait for hourglass");
+                    } catch (final InterruptedException e) {
+                        LOGGER.debug("interrupted in normal state, perhaps in hourglass now?");
+                        // nothing
+                    }
+                }
+            }
+        }
     }
 }
