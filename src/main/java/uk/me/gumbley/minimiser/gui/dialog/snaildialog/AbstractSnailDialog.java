@@ -51,7 +51,7 @@ public abstract class AbstractSnailDialog extends JDialog {
         lock = new Object();
         workers = new ArrayList<SwingWorker>();
         
-        cursorManager.hourglassViaEventThread();
+        cursorManager.hourglassViaEventThread(this.getClass().getSimpleName());
         setContentPane(createMainComponent());
         initialise();
         addCursorNormalWorker();
@@ -101,7 +101,7 @@ public abstract class AbstractSnailDialog extends JDialog {
             
             public void finished() {
                 LOGGER.debug("Normal Cursor SwingWorker - finished");
-                cursorManager.normal();
+                cursorManager.normal(this.getClass().getSimpleName());
             }
         });
     }
@@ -131,7 +131,7 @@ public abstract class AbstractSnailDialog extends JDialog {
             Toolkit.getDefaultToolkit().removeAWTEventListener(awtEventListener);
         }
         setVisible(false);
-        cursorManager.normal();
+        cursorManager.normal(this.getClass().getSimpleName());
         dispose();
     }
 }

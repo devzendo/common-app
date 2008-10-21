@@ -27,7 +27,7 @@ public final class CursorManager {
     private AtomicLong hourglassSetTime = new AtomicLong(0);
     private Thread stuckDetector;
     private Object lock;
-    private List<Exception> hourglassCallers;
+    private List<String> hourglassCallers;
     
 
     /**
@@ -40,7 +40,7 @@ public final class CursorManager {
 
     private void startStuckDetector() {
         lock = new Object();
-        hourglassCallers = new ArrayList<Exception>();
+        hourglassCallers = new ArrayList<String>();
         stuckDetector = new Thread(new StuckHourGlassDetector());
         stuckDetector.setDaemon(true);
         stuckDetector.setName("Stuck Hourglass Detector");
@@ -58,12 +58,13 @@ public final class CursorManager {
     
     /**
      * Set the hourglass cursor, if a main component has been set.
+     * @param caller the name of the caller, for stuck hourglass detection
      */
-    public void hourglass() {
+    public void hourglass(final String caller) {
         LOGGER.debug("Setting hourglass cursor");
         if (frame != null) {
             frame.setCursor(HOURGLASS);
-            hourglassCallers.add(new RuntimeException());
+            hourglassCallers.add(caller);
             hourglass.set(true);
             hourglassSetTime.set(System.currentTimeMillis());
             synchronized (lock) {
@@ -81,11 +82,12 @@ public final class CursorManager {
      * Set the hourglass cursor, if a main component has been set. This
      * always runs on the event thread. If you're sure you're already on
      * the event thread, use hourglass().
+     * @param caller the name of the caller, for stuck hourglass detection
      */
-    public void hourglassViaEventThread() {
+    public void hourglassViaEventThread(final String caller) {
         final Runnable r = new Runnable() {
             public void run() {
-                hourglass();
+                hourglass(caller);
             }
         };
         GUIUtils.runOnEventThread(r);
@@ -93,13 +95,20 @@ public final class CursorManager {
 
     /**
      * Set the normal cursor, if the main component has been set. 
+     * @param caller the name of the caller, for stuck hourglass detection
      */
-    public void normal() {
+    public void normal(final String caller) {
         LOGGER.debug("Setting normal cursor");
         if (frame != null) {
             frame.setCursor(NORMAL);
             hourglass.set(false);
             hourglassSetTime.set(0);
+            if (hourglassCallers.size() > 0) {
+                final int lastIndex = hourglassCallers.size() - 1;
+                if (hourglassCallers.get(lastIndex).equals(caller)) {
+                    hourglassCallers.remove(lastIndex);
+                }
+            }
             synchronized (lock) {
                 lock.notify();
             }
@@ -116,11 +125,12 @@ public final class CursorManager {
      * Set the normla cursor, if a main component has been set. This
      * always runs on the event thread. If you're sure you're already on
      * the event thread, use normal().
+     * @param caller the name of the caller, for stuck hourglass detection
      */
-    public void normalViaEventThread() {
+    public void normalViaEventThread(final String caller) {
         final Runnable r = new Runnable() {
             public void run() {
-                normal();
+                normal(caller);
             }
         };
         GUIUtils.runOnEventThread(r);
@@ -165,11 +175,8 @@ public final class CursorManager {
                                 final long stuckFor = System.currentTimeMillis() - hourglassSetTime.get();
                                 if (stuckFor > 28000) {
                                     LOGGER.warn("The hourglass cursor appears to have been stuck for " + StringUtils.translateTimeDuration(stuckFor));
-                                    for (Exception e : hourglassCallers) {
-                                        LOGGER.warn("----");
-                                        for (StackTraceElement ste : e.getStackTrace()) {
-                                            LOGGER.warn("    " + ste.toString());
-                                        }
+                                    for (String caller : hourglassCallers) {
+                                        LOGGER.warn("  " + caller);
                                     }
                                 } else {
                                     LOGGER.debug("Only been in hourglass for " + StringUtils.translateTimeDuration(stuckFor));
