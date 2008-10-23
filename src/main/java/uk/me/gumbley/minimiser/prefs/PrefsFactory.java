@@ -42,4 +42,14 @@ public final class PrefsFactory implements FactoryBean {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefsPath));
         factoryPrefs = new DefaultPrefsImpl(prefsPath);
     }
+    
+
+    /**
+     * Factory population method, used by unit tests
+     * @param prefs a previously instantiated Prefs object
+     */
+    public void setPrefs(final Prefs prefs) {
+        LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefs.getClass().getSimpleName()));
+        factoryPrefs = prefs;
+    }
 }
