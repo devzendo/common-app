@@ -151,6 +151,21 @@ public interface Prefs {
      * @param tabNames the names of the open tabs
      */
     void setOpenTabs(String databaseName, String[] tabNames);
+    
+    /**
+     * Obtain the currently active tab for a given database
+     * @param databaseName the database with an active tab
+     * @return the text of the tab that's the active one
+     */
+    String getActiveTab(String databaseName);
+
+
+    /**
+     * Set the active tab for a given database
+     * @param databaseName the database with an active tab
+     * @param tabName the name of the active tab
+     */
+    void setActiveTab(String databaseName, String tabName);
 
     /**
      * Is the named tab hidden?
