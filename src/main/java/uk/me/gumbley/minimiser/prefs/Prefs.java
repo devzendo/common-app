@@ -194,4 +194,17 @@ public interface Prefs {
      * @param observer the observer
      */
     void addChangeListener(Observer<PrefsEvent> observer);
+
+    /**
+     * Obtain the current software version
+     * @return the currently stored software version, or null if none has yet
+     * been stored.
+     */
+    String getCurrentSoftwareVersion();
+
+    /**
+     * Store the current software version
+     * @param version the new version to be stored
+     */
+    void setCurrentSoftwareVersion(String version);
 }
