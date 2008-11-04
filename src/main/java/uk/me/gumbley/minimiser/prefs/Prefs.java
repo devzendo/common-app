@@ -207,4 +207,30 @@ public interface Prefs {
      * @param version the new version to be stored
      */
     void setCurrentSoftwareVersion(String version);
+
+    /**
+     * Has the user indicated that they don't want to see a particular message
+     * again?
+     * @param messageId The key relating to the message
+     * @return true iff they do not want to see the message again
+     */
+    boolean dontShowThisAgain(String messageId);
+
+    /**
+     * The user doesn't want to see this message again. Remember it.
+     * @param messageId The key relating to the message
+     */
+    void setDontShowThisAgain(String messageId);
+
+    /**
+     * The user has indicated that the <em>do</em> want to see this message
+     * again. Remember their choice. 
+     * @param messageId The key relating to the message
+     */
+    void clearDontShowThisAgain(String messageId);
+
+    /**
+     * The user wants to see all messages they'd poreviously said 'no' to.
+     */
+    void clearAllDontShowThisAgainFlags();
 }
