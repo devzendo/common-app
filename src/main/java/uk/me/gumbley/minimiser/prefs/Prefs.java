@@ -214,20 +214,20 @@ public interface Prefs {
      * @param messageId The key relating to the message
      * @return true iff they do not want to see the message again
      */
-    boolean dontShowThisAgain(String messageId);
+    boolean isDontShowThisAgainFlagSet(String messageId);
 
     /**
      * The user doesn't want to see this message again. Remember it.
      * @param messageId The key relating to the message
      */
-    void setDontShowThisAgain(String messageId);
+    void setDontShowThisAgainFlag(String messageId);
 
     /**
      * The user has indicated that the <em>do</em> want to see this message
      * again. Remember their choice. 
      * @param messageId The key relating to the message
      */
-    void clearDontShowThisAgain(String messageId);
+    void clearDontShowThisAgainFlag(String messageId);
 
     /**
      * The user wants to see all messages they'd poreviously said 'no' to.
