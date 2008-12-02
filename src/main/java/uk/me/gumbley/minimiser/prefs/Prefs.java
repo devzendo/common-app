@@ -233,4 +233,17 @@ public interface Prefs {
      * The user wants to see all messages they'd poreviously said 'no' to.
      */
     void clearAllDontShowThisAgainFlags();
+
+    /**
+     * Has the user allowed the app to check for updates?
+     * @return true iff allowed to check for updates
+     */
+    boolean isUpdateAvailableCheckAllowed();
+
+    /**
+     * Store the user's choice for whether update available checks can be
+     * performed.
+     * @param allowed true iff allowed.
+     */
+    void setUpdateAvailableCheckAllowed(boolean allowed);
 }
