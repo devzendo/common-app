@@ -235,15 +235,16 @@ public interface Prefs {
     void clearAllDontShowThisAgainFlags();
 
     /**
-     * Has the user allowed the app to check for updates?
-     * @return true iff allowed to check for updates
+     * Is a specific boolean flag set?
+     * @param flagName the name of the flag to check
+     * @return true iff the flag is set
      */
-    boolean isUpdateAvailableCheckAllowed();
+    boolean isBooleanFlagSet(BooleanFlag flagName);
 
     /**
-     * Store the user's choice for whether update available checks can be
-     * performed.
-     * @param allowed true iff allowed.
+     * Store the value of a specific boolean flag.
+     * @param flagName the name of the flag to set
+     * @param allowed true or false
      */
-    void setUpdateAvailableCheckAllowed(boolean allowed);
+    void setBooleanFlag(BooleanFlag flagName, boolean allowed);
 }
