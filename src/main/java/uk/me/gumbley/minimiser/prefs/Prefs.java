@@ -59,6 +59,11 @@ public interface Prefs {
          * Which tabs are hidden, e.g. developer diagnostic tabs like SQL tab.
          */
         HIDDEN_TABS,
+        
+        /**
+         * Various boolean flags
+         */
+        BOOLEAN_FLAGS,
     }
     
     /**
