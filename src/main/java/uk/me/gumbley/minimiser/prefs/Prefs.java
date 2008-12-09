@@ -252,4 +252,33 @@ public interface Prefs {
      * @param allowed true or false
      */
     void setBooleanFlag(BooleanFlag flagName, boolean allowed);
+
+    /**
+     * When was the last check made for availability of updates?
+     * @return a String in the form DD/MM/YYYY, or the empty string if the
+     * check has never been made.
+     */
+    String getDateOfLastUpdateAvailableCheck();
+
+    /**
+     * Set the date of the last check for availablility of updates, in a UK
+     * Locale MEDIUM format, e.g. Dec 8, 2008 - this isn't displayed, it's just used in
+     * a string comparison to see whether the last update happened today or
+     * not.
+     * @param ukFormatDateString the date in a UK MEDIUM format e.g. Dec 8, 2008
+     */
+    void setDateOfLastUpdateAvailableCheck(String ukFormatDateString);
+
+    /**
+     * What is the last-retrieved version of the software from the update site?? 
+     * @return the version number, or the empty string if this has not been
+     * retrieved before.
+     */
+    String getLastRemoteUpdateVersion();
+
+    /**
+     * Set the version of the software as foudn on the remote update site 
+     * @param version the software version
+     */
+    void setLastRemoteUpdateVersion(String version);
 }
