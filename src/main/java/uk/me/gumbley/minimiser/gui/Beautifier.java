@@ -25,7 +25,9 @@ public final class Beautifier {
      * case we're already beautiful.
      */
     public static void makeBeautiful() {
-        if (OSTypeDetect.getInstance().getOSType() != OSType.MacOSX) {
+        if (OSTypeDetect.getInstance().getOSType() == OSType.MacOSX) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        } else {
             try {
                 UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
             } catch (final UnsupportedLookAndFeelException e) {
