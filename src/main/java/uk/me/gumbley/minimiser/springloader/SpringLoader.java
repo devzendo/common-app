@@ -16,6 +16,14 @@ public interface SpringLoader {
     <T> T getBean(String beanId, Class<T> beanType);
     
     /**
+     * Add an array of other application context files to the
+     * SpringLoader, e.g. by the plugin manager. 
+     * @param contextFiles an array of application context
+     * files, as resource paths.
+     */
+    void addApplicationContext(final String ... contextFiles);
+    
+    /**
      * Close the SpringLoader; free resources 
      */
     void close();

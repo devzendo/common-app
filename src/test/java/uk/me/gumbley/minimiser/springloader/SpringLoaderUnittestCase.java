@@ -3,9 +3,11 @@ package uk.me.gumbley.minimiser.springloader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+
 import uk.me.gumbley.commoncode.string.StringUtils;
 import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
@@ -23,7 +25,8 @@ public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
     private SpringLoader springLoader;
 
     /**
-     * Set up the SpringLoader with all application context files given in any
+     * Set up the SpringLoader with all application context files
+     * given in any annotations.
      * 
      * @ApplicatonContext annotations on this test class, and any in its
      *                    inheritance hierarchy.

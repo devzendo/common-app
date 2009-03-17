@@ -7,18 +7,18 @@ import org.apache.log4j.Logger;
  * @author matt
  *
  */
-public final class SpringLoadedBean implements AnswerProvider {
-    private static final Logger LOGGER = Logger.getLogger(SpringLoadedBean.class);
+public final class OverriddenSpringLoadedBean implements AnswerProvider {
+    private static final Logger LOGGER = Logger.getLogger(OverriddenSpringLoadedBean.class);
     /**
      * Just say hello
      */
-    public SpringLoadedBean() {
-        LOGGER.info("Hello from SpringLoaderTestBean");
+    public OverriddenSpringLoadedBean() {
+        LOGGER.info("Hello from OverriddenSpringLoaderTestBean");
     }
     /**
      * {@inheritDoc}
      */
     public int getTheAnswer() {
-        return 31415;
+        return 16384;
     }
 }

@@ -14,27 +14,34 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  */
 public final class SpringLoaderImpl implements SpringLoader, ApplicationContextAware {
-    private ApplicationContext appContext;
+    private ApplicationContext currentAppContext;
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     public <T> T getBean(final String beanId, final Class <T> beanType) {
-        return (T) appContext.getBean(beanId, beanType);
+        return (T) currentAppContext.getBean(beanId, beanType);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void addApplicationContext(final String ... contextFiles) {
+        currentAppContext = new ClassPathXmlApplicationContext(contextFiles, true, currentAppContext);
     }
 
     /**
      * {@inheritDoc}
      */
     public void setApplicationContext(final ApplicationContext aC) throws BeansException {
-        appContext = aC;
+        currentAppContext = aC;
     }
 
     /**
      * {@inheritDoc}
      */
     public void close() {
-        ((ClassPathXmlApplicationContext) appContext).close();
+        ((ClassPathXmlApplicationContext) currentAppContext).close();
     }
 }
