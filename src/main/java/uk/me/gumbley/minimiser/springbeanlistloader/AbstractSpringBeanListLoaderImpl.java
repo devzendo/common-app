@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import uk.me.gumbley.minimiser.springloader.SpringLoader;
 
 /**
@@ -20,9 +22,12 @@ public abstract class AbstractSpringBeanListLoaderImpl<T> implements SpringBeanL
     private static final Logger LOGGER = Logger
             .getLogger(AbstractSpringBeanListLoaderImpl.class);
     
-    private final List<String> beanNames;
+    private final List<String> loadedBeanNames;
     private final Map<String, T> beanMap;
     private final SpringLoader loader;
+    private volatile boolean loaded;
+
+    private final List<String> mBeanNameList;
     
     /**
      * @param springLoader the Spring loader
@@ -30,49 +35,55 @@ public abstract class AbstractSpringBeanListLoaderImpl<T> implements SpringBeanL
      */
     public AbstractSpringBeanListLoaderImpl(final SpringLoader springLoader, final List<String> beanNameList) {
         this.loader = springLoader;
+        mBeanNameList = beanNameList;
         beanMap = new HashMap<String, T>();
-        this.beanNames = instantiateBeans(beanNameList);
+        loadedBeanNames = new ArrayList<String>();
     }
     
     @SuppressWarnings("unchecked")
-    private List<String> instantiateBeans(final List<String> originalBeanNames) {
-        final List<String> loadedNames = new ArrayList<String>(); 
+    private void lazyInitialise() {
+        if (loaded) {
+            return;
+        }
+        loaded = true;
         LOGGER.info("Loading beans");
-        for (final String beanName : originalBeanNames) {
+        for (final String beanName : mBeanNameList) {
             LOGGER.info("Obtaining bean '" + beanName + "'");
             try {
                 final T bean = (T) loader.getBean(beanName, null);
                 beanMap.put(beanName, bean);
-                loadedNames.add(beanName);
-            } catch (final RuntimeException re) {
-                LOGGER.warn("Could not load '" + beanName + ": " + re.getMessage(), re);
+                loadedBeanNames.add(beanName);
+            } catch (final Throwable t) {
+                LOGGER.warn("Could not load '" + beanName + ": " + t.getMessage(), t);
                 // TODO pass this on to an injected ProblemReporter?
             }
         }
         LOGGER.info("Beans loaded");
-        return loadedNames;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final synchronized List<String> getBeanNames() {
+        lazyInitialise();
+        return loadedBeanNames;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final List<String> getBeanNames() {
-        return beanNames;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final T getBean(final String beanName) {
+    public final synchronized T getBean(final String beanName) {
+        lazyInitialise();
         return beanMap.get(beanName);
     }
     
     /**
      * {@inheritDoc}
      */
-    public final List<T> getBeans() {
+    public final synchronized List<T> getBeans() {
+        lazyInitialise();
         final List<T> list = new ArrayList<T>();
-        for (String beanName : beanNames) {
+        for (String beanName : loadedBeanNames) {
             list.add(beanMap.get(beanName));
         }
         return list;
