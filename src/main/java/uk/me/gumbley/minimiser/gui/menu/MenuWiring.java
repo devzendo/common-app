@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.swing.JMenuItem;
+
 import org.apache.log4j.Logger;
+
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 
 /**
@@ -59,7 +62,7 @@ public final class MenuWiring {
             return stashMenuItem;
         }
     }
-    private Map<MenuIdentifier, MenuDetails> menuDetailsMap;
+    private final Map<MenuIdentifier, MenuDetails> menuDetailsMap;
 
     /**
      * Create some MenuWiring
@@ -235,10 +238,10 @@ public final class MenuWiring {
     }
 
     /**
-     * Create a JMenuItem for the given menu identifier, item text and
-     * mnemonic and store it in the wiring map, or, of one already exists for
-     * this identifier in the wiring map, return that one (i.e., only create
-     * once and cache it).
+     * Create a JMenuItem for the given menu identifier, item text
+     * and mnemonic and store it in the wiring map, or, if one
+     * already exists for this identifier in the wiring map, return
+     * that one (i.e., only create once and cache it).
      * 
      * @param menuIdentifier the MenuIdentifier
      * @param menuItemText the text for this menu item
@@ -256,5 +259,27 @@ public final class MenuWiring {
             storeMenuItem(menuIdentifier, menuItem);
             return menuItem;
         }
+    }
+
+    /**
+     * Create a JMenuItem for the given menu identifier, item text
+     * and mnemonic and store it in the wiring map, and, if one
+     * already exists for this identifier in the wiring map, remove
+     * it, and replace it with the new one.
+     * 
+     * @param menuIdentifier the MenuIdentifier
+     * @param menuItemText the text for this menu item
+     * @param mnemonic the mnemonic
+     * @return the JMenuItem for this identifier
+     */
+    public JMenuItem replaceMenuItem(final MenuIdentifier menuIdentifier,
+            final String menuItemText, final char mnemonic) {
+        synchronized (menuDetailsMap) {
+            menuDetailsMap.remove(menuIdentifier);
+            final JMenuItem menuItem = new JMenuItem(menuItemText);
+            menuItem.setMnemonic(mnemonic);
+            storeMenuItem(menuIdentifier, menuItem);
+            return menuItem;
+        }            
     }
 }

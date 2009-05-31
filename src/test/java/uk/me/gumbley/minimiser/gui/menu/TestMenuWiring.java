@@ -2,10 +2,13 @@ package uk.me.gumbley.minimiser.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JMenuItem;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import uk.me.gumbley.minimiser.gui.menu.Menu.MenuIdentifier;
 import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
@@ -210,5 +213,16 @@ public final class TestMenuWiring extends LoggingTestCase {
         Assert.assertNull(menuWiring.getMenuItem(MenuIdentifier.FileClose));
         final JMenuItem newMI = menuWiring.createMenuItem(MenuIdentifier.FileClose, "Close", 'C');
         Assert.assertSame(newMI, menuWiring.createMenuItem(MenuIdentifier.FileClose, "Close", 'C'));
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void replaceNonExistantMenuItemGetsNewMenuItemThenReturnsNew() {
+        Assert.assertNull(menuWiring.getMenuItem(MenuIdentifier.FileClose));
+        final JMenuItem newMI = menuWiring.replaceMenuItem(MenuIdentifier.FileClose, "Close", 'C');
+        final JMenuItem replacedMI = menuWiring.replaceMenuItem(MenuIdentifier.FileClose, "Close", 'C');
+        Assert.assertNotSame(newMI, replacedMI);
     }
 }
