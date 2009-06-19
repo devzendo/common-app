@@ -8,8 +8,11 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JDialog;
+
 import org.apache.log4j.Logger;
+
 import uk.me.gumbley.commoncode.gui.SwingWorker;
 import uk.me.gumbley.minimiser.gui.CursorManager;
 
@@ -20,7 +23,18 @@ import uk.me.gumbley.minimiser.gui.CursorManager;
  * Examples might be the Tools->Options dialog (which loads several beans, one
  * for each tab), and the About dialog (which loads several pages of text).
  * <p>
- * While being constructed, the hourglass cursor will be shown, and once
+ * AbstractSnailDialogs use a two-phase construction to ensure
+ * correct storage of subclass instance data before any real work
+ * is done.
+ * <p>
+ * Subclass constructors should upcall to super(), then store any
+ * constructor parameters they need, and NO MORE.
+ * <p>
+ * Client code should call the subclass constructor, then call
+ * postConstruct(). This ensures that all subclass instance data
+ * is stored correctly. 
+ * <p>
+ * After postConstruct(), the hourglass cursor will be shown, and once
  * construction is finished, it will be set back to normal. 
  * <p>
  * During initialisation, several SwingWorkers can be constructed and added
@@ -29,12 +43,13 @@ import uk.me.gumbley.minimiser.gui.CursorManager;
  * @author matt
  *
  */
+@SuppressWarnings("serial")
 public abstract class AbstractSnailDialog extends JDialog {
     private static final Logger LOGGER = Logger
             .getLogger(AbstractSnailDialog.class);
     private final CursorManager cursorManager;
-    private List<SwingWorker> workers;
-    private Object lock;
+    private final List<SwingWorker> workers;
+    private final Object lock;
     private AWTEventListener awtEventListener;
 
     /**
@@ -50,7 +65,13 @@ public abstract class AbstractSnailDialog extends JDialog {
         setTitle(title);
         lock = new Object();
         workers = new ArrayList<SwingWorker>();
-        
+    }
+
+    /**
+     * After subclass construction, call this to start the
+     * construction process.
+     */
+    public final void postConstruct() {
         cursorManager.hourglassViaEventThread(this.getClass().getSimpleName());
         setContentPane(createMainComponent());
         initialise();
@@ -99,6 +120,7 @@ public abstract class AbstractSnailDialog extends JDialog {
                 return null;
             }
             
+            @Override
             public void finished() {
                 LOGGER.debug("Normal Cursor SwingWorker - finished");
                 cursorManager.normal(this.getClass().getSimpleName());

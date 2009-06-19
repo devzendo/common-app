@@ -4,8 +4,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
+
 import javax.swing.JPanel;
+
 import org.apache.log4j.Logger;
+
 import uk.me.gumbley.commoncode.gui.SwingWorker;
 import uk.me.gumbley.minimiser.gui.CursorManager;
 
@@ -21,7 +24,8 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
     private static final Logger LOGGER = Logger
             .getLogger(StubRecordingSnailDialog.class);
     private volatile boolean isInitialised = false;
-    private volatile boolean isConstructedOnNonEventThread = false;
+    private volatile boolean isSwingWorkerConstructedOnNonEventThread = false;
+
     private volatile boolean isFinishedOnEventThread = false;
     
     /**
@@ -56,10 +60,11 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
             @Override
             public Object construct() {
                 LOGGER.debug("StubRecordingSnailDialog SwingWorker - construct called");
-                isConstructedOnNonEventThread = !EventQueue.isDispatchThread();
+                isSwingWorkerConstructedOnNonEventThread = !EventQueue.isDispatchThread();
                 return new Object();
             }
             
+            @Override
             public void finished() {
                 LOGGER.debug("StubRecordingSnailDialog SwingWorker - finished called");
                 isFinishedOnEventThread = EventQueue.isDispatchThread();
@@ -81,8 +86,8 @@ public final class StubRecordingSnailDialog extends AbstractSnailDialog {
      * Has the construct method of the SwingWorker been called on a non EDT?
      * @return true iff called on a non EDT
      */
-    public boolean isConstructedOnNonEventThread() {
-        return isConstructedOnNonEventThread;
+    public boolean isSwingWorkerConstructedOnNonEventThread() {
+        return isSwingWorkerConstructedOnNonEventThread;
     }
 
     /**
