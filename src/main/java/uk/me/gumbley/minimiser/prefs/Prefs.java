@@ -270,14 +270,14 @@ public interface Prefs {
     void setDateOfLastUpdateAvailableCheck(String ukFormatDateString);
 
     /**
-     * What is the last-retrieved version of the software from the update site?? 
+     * What is the last-retrieved version of the software from the update site?
      * @return the version number, or the empty string if this has not been
      * retrieved before.
      */
     String getLastRemoteUpdateVersion();
 
     /**
-     * Set the version of the software as foudn on the remote update site 
+     * Set the version of the software as found on the remote update site 
      * @param version the software version
      */
     void setLastRemoteUpdateVersion(String version);
