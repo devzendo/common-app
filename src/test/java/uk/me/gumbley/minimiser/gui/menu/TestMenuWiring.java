@@ -122,6 +122,27 @@ public final class TestMenuWiring extends LoggingTestCase {
         Assert.assertEquals(event.getActionCommand(), result[0].getActionCommand());
     }
     
+    /**
+     * 
+     */
+    @Test
+    public void testGeneratedTriggeringOfMenuItemDispatches() {
+        final JMenuItem menuItem = new JMenuItem();
+        menuWiring.storeMenuItem(MenuIdentifier.FileClose, menuItem);
+        final ActionEvent[] result = new ActionEvent[] {null};
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                result[0] = e;
+            }
+        };
+        menuWiring.setActionListener(MenuIdentifier.FileClose, actionListener);
+        Assert.assertNull(result[0]);
+        menuWiring.triggerActionListener(MenuIdentifier.FileClose);
+        // with triggerActionListener, a dummy event is created
+        // that contains the JMenuItem, so we can only check that
+        Assert.assertNotNull(result[0]);
+        Assert.assertEquals(menuItem, result[0].getSource());
+    }
 
     /**
      * 

@@ -165,8 +165,19 @@ public final class MenuWiring {
         }
     }
 
+    public void triggerActionListener(final MenuIdentifier menuIdentifier) {
+        synchronized (menuDetailsMap) {
+            final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
+            if (menuDetails != null && menuDetails.getMenuItem() != null) {
+                injectActionEvent(menuIdentifier, new ActionEvent(menuDetails.getMenuItem(), 0, ""));
+            }
+        }
+    }
+
     /**
-     * Unit test method for dipatching an event to direct listeners.
+     * Dispatching an event to direct listeners. Originally used
+     * by unit tests, is also used to trigger menu events given
+     * their MenuIdentifiers by other parts of the system.
      * @param menuIdentifier the MenuIdentifier to dispatch for
      * @param event the event to dispatch
      */
