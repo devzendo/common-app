@@ -165,6 +165,12 @@ public final class MenuWiring {
         }
     }
 
+    /**
+     * Trigger the actioning of an action listener given its
+     * menu identifier.
+     * @param menuIdentifier the identifier of the menu item whose
+     * action listener is to be triggered.
+     */
     public void triggerActionListener(final MenuIdentifier menuIdentifier) {
         synchronized (menuDetailsMap) {
             final MenuDetails menuDetails = menuDetailsMap.get(menuIdentifier);
