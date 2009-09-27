@@ -1,10 +1,12 @@
 package uk.me.gumbley.minimiser.gui;
 
-import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
+import uk.me.gumbley.commoncode.gui.GUIUtils;
 
 /**
  * A ListCellRenderer that renders a subtle stripe effect.
@@ -17,6 +19,7 @@ public final class StripyListCellRenderer extends DefaultListCellRenderer implem
     /**
      * {@inheritDoc}
      */
+    @Override
     public Component getListCellRendererComponent(
             final JList list,
             final Object value,
@@ -25,16 +28,8 @@ public final class StripyListCellRenderer extends DefaultListCellRenderer implem
             final boolean cellHasFocus) {
         final Component ret = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         if ((index & 0x01) == 0x01) {
-            setBackground(slightlyDarker(getBackground()));
+            setBackground(GUIUtils.slightlyDarkerColor(getBackground()));
         }
         return ret;
-    }
-    
-    private static final double FACTOR = 0.92;
-
-    private Color slightlyDarker(final Color color) {
-        return new Color(Math.max((int) (color.getRed() * FACTOR), 0), 
-                 Math.max((int) (color.getGreen() * FACTOR), 0),
-                 Math.max((int) (color.getBlue() * FACTOR), 0));
     }
 }
