@@ -50,7 +50,7 @@ public abstract class AbstractMenuGroup {
     public final void createMenuItem(final MenuIdentifier menuIdentifier,
             final String menuItemText, final char mnemonic, final JMenu menu) {
 
-        getJMenu().add(
+        menu.add(
             menuWiring.createMenuItem(menuIdentifier, menuItemText, mnemonic));
     }
 
@@ -65,7 +65,7 @@ public abstract class AbstractMenuGroup {
     public final void replaceMenuItem(final MenuIdentifier menuIdentifier,
             final String menuItemText, final char mnemonic, final JMenu menu) {
 
-        getJMenu().add(
+        menu.add(
             menuWiring.replaceMenuItem(menuIdentifier, menuItemText, mnemonic));
     }
 
