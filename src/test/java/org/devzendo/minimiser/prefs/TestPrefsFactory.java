@@ -1,23 +1,24 @@
-package uk.me.gumbley.minimiser.prefs;
+package org.devzendo.minimiser.prefs;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.devzendo.minimiser.springloader.ApplicationContext;
+import org.devzendo.minimiser.springloader.SpringLoaderUnittestCase;
 import org.junit.Assert;
 import org.junit.Test;
-import uk.me.gumbley.minimiser.springloader.ApplicationContext;
-import uk.me.gumbley.minimiser.springloader.SpringLoaderUnittestCase;
 
 /**
  * Test the Prefs FactoryBean
  * @author matt
  *
  */
-@ApplicationContext("uk/me/gumbley/minimiser/prefs/PrefsTestCase.xml")
+@ApplicationContext("org/devzendo/minimiser/prefs/PrefsTestCase.xml")
 public final class TestPrefsFactory extends SpringLoaderUnittestCase {
-    
+
     /**
      * @throws IOException on failure
-     * 
+     *
      */
     @Test
     public void testStoreTemporaryPrefs() throws IOException {
@@ -27,13 +28,13 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         final PrefsFactory prefsFactory = getPrefsFactory();
         Assert.assertNotNull(prefsFactory);
         prefsFactory.setPrefs(tempFile.getAbsolutePath());
-        
+
         final Prefs prefs = getPrefs();
         Assert.assertNotNull(prefs);
-        
+
         Assert.assertEquals(tempFile.getAbsolutePath(), prefs.getAbsolutePath());
     }
-    
+
     /**
      * @throws IOException on failure
      */
@@ -42,7 +43,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         final File tempFile = File.createTempFile("minimiser-unit-test", "prefs").getAbsoluteFile();
         tempFile.deleteOnExit();
         getPrefsFactory().setPrefs(tempFile.getAbsolutePath());
-        
+
         final Prefs prefs1 = getPrefs();
         final Prefs prefs2 = getPrefs();
         Assert.assertSame(prefs1, prefs2);

@@ -1,6 +1,7 @@
-package uk.me.gumbley.minimiser.prefs;
+package org.devzendo.minimiser.prefs;
 
 import java.io.File;
+
 import uk.me.gumbley.commoncode.string.StringUtils;
 
 /**

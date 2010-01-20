@@ -1,11 +1,12 @@
-package uk.me.gumbley.minimiser.prefs;
+package org.devzendo.minimiser.prefs;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.apache.log4j.Logger;
+import org.devzendo.minimiser.logging.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Test;
-import uk.me.gumbley.minimiser.logging.LoggingTestCase;
 
 
 /**

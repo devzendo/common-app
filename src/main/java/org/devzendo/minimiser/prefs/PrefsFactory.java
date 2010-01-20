@@ -1,4 +1,4 @@
-package uk.me.gumbley.minimiser.prefs;
+package org.devzendo.minimiser.prefs;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.FactoryBean;

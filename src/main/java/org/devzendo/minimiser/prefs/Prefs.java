@@ -1,4 +1,4 @@
-package uk.me.gumbley.minimiser.prefs;
+package org.devzendo.minimiser.prefs;
 
 import uk.me.gumbley.commoncode.patterns.observer.Observer;
 
