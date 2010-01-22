@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.string.StringUtils;
 import org.devzendo.minimiser.logging.LoggingTestCase;
 import org.junit.After;
 import org.junit.Before;
 
-import uk.me.gumbley.commoncode.string.StringUtils;
 
 /**
  * A base class for Junit 4 test cases that specify a set of Spring application
