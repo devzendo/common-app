@@ -2,7 +2,8 @@ package org.devzendo.minimiser.prefs;
 
 import java.io.File;
 
-import uk.me.gumbley.commoncode.string.StringUtils;
+import org.devzendo.commoncode.string.StringUtils;
+
 
 /**
  * Utility for working with the directory that holds preference storage.
