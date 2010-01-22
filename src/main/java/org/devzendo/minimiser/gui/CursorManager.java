@@ -11,9 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JRootPane;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.gui.GUIUtils;
+import org.devzendo.commoncode.string.StringUtils;
 
-import uk.me.gumbley.commoncode.gui.GUIUtils;
-import uk.me.gumbley.commoncode.string.StringUtils;
 
 /**
  * Handlings make benefit great user interaction of hourglass/normal cursor.

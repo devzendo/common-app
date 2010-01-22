@@ -5,14 +5,14 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.concurrency.ThreadUtils;
+import org.devzendo.commoncode.gui.GUIUtils;
 import org.devzendo.minimiser.gui.CursorManager;
 import org.devzendo.minimiser.logging.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import uk.me.gumbley.commoncode.concurrency.ThreadUtils;
-import uk.me.gumbley.commoncode.gui.GUIUtils;
 
 /**
  * Tests the SnailDialog's threading and delayed initialisation mechanism.

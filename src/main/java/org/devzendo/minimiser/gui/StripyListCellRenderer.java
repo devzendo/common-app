@@ -6,7 +6,8 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import uk.me.gumbley.commoncode.gui.GUIUtils;
+import org.devzendo.commoncode.gui.GUIUtils;
+
 
 /**
  * A ListCellRenderer that renders a subtle stripe effect.

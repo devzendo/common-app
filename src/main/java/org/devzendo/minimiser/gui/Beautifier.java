@@ -4,9 +4,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.os.OSTypeDetect;
+import org.devzendo.commoncode.os.OSTypeDetect.OSType;
 
-import uk.me.gumbley.commoncode.os.OSTypeDetect;
-import uk.me.gumbley.commoncode.os.OSTypeDetect.OSType;
 
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 

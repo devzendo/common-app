@@ -12,9 +12,9 @@ import java.util.List;
 import javax.swing.JDialog;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.gui.SwingWorker;
 import org.devzendo.minimiser.gui.CursorManager;
 
-import uk.me.gumbley.commoncode.gui.SwingWorker;
 
 /**
  * An AbstractSnailDialog is a modal JDialog that takes a long time to

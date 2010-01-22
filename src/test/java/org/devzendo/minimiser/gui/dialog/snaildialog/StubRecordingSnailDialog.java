@@ -8,9 +8,9 @@ import java.awt.Frame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.gui.SwingWorker;
 import org.devzendo.minimiser.gui.CursorManager;
 
-import uk.me.gumbley.commoncode.gui.SwingWorker;
 
 /**
  * A SnailDialog that initialises a worker that records the threads it has been

@@ -3,9 +3,9 @@ package org.devzendo.minimiser.gui.menu.actionlisteners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.devzendo.commoncode.gui.GUIUtils;
 import org.devzendo.minimiser.gui.CursorManager;
 
-import uk.me.gumbley.commoncode.gui.GUIUtils;
 
 /**
  * An ActionListener base class that can be attached to say a MenuItem, such
