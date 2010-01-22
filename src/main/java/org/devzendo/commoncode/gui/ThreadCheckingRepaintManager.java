@@ -1,4 +1,4 @@
-package uk.me.gumbley.commoncode.gui;
+package org.devzendo.commoncode.gui;
 
 import java.awt.Component;
 import java.io.ByteArrayOutputStream;

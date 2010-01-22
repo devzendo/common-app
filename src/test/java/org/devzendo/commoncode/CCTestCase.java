@@ -1,4 +1,4 @@
-package uk.me.gumbley.commoncode;
+package org.devzendo.commoncode;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;

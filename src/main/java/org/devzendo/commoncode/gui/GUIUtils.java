@@ -1,4 +1,4 @@
-package uk.me.gumbley.commoncode.gui;
+package org.devzendo.commoncode.gui;
 
 import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;

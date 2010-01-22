@@ -1,4 +1,4 @@
-package uk.me.gumbley.commoncode.gui;
+package org.devzendo.commoncode.gui;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
