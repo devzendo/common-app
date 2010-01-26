@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.devzendo.commoncode.os.OSTypeDetect;
 import org.devzendo.commoncode.os.OSTypeDetect.OSType;
 
-
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
 /**
