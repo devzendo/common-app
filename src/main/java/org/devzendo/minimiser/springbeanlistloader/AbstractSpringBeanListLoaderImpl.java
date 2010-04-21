@@ -71,7 +71,7 @@ public abstract class AbstractSpringBeanListLoaderImpl<T> implements SpringBeanL
                 loadedBeanNames.add(beanName);
             } catch (final Throwable t) {
                 LOGGER.warn("Could not load '" + beanName + ": " + t.getMessage(), t);
-                // TODO pass this on to an injected ProblemReporter?
+                // TODO: pass this on to an injected ProblemReporter?
             }
         }
         LOGGER.info("Beans loaded");
