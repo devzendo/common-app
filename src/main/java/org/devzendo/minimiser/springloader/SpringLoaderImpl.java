@@ -35,9 +35,8 @@ public final class SpringLoaderImpl implements SpringLoader, ApplicationContextA
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public <T> T getBean(final String beanId, final Class <T> beanType) {
-        return (T) currentAppContext.getBean(beanId, beanType);
+        return currentAppContext.getBean(beanId, beanType);
     }
     
     /**
