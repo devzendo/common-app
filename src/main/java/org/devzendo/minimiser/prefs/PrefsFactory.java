@@ -24,14 +24,14 @@ import org.springframework.beans.factory.FactoryBean;
  * @author matt
  *
  */
-public final class PrefsFactory implements FactoryBean {
+public final class PrefsFactory implements FactoryBean<Prefs> {
     private static final Logger LOGGER = Logger.getLogger(PrefsFactory.class);
     private Prefs factoryPrefs;
 
     /**
      * {@inheritDoc}
      */
-    public Object getObject() throws Exception {
+    public Prefs getObject() throws Exception {
         LOGGER.debug(String.format("PrefsFactory returning %s as prefs object", factoryPrefs));
         return factoryPrefs;
     }
