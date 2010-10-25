@@ -18,41 +18,44 @@
  */
 package org.devzendo.minimiser.gui.menu;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * Identifiers for the various menu items.
  * 
  * @author matt
  *
  */
-public enum MenuIdentifier {
+public class MenuIdentifier {
     /**
      *
      */
-    FileNew,
+    public static MenuIdentifier FileNew = new MenuIdentifier("FileNew");
     /**
      *
      */
-    FileOpen,
+    public static MenuIdentifier FileOpen = new MenuIdentifier("FileOpen");
     /**
      *
      */
-    FileClose,
+    public static MenuIdentifier FileClose = new MenuIdentifier("FileClose");
     /**
      *
      */
-    FileCloseAll,
+    public static MenuIdentifier FileCloseAll = new MenuIdentifier("FileCloseAll");
     /**
      *
      */
-    FileImport,
+    public static MenuIdentifier FileImport = new MenuIdentifier("FileImport");
     /**
      *
      */
-    FileExport,
+    public static MenuIdentifier FileExport = new MenuIdentifier("FileExport");
     /**
      *
      */
-    FileExit,
+    public static MenuIdentifier FileExit = new MenuIdentifier("FileExit");
 
     // Window menu is handled internally by the menu
     // View menu is handled internally by the menu
@@ -60,25 +63,50 @@ public enum MenuIdentifier {
     /**
      *
      */
-    ToolsOptions,
+    public static MenuIdentifier ToolsOptions = new MenuIdentifier("ToolsOptions");
     /**
      *
      */
-    HelpWelcome,
+    public static MenuIdentifier HelpWelcome = new MenuIdentifier("HelpWelcome");
     /**
      *
      */
-    HelpWhatsNew,
+    public static MenuIdentifier HelpWhatsNew = new MenuIdentifier("HelpWhatsNew");
     /**
      *
      */
-    HelpAbout,
+    public static MenuIdentifier HelpAbout = new MenuIdentifier("HelpAbout");
     /**
      *
      */
-    HelpContents,
+    public static MenuIdentifier HelpContents = new MenuIdentifier("HelpContents");
     /**
      *
      */
-    HelpCheckForUpdates
+    public static MenuIdentifier HelpCheckForUpdates = new MenuIdentifier("HelpCheckForUpdates");
+    
+    private final String mName;
+    public MenuIdentifier(final String name) {
+        mName = name;
+    }
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final MenuIdentifier other = (MenuIdentifier) obj;
+        return new EqualsBuilder().append(this.mName, other.mName).isEquals();
+    }
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(1, 31)
+        .append(mName).toHashCode();
+    }
+    @Override
+    public String toString() {
+        return mName;
+    }
 }
