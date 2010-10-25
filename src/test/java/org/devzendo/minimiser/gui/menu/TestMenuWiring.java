@@ -21,7 +21,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-import org.devzendo.minimiser.gui.menu.Menu.MenuIdentifier;
 import org.devzendo.minimiser.logging.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Before;

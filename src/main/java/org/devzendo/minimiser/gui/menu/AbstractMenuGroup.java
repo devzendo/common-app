@@ -18,7 +18,6 @@ package org.devzendo.minimiser.gui.menu;
 
 import javax.swing.JMenu;
 
-import org.devzendo.minimiser.gui.menu.Menu.MenuIdentifier;
 
 
 /**

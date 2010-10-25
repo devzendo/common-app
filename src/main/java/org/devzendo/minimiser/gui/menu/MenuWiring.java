@@ -24,7 +24,6 @@ import java.util.Map;
 import javax.swing.JMenuItem;
 
 import org.apache.log4j.Logger;
-import org.devzendo.minimiser.gui.menu.Menu.MenuIdentifier;
 
 
 /**
