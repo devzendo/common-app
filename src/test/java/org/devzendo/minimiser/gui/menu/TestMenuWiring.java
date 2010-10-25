@@ -50,7 +50,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test
     public void testNonExistantMenuItem() {
-        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FileClose));
+        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FILE_CLOSE));
     }
 
     /**
@@ -58,7 +58,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test
     public void testNonExistantActionListener() {
-        Assert.assertNull(menuWiring.getActionListener(SystemMenuIdentifiers.FileClose));
+        Assert.assertNull(menuWiring.getActionListener(SystemMenuIdentifiers.FILE_CLOSE));
     }
     
     /**
@@ -67,8 +67,8 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testReturnMenuItem() {
         final JMenuItem menuItem = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem);
-        Assert.assertEquals(menuItem, menuWiring.getMenuItem(SystemMenuIdentifiers.FileClose));
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem);
+        Assert.assertEquals(menuItem, menuWiring.getMenuItem(SystemMenuIdentifiers.FILE_CLOSE));
     }
     
     /**
@@ -77,8 +77,8 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testEmptyInitialActionListener() {
         final JMenuItem menuItem = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem);
-        Assert.assertNull(menuWiring.getActionListener(SystemMenuIdentifiers.FileClose));
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem);
+        Assert.assertNull(menuWiring.getActionListener(SystemMenuIdentifiers.FILE_CLOSE));
     }
 
     /**
@@ -87,13 +87,13 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testSetActionListener() {
         final JMenuItem menuItem = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
             }
         };
-        menuWiring.setActionListener(SystemMenuIdentifiers.FileClose, actionListener);
-        Assert.assertEquals(actionListener, menuWiring.getActionListener(SystemMenuIdentifiers.FileClose));
+        menuWiring.setActionListener(SystemMenuIdentifiers.FILE_CLOSE, actionListener);
+        Assert.assertEquals(actionListener, menuWiring.getActionListener(SystemMenuIdentifiers.FILE_CLOSE));
     }
 
     /**
@@ -102,17 +102,17 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testStoreMenuItemAgainRetainsActionListener() {
         final JMenuItem menuItem1 = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem1);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem1);
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
             }
         };
-        menuWiring.setActionListener(SystemMenuIdentifiers.FileClose, actionListener);
+        menuWiring.setActionListener(SystemMenuIdentifiers.FILE_CLOSE, actionListener);
 
         final JMenuItem menuItem2 = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem2);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem2);
 
-        Assert.assertEquals(actionListener, menuWiring.getActionListener(SystemMenuIdentifiers.FileClose));
+        Assert.assertEquals(actionListener, menuWiring.getActionListener(SystemMenuIdentifiers.FILE_CLOSE));
     }
     
     /**
@@ -121,17 +121,17 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testGeneratedActionListenerDispatches() {
         final JMenuItem menuItem = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem);
         final ActionEvent[] result = new ActionEvent[] {null};
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 result[0] = e;
             }
         };
-        menuWiring.setActionListener(SystemMenuIdentifiers.FileClose, actionListener);
+        menuWiring.setActionListener(SystemMenuIdentifiers.FILE_CLOSE, actionListener);
         Assert.assertNull(result[0]);
         final ActionEvent event = new ActionEvent(menuItem, 69, "wahey");
-        menuWiring.injectActionEvent(SystemMenuIdentifiers.FileClose, event);
+        menuWiring.injectActionEvent(SystemMenuIdentifiers.FILE_CLOSE, event);
         Assert.assertEquals(event.getSource(), result[0].getSource());
         // does not match for some reason Assert.assertEquals(event.getID(), result[0].getID());
         Assert.assertEquals(event.getActionCommand(), result[0].getActionCommand());
@@ -143,16 +143,16 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testGeneratedTriggeringOfMenuItemDispatches() {
         final JMenuItem menuItem = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem);
         final ActionEvent[] result = new ActionEvent[] {null};
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 result[0] = e;
             }
         };
-        menuWiring.setActionListener(SystemMenuIdentifiers.FileClose, actionListener);
+        menuWiring.setActionListener(SystemMenuIdentifiers.FILE_CLOSE, actionListener);
         Assert.assertNull(result[0]);
-        menuWiring.triggerActionListener(SystemMenuIdentifiers.FileClose);
+        menuWiring.triggerActionListener(SystemMenuIdentifiers.FILE_CLOSE);
         // with triggerActionListener, a dummy event is created
         // that contains the JMenuItem, so we can only check that
         Assert.assertNotNull(result[0]);
@@ -165,22 +165,22 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void testGeneratedActionListenerStillDispatchesAfterStoringMenuItemAgain() {
         final JMenuItem menuItem1 = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem1);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem1);
         final ActionEvent[] result = new ActionEvent[] {null};
         ActionListener actionListener = new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 result[0] = e;
             }
         };
-        menuWiring.setActionListener(SystemMenuIdentifiers.FileClose, actionListener);
+        menuWiring.setActionListener(SystemMenuIdentifiers.FILE_CLOSE, actionListener);
 
         // store again
         final JMenuItem menuItem2 = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem2);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem2);
         
         Assert.assertNull(result[0]);
         final ActionEvent event = new ActionEvent(menuItem1, 69, "wahey");
-        menuWiring.injectActionEvent(SystemMenuIdentifiers.FileClose, event);
+        menuWiring.injectActionEvent(SystemMenuIdentifiers.FILE_CLOSE, event);
         Assert.assertEquals(event.getSource(), result[0].getSource());
         // does not match for some reason Assert.assertEquals(event.getID(), result[0].getID());
         Assert.assertEquals(event.getActionCommand(), result[0].getActionCommand());
@@ -191,7 +191,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test(expected = IllegalStateException.class)
     public void enableWithNoMenuItemThrows() {
-        menuWiring.enableMenuItem(SystemMenuIdentifiers.FileClose);
+        menuWiring.enableMenuItem(SystemMenuIdentifiers.FILE_CLOSE);
     }
 
     /**
@@ -199,7 +199,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test(expected = IllegalStateException.class)
     public void setEnabledWithNoMenuItemThrows() {
-        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FileClose, false);
+        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE, false);
     }
 
     /**
@@ -207,7 +207,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test(expected = IllegalStateException.class)
     public void disableWithNoMenuItemThrows() {
-        menuWiring.disableMenuItem(SystemMenuIdentifiers.FileClose);
+        menuWiring.disableMenuItem(SystemMenuIdentifiers.FILE_CLOSE);
     }
     
     /**
@@ -215,7 +215,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test(expected = IllegalStateException.class)
     public void isEnabledWithNoMenuItemThrows() {
-        menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose);
+        menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE);
     }
     
     /**
@@ -224,21 +224,21 @@ public final class TestMenuWiring extends LoggingTestCase {
     @Test
     public void menuItemsCanBeDisabledAndEnabled() {
         final JMenuItem menuItem1 = new JMenuItem();
-        menuWiring.storeMenuItem(SystemMenuIdentifiers.FileClose, menuItem1);
+        menuWiring.storeMenuItem(SystemMenuIdentifiers.FILE_CLOSE, menuItem1);
         
-        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose));
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE));
         
-        menuWiring.disableMenuItem(SystemMenuIdentifiers.FileClose);
-        Assert.assertFalse(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose));
+        menuWiring.disableMenuItem(SystemMenuIdentifiers.FILE_CLOSE);
+        Assert.assertFalse(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE));
 
-        menuWiring.enableMenuItem(SystemMenuIdentifiers.FileClose);
-        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose));
+        menuWiring.enableMenuItem(SystemMenuIdentifiers.FILE_CLOSE);
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE));
 
-        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FileClose, false);
-        Assert.assertFalse(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose));
+        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE, false);
+        Assert.assertFalse(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE));
 
-        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FileClose, true);
-        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FileClose));
+        menuWiring.setMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE, true);
+        Assert.assertTrue(menuWiring.isMenuItemEnabled(SystemMenuIdentifiers.FILE_CLOSE));
     }
     
     /**
@@ -246,9 +246,9 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test
     public void createNonExistantMenuItemGetsNewMenuItemThenReturnsSame() {
-        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FileClose));
-        final JMenuItem newMI = menuWiring.createMenuItem(SystemMenuIdentifiers.FileClose, "Close", 'C');
-        Assert.assertSame(newMI, menuWiring.createMenuItem(SystemMenuIdentifiers.FileClose, "Close", 'C'));
+        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FILE_CLOSE));
+        final JMenuItem newMI = menuWiring.createMenuItem(SystemMenuIdentifiers.FILE_CLOSE, "Close", 'C');
+        Assert.assertSame(newMI, menuWiring.createMenuItem(SystemMenuIdentifiers.FILE_CLOSE, "Close", 'C'));
     }
     
     /**
@@ -256,9 +256,9 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Test
     public void replaceNonExistantMenuItemGetsNewMenuItemThenReturnsNew() {
-        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FileClose));
-        final JMenuItem newMI = menuWiring.replaceMenuItem(SystemMenuIdentifiers.FileClose, "Close", 'C');
-        final JMenuItem replacedMI = menuWiring.replaceMenuItem(SystemMenuIdentifiers.FileClose, "Close", 'C');
+        Assert.assertNull(menuWiring.getMenuItem(SystemMenuIdentifiers.FILE_CLOSE));
+        final JMenuItem newMI = menuWiring.replaceMenuItem(SystemMenuIdentifiers.FILE_CLOSE, "Close", 'C');
+        final JMenuItem replacedMI = menuWiring.replaceMenuItem(SystemMenuIdentifiers.FILE_CLOSE, "Close", 'C');
         Assert.assertNotSame(newMI, replacedMI);
     }
 }

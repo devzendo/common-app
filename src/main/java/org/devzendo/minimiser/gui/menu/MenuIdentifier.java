@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package org.devzendo.minimiser.gui.menu;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
- * Identifiers for the various menu items.
+ * How a menu item is identified.
  * 
  * @author matt
  *
  */
-public class MenuIdentifier {
+public final class MenuIdentifier {
     private final String mName;
+    /**
+     * @param name the name of the menu identifier
+     */
     public MenuIdentifier(final String name) {
         mName = name;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -43,11 +47,19 @@ public class MenuIdentifier {
         final MenuIdentifier other = (MenuIdentifier) obj;
         return new EqualsBuilder().append(this.mName, other.mName).isEquals();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(1, 31)
         .append(mName).toHashCode();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return mName;
