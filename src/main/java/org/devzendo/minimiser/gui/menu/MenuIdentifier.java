@@ -28,63 +28,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  *
  */
 public class MenuIdentifier {
-    /**
-     *
-     */
-    public static MenuIdentifier FileNew = new MenuIdentifier("FileNew");
-    /**
-     *
-     */
-    public static MenuIdentifier FileOpen = new MenuIdentifier("FileOpen");
-    /**
-     *
-     */
-    public static MenuIdentifier FileClose = new MenuIdentifier("FileClose");
-    /**
-     *
-     */
-    public static MenuIdentifier FileCloseAll = new MenuIdentifier("FileCloseAll");
-    /**
-     *
-     */
-    public static MenuIdentifier FileImport = new MenuIdentifier("FileImport");
-    /**
-     *
-     */
-    public static MenuIdentifier FileExport = new MenuIdentifier("FileExport");
-    /**
-     *
-     */
-    public static MenuIdentifier FileExit = new MenuIdentifier("FileExit");
-
-    // Window menu is handled internally by the menu
-    // View menu is handled internally by the menu
-
-    /**
-     *
-     */
-    public static MenuIdentifier ToolsOptions = new MenuIdentifier("ToolsOptions");
-    /**
-     *
-     */
-    public static MenuIdentifier HelpWelcome = new MenuIdentifier("HelpWelcome");
-    /**
-     *
-     */
-    public static MenuIdentifier HelpWhatsNew = new MenuIdentifier("HelpWhatsNew");
-    /**
-     *
-     */
-    public static MenuIdentifier HelpAbout = new MenuIdentifier("HelpAbout");
-    /**
-     *
-     */
-    public static MenuIdentifier HelpContents = new MenuIdentifier("HelpContents");
-    /**
-     *
-     */
-    public static MenuIdentifier HelpCheckForUpdates = new MenuIdentifier("HelpCheckForUpdates");
-    
     private final String mName;
     public MenuIdentifier(final String name) {
         mName = name;
