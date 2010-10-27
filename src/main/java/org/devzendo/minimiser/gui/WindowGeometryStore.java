@@ -21,7 +21,6 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
-import org.devzendo.minimiser.prefs.Prefs;
 
 
 /**
@@ -34,14 +33,14 @@ import org.devzendo.minimiser.prefs.Prefs;
 public final class WindowGeometryStore {
     private static final Logger LOGGER = Logger
             .getLogger(WindowGeometryStore.class);
-    private final Prefs prefs;
+    private final WindowGeometryStorePersistence mPersistence;
 
     /**
      * Create the WindowGeometryStore
-     * @param preferences the preferences used for storage
+     * @param persistence the persistence mechanism for geometry storage
      */
-    public WindowGeometryStore(final Prefs preferences) {
-        this.prefs = preferences;
+    public WindowGeometryStore(final WindowGeometryStorePersistence persistence) {
+        mPersistence = persistence;
     }
 
     /**
@@ -54,7 +53,7 @@ public final class WindowGeometryStore {
     public boolean hasStoredGeometry(final JFrame frame) {
         final String name = frame.getName();
         LOGGER.debug("Trying to load stored geometry for JFrame '" + name + "'");
-        final String geomStr = prefs.getWindowGeometry(name);
+        final String geomStr = mPersistence.getWindowGeometry(name);
         return (!geomStr.equals(""));
     }
     
@@ -65,7 +64,7 @@ public final class WindowGeometryStore {
     public void loadGeometry(final JFrame frame) {
         final String name = frame.getName();
         LOGGER.debug("Trying to load stored geometry for JFrame '" + name + "'");
-        final String geomStr = prefs.getWindowGeometry(name);
+        final String geomStr = mPersistence.getWindowGeometry(name);
         if (geomStr.equals("")) {
             LOGGER.debug("No geometry stored for JFrame '" + name + "'");
             return;
@@ -93,6 +92,6 @@ public final class WindowGeometryStore {
         final String geomStr = String.format("%d,%d,%d,%d",
             rect.x, rect.y, rect.width, rect.height);
         LOGGER.debug("Storing window '" + windowName + "' geometry " + geomStr);
-        prefs.setWindowGeometry(windowName, geomStr);
+        mPersistence.setWindowGeometry(windowName, geomStr);
     }
 }
