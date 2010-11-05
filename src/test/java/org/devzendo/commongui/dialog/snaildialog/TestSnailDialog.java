@@ -26,7 +26,7 @@ import org.devzendo.commongui.CursorManager;
 import org.devzendo.commongui.GUIUtils;
 import org.devzendo.commongui.LoggingTestCase;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -45,11 +45,11 @@ public final class TestSnailDialog  {
     /**
      * 
      */
-    @Before
-    public void setupLogging() {
+    @BeforeClass
+    public static void setupLogging() {
         LoggingTestCase.setupLogging();
     }
-    
+
     /**
      * @throws InterruptedException
      *         on latch failure

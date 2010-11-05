@@ -24,6 +24,7 @@ import javax.swing.JMenuItem;
 import org.devzendo.commongui.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -41,9 +42,16 @@ public final class TestMenuWiring {
     /**
      * 
      */
+    @BeforeClass
+    public static void setupLogging() {
+        LoggingTestCase.setupLogging();
+    }
+
+    /**
+     * 
+     */
     @Before
     public void getMenuWiring() {
-        LoggingTestCase.setupLogging();
         menuWiring = new MenuWiring();
     }
     
