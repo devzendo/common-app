@@ -20,8 +20,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.devzendo.minimiser.logging.LoggingTestCase;
+import org.devzendo.commoncode.logging.LoggingUnittestHelper;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -30,9 +31,17 @@ import org.junit.Test;
  * @author matt
  *
  */
-public final class TestPrefsLocation extends LoggingTestCase {
+public final class TestPrefsLocation  {
     private static final Logger LOGGER = Logger
             .getLogger(TestPrefsLocation.class);
+    /**
+     * 
+     */
+    @BeforeClass
+    public static void setupLogging() {
+        LoggingUnittestHelper.setupLogging();
+    }
+
     /**
      * 
      */
