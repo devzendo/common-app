@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 
 import junit.framework.Assert;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 
@@ -30,21 +29,9 @@ import org.junit.Test;
  * @author matt
  *
  */
-public final class TestGUIValueObtainer extends CCTestCase {
-    private static final Logger LOGGER = Logger
-            .getLogger(TestGUIValueObtainer.class);
-    
+public final class TestGUIValueObtainer {
     private JLabel label;
     private Object lock;
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Logger getLogger() {
-        return LOGGER;
-    }
     
     /**
      * @throws Exception but won't

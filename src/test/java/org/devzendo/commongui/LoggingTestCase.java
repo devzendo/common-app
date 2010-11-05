@@ -20,12 +20,15 @@ import org.apache.log4j.BasicConfigurator;
 
 
 /**
- * Base class of all TestCases that initialises log4j.
+ * Helper class for initialising log4j.
  * @author matt
  *
  */
-public abstract class LoggingTestCase {
-    static {
+public final class LoggingTestCase {
+    /**
+     * Initialise logging.
+     */
+    public static void setupLogging() {
         BasicConfigurator.resetConfiguration();
         BasicConfigurator.configure();
     }

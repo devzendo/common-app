@@ -34,7 +34,7 @@ import org.junit.Test;
  * @author matt
  *
  */
-public final class TestMenuWiring extends LoggingTestCase {
+public final class TestMenuWiring {
     private MenuWiring menuWiring;
     private static final MenuIdentifier FILE_CLOSE = new MenuIdentifier("FileClose");
 
@@ -43,6 +43,7 @@ public final class TestMenuWiring extends LoggingTestCase {
      */
     @Before
     public void getMenuWiring() {
+        LoggingTestCase.setupLogging();
         menuWiring = new MenuWiring();
     }
     
