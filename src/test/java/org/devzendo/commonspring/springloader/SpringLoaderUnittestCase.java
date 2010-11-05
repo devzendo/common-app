@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commoncode.logging.LoggingTestCase;
+import org.devzendo.commoncode.logging.LoggingUnittestHelper;
 import org.devzendo.commoncode.string.StringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +47,7 @@ public abstract class SpringLoaderUnittestCase {
      */
     @BeforeClass
     public static void setupLogging() {
-        LoggingTestCase.setupLogging();
+        LoggingUnittestHelper.setupLogging();
     }
 
     /**
