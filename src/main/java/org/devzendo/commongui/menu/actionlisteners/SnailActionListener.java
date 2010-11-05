@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.menu.actionlisteners;
+package org.devzendo.commongui.menu.actionlisteners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
