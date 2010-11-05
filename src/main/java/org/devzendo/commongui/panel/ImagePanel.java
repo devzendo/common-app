@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.panel;
+package org.devzendo.commongui.panel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

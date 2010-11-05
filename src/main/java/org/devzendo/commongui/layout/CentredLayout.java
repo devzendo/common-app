@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.layout;
+package org.devzendo.commongui.layout;
 
 import java.awt.Component;
 import java.awt.Container;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.dialog.snaildialog;
+package org.devzendo.commongui.dialog.snaildialog;
 
 import java.awt.AWTEvent;
 import java.awt.Container;

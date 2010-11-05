@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.devzendo.commongui.CursorManager;
 import org.devzendo.commongui.SwingWorker;
-import org.devzendo.minimiser.gui.dialog.snaildialog.AbstractSnailDialog;
 
 
 /**

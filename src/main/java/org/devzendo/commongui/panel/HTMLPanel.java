@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.messagequeueviewer;
+package org.devzendo.commongui.panel;
 
 import javax.swing.JTextPane;
 
