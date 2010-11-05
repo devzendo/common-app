@@ -34,6 +34,8 @@ import org.junit.Test;
 public final class TestPrefsLocation  {
     private static final Logger LOGGER = Logger
             .getLogger(TestPrefsLocation.class);
+    private static final String PREFS_FILE = "minimiser.prefs";
+    private static final String PREFS_DIRECTORY = ".minimiser";
     /**
      * 
      */
@@ -47,7 +49,7 @@ public final class TestPrefsLocation  {
      */
     @Test
     public void testNonexistantPrefsLocation() {
-        final PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new PrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
     }
     
@@ -56,7 +58,7 @@ public final class TestPrefsLocation  {
      */
     @Test
     public void testPrefsDirCreationFails() {
-        final PrefsLocation prefsLocation = new PrefsLocation("/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new PrefsLocation(PREFS_DIRECTORY, PREFS_FILE,"/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.createPrefsDirectory());
     }
     
@@ -69,7 +71,7 @@ public final class TestPrefsLocation  {
         tempDirFile.deleteOnExit();
         final String tempDir = tempDirFile.getParent();
         LOGGER.info("Temporary directory is " + tempDir);
-        final PrefsLocation prefsLocation = new PrefsLocation(tempDir);
+        final PrefsLocation prefsLocation = new PrefsLocation(PREFS_DIRECTORY, PREFS_FILE, tempDir);
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
         final File prefsDir = prefsLocation.getPrefsDir();
         final File prefsFile = prefsLocation.getPrefsFile();

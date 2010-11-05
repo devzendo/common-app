@@ -29,21 +29,25 @@ import org.devzendo.commoncode.string.StringUtils;
 public final class PrefsLocation {
     private static final String PREFS_FILE = "minimiser.prefs";
     private static final String PREFS_DIRECTORY = ".minimiser";
-    private File prefsDir;
-    private File prefsFile;
+    private File absolutePrefsDir;
+    private File absolutePrefsFile;
     private String userHome;
+    private final String mPrefsDir;
+    private final String mPrefsFile;
 
     /**
      * Initialise a PrefsLocation with the standard user home directory.
      */
-    public PrefsLocation() {
+    public PrefsLocation(final String prefsDir, final String prefsFile) {
+        mPrefsDir = prefsDir;
+        mPrefsFile = prefsFile;
         userHome = System.getProperty("user.home");
         initialise();
     }
 
     private void initialise() {
-        prefsDir = new File(StringUtils.slashTerminate(userHome) + PREFS_DIRECTORY);
-        prefsFile = new File(StringUtils.slashTerminate(prefsDir.getAbsolutePath()) + PREFS_FILE);
+        absolutePrefsDir = new File(StringUtils.slashTerminate(userHome) + mPrefsDir);
+        absolutePrefsFile = new File(StringUtils.slashTerminate(absolutePrefsDir.getAbsolutePath()) + mPrefsFile);
     }
     
     /**
@@ -52,7 +56,8 @@ public final class PrefsLocation {
      * 
      * @param home the home directory to use
      */
-    public PrefsLocation(final String home) {
+    public PrefsLocation(final String prefsDir, final String prefsFile, final String home) {
+        this(prefsDir, prefsFile);
         userHome = home;
         initialise();
     }
@@ -62,7 +67,7 @@ public final class PrefsLocation {
      * @return true if it exists, false if it doesn't.
      */
     public boolean prefsDirectoryExists() {
-        return prefsDir.exists();
+        return absolutePrefsDir.exists();
     }
     
     /**
@@ -72,20 +77,20 @@ public final class PrefsLocation {
      * @see File.mkdir
      */
     public boolean createPrefsDirectory() {
-        return prefsDir.mkdir();
+        return absolutePrefsDir.mkdir();
     }
 
     /**
      * @return the prefsDir
      */
     public File getPrefsDir() {
-        return prefsDir;
+        return absolutePrefsDir;
     }
 
     /**
      * @return the prefsFile
      */
     public File getPrefsFile() {
-        return prefsFile;
+        return absolutePrefsFile;
     }
 }
