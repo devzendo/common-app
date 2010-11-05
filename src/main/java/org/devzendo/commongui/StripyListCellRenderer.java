@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui;
+package org.devzendo.commongui;
 
 import java.awt.Component;
 
@@ -22,7 +22,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.devzendo.commongui.GUIUtils;
 
 
 /**

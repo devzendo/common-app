@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.dialog.snaildialog;
+package org.devzendo.commongui.dialog.snaildialog;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -24,8 +24,9 @@ import java.awt.Frame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commongui.CursorManager;
 import org.devzendo.commongui.SwingWorker;
-import org.devzendo.minimiser.gui.CursorManager;
+import org.devzendo.minimiser.gui.dialog.snaildialog.AbstractSnailDialog;
 
 
 /**

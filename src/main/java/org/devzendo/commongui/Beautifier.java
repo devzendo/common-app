@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui;
+package org.devzendo.commongui;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

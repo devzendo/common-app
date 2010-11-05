@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.dialog.snaildialog;
+package org.devzendo.commongui.dialog.snaildialog;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -22,9 +22,9 @@ import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
 import org.devzendo.commoncode.concurrency.ThreadUtils;
+import org.devzendo.commongui.CursorManager;
 import org.devzendo.commongui.GUIUtils;
 import org.devzendo.commongui.LoggingTestCase;
-import org.devzendo.minimiser.gui.CursorManager;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

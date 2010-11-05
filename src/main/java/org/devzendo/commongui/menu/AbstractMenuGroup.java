@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui.menu;
+package org.devzendo.commongui.menu;
 
 import javax.swing.JMenu;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui;
+package org.devzendo.commongui;
 
 import java.awt.Component;
 import java.awt.Cursor;
@@ -28,7 +28,6 @@ import javax.swing.JRootPane;
 
 import org.apache.log4j.Logger;
 import org.devzendo.commoncode.string.StringUtils;
-import org.devzendo.commongui.GUIUtils;
 
 
 /**
