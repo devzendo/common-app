@@ -27,8 +27,8 @@ import org.devzendo.commoncode.string.StringUtils;
  *
  */
 public final class PrefsLocation {
-    private static final String MINIMISER_PREFS = "minimiser.prefs";
-    private static final String DOT_MINIMISER = ".minimiser";
+    private static final String PREFS_FILE = "minimiser.prefs";
+    private static final String PREFS_DIRECTORY = ".minimiser";
     private File prefsDir;
     private File prefsFile;
     private String userHome;
@@ -42,8 +42,8 @@ public final class PrefsLocation {
     }
 
     private void initialise() {
-        prefsDir = new File(StringUtils.slashTerminate(userHome) + DOT_MINIMISER);
-        prefsFile = new File(StringUtils.slashTerminate(prefsDir.getAbsolutePath()) + MINIMISER_PREFS);
+        prefsDir = new File(StringUtils.slashTerminate(userHome) + PREFS_DIRECTORY);
+        prefsFile = new File(StringUtils.slashTerminate(prefsDir.getAbsolutePath()) + PREFS_FILE);
     }
     
     /**
