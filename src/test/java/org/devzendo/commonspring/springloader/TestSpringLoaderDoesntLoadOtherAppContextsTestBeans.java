@@ -17,7 +17,6 @@
 package org.devzendo.commonspring.springloader;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commonspring.springloader.SpringLoader;
 import org.junit.Assert;
 import org.junit.Test;
 
