@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
 import org.devzendo.commoncode.concurrency.ThreadUtils;
-import org.devzendo.commoncode.logging.LoggingTestCase;
+import org.devzendo.commoncode.logging.LoggingUnittestHelper;
 import org.devzendo.commongui.CursorManager;
 import org.devzendo.commongui.GUIUtils;
 import org.junit.Assert;
@@ -47,7 +47,7 @@ public final class TestSnailDialog  {
      */
     @BeforeClass
     public static void setupLogging() {
-        LoggingTestCase.setupLogging();
+        LoggingUnittestHelper.setupLogging();
     }
 
     /**
