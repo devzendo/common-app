@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commoncode.gui;
+package org.devzendo.commongui;
 
 import java.util.concurrent.Callable;
 
@@ -23,7 +23,8 @@ import javax.swing.JLabel;
 import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commoncode.CCTestCase;
+import org.devzendo.commongui.GUIUtils;
+import org.devzendo.commongui.GUIValueObtainer;
 import org.junit.Test;
 
 

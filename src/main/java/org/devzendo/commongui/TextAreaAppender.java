@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commoncode.gui;
+package org.devzendo.commongui;
 
 import javax.swing.JTextArea;
 

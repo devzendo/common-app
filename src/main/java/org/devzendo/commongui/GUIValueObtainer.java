@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commoncode.gui;
+package org.devzendo.commongui;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;

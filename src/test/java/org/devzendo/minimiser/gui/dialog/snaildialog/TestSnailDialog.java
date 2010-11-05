@@ -22,9 +22,9 @@ import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
 import org.devzendo.commoncode.concurrency.ThreadUtils;
-import org.devzendo.commoncode.gui.GUIUtils;
+import org.devzendo.commongui.GUIUtils;
+import org.devzendo.commongui.LoggingTestCase;
 import org.devzendo.minimiser.gui.CursorManager;
-import org.devzendo.minimiser.logging.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

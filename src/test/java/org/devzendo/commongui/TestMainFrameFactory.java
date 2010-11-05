@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.gui;
+package org.devzendo.commongui;
 
 import java.awt.Frame;
 import java.io.IOException;
 
 import org.devzendo.commonspring.springloader.ApplicationContext;
 import org.devzendo.commonspring.springloader.SpringLoaderUnittestCase;
+import org.devzendo.minimiser.gui.MainFrameFactory;
 import org.junit.Assert;
 import org.junit.Test;
 

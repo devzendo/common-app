@@ -27,8 +27,8 @@ import javax.swing.JFrame;
 import javax.swing.JRootPane;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commoncode.gui.GUIUtils;
 import org.devzendo.commoncode.string.StringUtils;
+import org.devzendo.commongui.GUIUtils;
 
 
 /**

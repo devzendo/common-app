@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-import org.devzendo.minimiser.logging.LoggingTestCase;
+import org.devzendo.commongui.LoggingTestCase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

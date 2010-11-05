@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commoncode.gui;
+package org.devzendo.commongui;
 
 import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;

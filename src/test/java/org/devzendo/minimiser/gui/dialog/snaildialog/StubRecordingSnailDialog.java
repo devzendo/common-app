@@ -24,7 +24,7 @@ import java.awt.Frame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commoncode.gui.SwingWorker;
+import org.devzendo.commongui.SwingWorker;
 import org.devzendo.minimiser.gui.CursorManager;
 
 

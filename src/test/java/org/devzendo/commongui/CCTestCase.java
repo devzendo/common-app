@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commoncode;
+package org.devzendo.commongui;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;

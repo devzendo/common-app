@@ -19,7 +19,7 @@ package org.devzendo.minimiser.gui.menu.actionlisteners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.devzendo.commoncode.gui.GUIUtils;
+import org.devzendo.commongui.GUIUtils;
 import org.devzendo.minimiser.gui.CursorManager;
 
 
