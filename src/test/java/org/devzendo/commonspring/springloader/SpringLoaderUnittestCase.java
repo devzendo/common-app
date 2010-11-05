@@ -22,12 +22,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commoncode.logging.LoggingTestCase;
 import org.devzendo.commoncode.string.StringUtils;
-import org.devzendo.commonspring.logging.LoggingTestCase;
-import org.devzendo.commonspring.springloader.SpringLoader;
-import org.devzendo.commonspring.springloader.SpringLoaderFactory;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 
 /**
@@ -38,10 +37,18 @@ import org.junit.Before;
  * @ApplicationContext annotation.
  * @author matt
  */
-public abstract class SpringLoaderUnittestCase extends LoggingTestCase {
+public abstract class SpringLoaderUnittestCase {
     private static final Logger LOGGER = Logger
             .getLogger(SpringLoaderUnittestCase.class);
     private SpringLoader springLoader;
+
+    /**
+     * 
+     */
+    @BeforeClass
+    public static void setupLogging() {
+        LoggingTestCase.setupLogging();
+    }
 
     /**
      * Set up the SpringLoader with all application context files
