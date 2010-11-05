@@ -27,8 +27,6 @@ import org.devzendo.commoncode.string.StringUtils;
  *
  */
 public final class PrefsLocation {
-    private static final String PREFS_FILE = "minimiser.prefs";
-    private static final String PREFS_DIRECTORY = ".minimiser";
     private File absolutePrefsDir;
     private File absolutePrefsFile;
     private String userHome;
@@ -37,6 +35,9 @@ public final class PrefsLocation {
 
     /**
      * Initialise a PrefsLocation with the standard user home directory.
+     * 
+     * @param prefsDir the directory under the home where the prefs file is to be stored.
+     * @param prefsFile the name of the prefs file.
      */
     public PrefsLocation(final String prefsDir, final String prefsFile) {
         mPrefsDir = prefsDir;
@@ -54,6 +55,8 @@ public final class PrefsLocation {
      * Initialise a PrefsLocation with a specific directory for the user home.
      * This variant of the constructor is used for unit testing.
      * 
+     * @param prefsDir the directory under the home where the prefs file is to be stored.
+     * @param prefsFile the name of the prefs file.
      * @param home the home directory to use
      */
     public PrefsLocation(final String prefsDir, final String prefsFile, final String home) {
