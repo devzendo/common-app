@@ -27,9 +27,9 @@ import org.devzendo.commoncode.string.StringUtils;
  *
  */
 public final class PrefsLocation {
-    private File absolutePrefsDir;
-    private File absolutePrefsFile;
-    private String userHome;
+    private File mAbsolutePrefsDir;
+    private File mAbsolutePrefsFile;
+    private String mUserHome;
     private final String mPrefsDir;
     private final String mPrefsFile;
 
@@ -42,13 +42,13 @@ public final class PrefsLocation {
     public PrefsLocation(final String prefsDir, final String prefsFile) {
         mPrefsDir = prefsDir;
         mPrefsFile = prefsFile;
-        userHome = System.getProperty("user.home");
+        mUserHome = System.getProperty("user.home");
         initialise();
     }
 
     private void initialise() {
-        absolutePrefsDir = new File(StringUtils.slashTerminate(userHome) + mPrefsDir);
-        absolutePrefsFile = new File(StringUtils.slashTerminate(absolutePrefsDir.getAbsolutePath()) + mPrefsFile);
+        mAbsolutePrefsDir = new File(StringUtils.slashTerminate(mUserHome) + mPrefsDir);
+        mAbsolutePrefsFile = new File(StringUtils.slashTerminate(mAbsolutePrefsDir.getAbsolutePath()) + mPrefsFile);
     }
     
     /**
@@ -61,7 +61,7 @@ public final class PrefsLocation {
      */
     public PrefsLocation(final String prefsDir, final String prefsFile, final String home) {
         this(prefsDir, prefsFile);
-        userHome = home;
+        mUserHome = home;
         initialise();
     }
     
@@ -70,7 +70,7 @@ public final class PrefsLocation {
      * @return true if it exists, false if it doesn't.
      */
     public boolean prefsDirectoryExists() {
-        return absolutePrefsDir.exists();
+        return mAbsolutePrefsDir.exists();
     }
     
     /**
@@ -80,20 +80,20 @@ public final class PrefsLocation {
      * @see File.mkdir
      */
     public boolean createPrefsDirectory() {
-        return absolutePrefsDir.mkdir();
+        return mAbsolutePrefsDir.mkdir();
     }
 
     /**
      * @return the prefsDir
      */
     public File getPrefsDir() {
-        return absolutePrefsDir;
+        return mAbsolutePrefsDir;
     }
 
     /**
      * @return the prefsFile
      */
     public File getPrefsFile() {
-        return absolutePrefsFile;
+        return mAbsolutePrefsFile;
     }
 }
