@@ -57,6 +57,7 @@ public abstract class AbstractPrefsStartupHelper {
             }
         }
         mPrefsFactory.setPrefs(mPrefsLocation.getPrefsFile().getAbsolutePath());
+        LOGGER.debug("Prefs set in factory");
     }
 
     /**
