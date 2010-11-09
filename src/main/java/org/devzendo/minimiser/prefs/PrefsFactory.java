@@ -26,21 +26,22 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public final class PrefsFactory implements FactoryBean<Prefs> {
     private static final Logger LOGGER = Logger.getLogger(PrefsFactory.class);
-    private Prefs factoryPrefs;
+    private Prefs mFactoryPrefs;
+    private Class<? extends Prefs> mPrefsClass;
 
     /**
      * {@inheritDoc}
      */
     public Prefs getObject() throws Exception {
-        LOGGER.debug(String.format("PrefsFactory returning %s as prefs object", factoryPrefs));
-        return factoryPrefs;
+        LOGGER.debug(String.format("PrefsFactory returning %s as prefs object", mFactoryPrefs));
+        return mFactoryPrefs;
     }
 
     /**
      * {@inheritDoc}
      */
     public Class<?> getObjectType() {
-        return DefaultPrefsImpl.class;
+        return mPrefsClass;
     }
 
     /**
@@ -56,7 +57,7 @@ public final class PrefsFactory implements FactoryBean<Prefs> {
      */
     public void setPrefs(final String prefsPath) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefsPath));
-        factoryPrefs = new DefaultPrefsImpl(prefsPath);
+        mFactoryPrefs = new DefaultPrefsImpl(prefsPath);
     }
     
 
@@ -66,6 +67,14 @@ public final class PrefsFactory implements FactoryBean<Prefs> {
      */
     public void setPrefs(final Prefs prefs) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefs.getClass().getSimpleName()));
-        factoryPrefs = prefs;
+        mFactoryPrefs = prefs;
+    }
+
+    /**
+     * @param prefsClass the concrete prefs class returned by this factory
+     */
+    public void setPrefsClass(final Class<? extends Prefs> prefsClass) {
+        LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs class", prefsClass.getSimpleName()));
+        mPrefsClass = prefsClass;
     }
 }

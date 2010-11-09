@@ -29,9 +29,13 @@ public final class LoggingPrefsStartupHelper extends AbstractPrefsStartupHelper 
     /**
      * @param prefsLocation the location of the prefs
      * @param prefsFactory the factory in which to store it.
+     * @param prefsInstantiator the instantiator of prefs
      */
-    public LoggingPrefsStartupHelper(final PrefsLocation prefsLocation, final PrefsFactory prefsFactory) {
-        super(prefsLocation, prefsFactory);
+    public LoggingPrefsStartupHelper(
+            final PrefsLocation prefsLocation, 
+            final PrefsFactory prefsFactory,
+            final PrefsInstantiator prefsInstantiator) {
+        super(prefsLocation, prefsFactory, prefsInstantiator);
     }
     
     /**

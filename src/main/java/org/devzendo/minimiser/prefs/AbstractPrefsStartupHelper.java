@@ -27,15 +27,21 @@ public abstract class AbstractPrefsStartupHelper {
             .getLogger(AbstractPrefsStartupHelper.class);
     private final PrefsFactory mPrefsFactory;
     private final PrefsLocation mPrefsLocation;
+    private final PrefsInstantiator mPrefsInstantiator;
 
     /**
      * Create the prefs startup helper
      * @param prefsLocation the location of the prefs
      * @param prefsFactory the factory where the prefs object will be stored
+     * @param prefsInstantiator the instantiator for new Prefs objects
      */
-    public AbstractPrefsStartupHelper(final PrefsLocation prefsLocation, final PrefsFactory prefsFactory) {
+    public AbstractPrefsStartupHelper(
+            final PrefsLocation prefsLocation, 
+            final PrefsFactory prefsFactory, 
+            final PrefsInstantiator prefsInstantiator) {
         mPrefsLocation = prefsLocation;
         mPrefsFactory = prefsFactory;
+        mPrefsInstantiator = prefsInstantiator;
     }
     
     /**
@@ -56,7 +62,8 @@ public abstract class AbstractPrefsStartupHelper {
                 LOGGER.info("Created prefs directory OK");
             }
         }
-        mPrefsFactory.setPrefs(mPrefsLocation.getPrefsFile().getAbsolutePath());
+        mPrefsFactory.setPrefs(mPrefsInstantiator.instantiatePrefs(mPrefsLocation));
+        mPrefsFactory.setPrefsClass(mPrefsInstantiator.getPrefsClass());
         LOGGER.debug("Prefs set in factory");
     }
 
