@@ -57,7 +57,7 @@ public final class PrefsFactory implements FactoryBean<MiniMiserPrefs> {
      */
     public void setPrefs(final String prefsPath) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefsPath));
-        mFactoryPrefs = new DefaultPrefsImpl(prefsPath);
+        mFactoryPrefs = new DefaultMiniMiserPrefsImpl(prefsPath);
     }
     
 

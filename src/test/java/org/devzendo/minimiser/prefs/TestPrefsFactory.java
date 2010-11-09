@@ -46,7 +46,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         prefsFactory.setPrefs(tempFile.getAbsolutePath());
 
         final MiniMiserPrefs prefs = getPrefs();
-        Assert.assertTrue(prefs instanceof DefaultPrefsImpl);
+        Assert.assertTrue(prefs instanceof DefaultMiniMiserPrefsImpl);
         Assert.assertNotNull(prefs);
 
         Assert.assertEquals(tempFile.getAbsolutePath(), prefs.getAbsolutePath());
@@ -67,7 +67,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
     }
 
     private MiniMiserPrefs getPrefs() {
-        return getSpringLoader().getBean("prefs", DefaultPrefsImpl.class);
+        return getSpringLoader().getBean("prefs", DefaultMiniMiserPrefsImpl.class);
     }
 
     private PrefsFactory getPrefsFactory() {
