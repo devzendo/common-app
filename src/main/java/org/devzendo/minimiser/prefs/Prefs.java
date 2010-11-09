@@ -24,7 +24,7 @@ import org.devzendo.commoncode.patterns.observer.Observer;
  * @author matt
  *
  */
-public interface Prefs {
+public interface Prefs extends PrefsMarker {
     /**
      * The various sections that the Prefs storage is split into. Changes of
      * preference settings in any of these sections can be listened for.
