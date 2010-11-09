@@ -27,11 +27,11 @@ public interface PrefsInstantiator {
      * @param prefsLocation the location of the Prefs for this application.
      * @return a freshly-instantiated Prefs object for this applciation.
      */
-    MiniMiserPrefs instantiatePrefs(PrefsLocation prefsLocation);
+    Prefs instantiatePrefs(PrefsLocation prefsLocation);
     
     /**
      * @return the class used by this application for storing prefs; to be
      * stored in the PrefsFactory.
      */
-    Class<? extends MiniMiserPrefs> getPrefsClass();
+    Class<? extends Prefs> getPrefsClass();
 }

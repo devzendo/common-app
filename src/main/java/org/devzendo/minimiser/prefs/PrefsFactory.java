@@ -24,15 +24,15 @@ import org.springframework.beans.factory.FactoryBean;
  * @author matt
  *
  */
-public final class PrefsFactory implements FactoryBean<MiniMiserPrefs> {
+public final class PrefsFactory implements FactoryBean<Prefs> {
     private static final Logger LOGGER = Logger.getLogger(PrefsFactory.class);
-    private MiniMiserPrefs mFactoryPrefs;
-    private Class<? extends MiniMiserPrefs> mPrefsClass;
+    private Prefs mFactoryPrefs;
+    private Class<? extends Prefs> mPrefsClass;
 
     /**
      * {@inheritDoc}
      */
-    public MiniMiserPrefs getObject() throws Exception {
+    public Prefs getObject() throws Exception {
         LOGGER.debug(String.format("PrefsFactory returning %s as prefs object", mFactoryPrefs));
         return mFactoryPrefs;
     }
@@ -65,7 +65,7 @@ public final class PrefsFactory implements FactoryBean<MiniMiserPrefs> {
      * Factory population method, used by unit tests
      * @param prefs a previously instantiated Prefs object
      */
-    public void setPrefs(final MiniMiserPrefs prefs) {
+    public void setPrefs(final Prefs prefs) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefs.getClass().getSimpleName()));
         mFactoryPrefs = prefs;
     }
@@ -73,7 +73,7 @@ public final class PrefsFactory implements FactoryBean<MiniMiserPrefs> {
     /**
      * @param prefsClass the concrete prefs class returned by this factory
      */
-    public void setPrefsClass(final Class<? extends MiniMiserPrefs> prefsClass) {
+    public void setPrefsClass(final Class<? extends Prefs> prefsClass) {
         LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs class", prefsClass.getSimpleName()));
         mPrefsClass = prefsClass;
     }
