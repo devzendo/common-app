@@ -46,6 +46,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
         prefsFactory.setPrefs(tempFile.getAbsolutePath());
 
         final Prefs prefs = getPrefs();
+        Assert.assertTrue(prefs instanceof DefaultPrefsImpl);
         Assert.assertNotNull(prefs);
 
         Assert.assertEquals(tempFile.getAbsolutePath(), prefs.getAbsolutePath());
