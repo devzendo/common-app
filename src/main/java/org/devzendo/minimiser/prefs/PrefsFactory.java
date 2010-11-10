@@ -50,19 +50,9 @@ public final class PrefsFactory implements FactoryBean<Prefs> {
     public boolean isSingleton() {
         return true;
     }
-    
-    /**
-     * Factory population method
-     * @param prefsPath the path of the prefs to return as a Singleton
-     */
-    public void setPrefs(final String prefsPath) {
-        LOGGER.debug(String.format("PrefsFactory being populated with %s as prefs object", prefsPath));
-        mFactoryPrefs = new DefaultMiniMiserPrefsImpl(prefsPath);
-    }
-    
 
     /**
-     * Factory population method, used by unit tests
+     * Factory population method
      * @param prefs a previously instantiated Prefs object
      */
     public void setPrefs(final Prefs prefs) {
