@@ -38,14 +38,14 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
      */
     @Test
     public void testStoreTemporaryPrefs() throws IOException {
-        final DefaultMiniMiserPrefsImpl tempFilePrefs = createTemporaryPrefsFile();
+        final SamplePrefsImpl tempFilePrefs = createTemporaryPrefsFile();
 
         final PrefsFactory prefsFactory = getPrefsFactory();
         Assert.assertNotNull(prefsFactory);
         prefsFactory.setPrefs(tempFilePrefs);
 
-        final MiniMiserPrefs prefs = getPrefs();
-        Assert.assertTrue(prefs instanceof DefaultMiniMiserPrefsImpl);
+        final SamplePrefs prefs = getPrefs();
+        Assert.assertTrue(prefs instanceof SamplePrefsImpl);
         Assert.assertSame(tempFilePrefs, prefs);
     }
 
@@ -54,27 +54,27 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
      */
     @Test
     public void itsASingleton() throws IOException {
-        final DefaultMiniMiserPrefsImpl tempFilePrefs = createTemporaryPrefsFile();
+        final SamplePrefsImpl tempFilePrefs = createTemporaryPrefsFile();
         getPrefsFactory().setPrefs(tempFilePrefs);
 
-        final MiniMiserPrefs prefs1 = getPrefs();
-        final MiniMiserPrefs prefs2 = getPrefs();
+        final SamplePrefs prefs1 = getPrefs();
+        final SamplePrefs prefs2 = getPrefs();
         Assert.assertSame(prefs1, prefs2);
     }
 
-    private MiniMiserPrefs getPrefs() {
-        return getSpringLoader().getBean("prefs", DefaultMiniMiserPrefsImpl.class);
+    private SamplePrefs getPrefs() {
+        return getSpringLoader().getBean("prefs", SamplePrefsImpl.class);
     }
 
     private PrefsFactory getPrefsFactory() {
         return getSpringLoader().getBean("&prefs", PrefsFactory.class);
     }
     
-    private DefaultMiniMiserPrefsImpl createTemporaryPrefsFile()
+    private SamplePrefsImpl createTemporaryPrefsFile()
     throws IOException {
         final File tempFile = File.createTempFile("minimiser-unit-test", "prefs").getAbsoluteFile();
         tempFile.deleteOnExit();
-        final DefaultMiniMiserPrefsImpl tempFilePrefs = new DefaultMiniMiserPrefsImpl(tempFile.getAbsolutePath());
+        final SamplePrefsImpl tempFilePrefs = new SamplePrefsImpl(tempFile.getAbsolutePath());
         return tempFilePrefs;
     }
 }
