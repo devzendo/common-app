@@ -17,8 +17,8 @@ package org.devzendo.minimiser.prefs;
 
 import javax.swing.JOptionPane;
 
+import org.devzendo.commonapp.gui.GUIUtils;
 import org.devzendo.commoncode.string.StringUtils;
-import org.devzendo.commongui.GUIUtils;
 
 /**
  * Warns the user of prefs dir creation failure via a dialog.
