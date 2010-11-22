@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commonapp.prefs.Prefs;
 import org.devzendo.commoncode.file.INIFile;
 
 /**

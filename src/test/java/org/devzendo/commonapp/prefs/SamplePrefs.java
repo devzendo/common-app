@@ -13,25 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
 /**
- * Instatiates the Prefs for a given application. Can be changed for different
- * applications.
- * 
+ * Whether this app is funky!
  * @author matt
  *
  */
-public interface PrefsInstantiator {
+public interface SamplePrefs {
     /**
-     * @param prefsLocation the location of the Prefs for this application.
-     * @return a freshly-instantiated Prefs object for this applciation.
+     * @return true or false
      */
-    Prefs instantiatePrefs(PrefsLocation prefsLocation);
-    
-    /**
-     * @return the class used by this application for storing prefs; to be
-     * stored in the PrefsFactory.
-     */
-    Class<? extends Prefs> getPrefsClass();
+    boolean hasFunkiness();
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import org.junit.Test;
  * @author matt
  *
  */
-@ApplicationContext("org/devzendo/minimiser/prefs/PrefsTestCase.xml")
+@ApplicationContext("org/devzendo/commonapp/prefs/PrefsTestCase.xml")
 public final class TestPrefsFactory extends SpringLoaderUnittestCase {
 
     /**
@@ -72,7 +72,7 @@ public final class TestPrefsFactory extends SpringLoaderUnittestCase {
     
     private SamplePrefsImpl createTemporaryPrefsFile()
     throws IOException {
-        final File tempFile = File.createTempFile("minimiser-unit-test", "prefs").getAbsoluteFile();
+        final File tempFile = File.createTempFile("commonapp-unit-test", "prefs").getAbsoluteFile();
         tempFile.deleteOnExit();
         final SamplePrefsImpl tempFilePrefs = new SamplePrefsImpl(tempFile.getAbsolutePath());
         return tempFilePrefs;

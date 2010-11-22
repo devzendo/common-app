@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
 import java.io.File;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
 /**
  * Marker interface for all Prefs interfaces.

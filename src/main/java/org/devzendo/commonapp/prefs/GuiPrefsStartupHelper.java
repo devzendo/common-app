@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.devzendo.minimiser.prefs;
+package org.devzendo.commonapp.prefs;
 
-import org.apache.log4j.Logger;
+import javax.swing.JOptionPane;
+
+import org.devzendo.commonapp.gui.GUIUtils;
+import org.devzendo.commoncode.string.StringUtils;
 
 /**
- * Warns the user of prefs dir creation failure via log messages.
+ * Warns the user of prefs dir creation failure via a dialog.
  * 
  * @author matt
  *
  */
-public final class LoggingPrefsStartupHelper extends AbstractPrefsStartupHelper {
-    private static final Logger LOGGER = Logger
-            .getLogger(LoggingPrefsStartupHelper.class);
+public final class GuiPrefsStartupHelper extends AbstractPrefsStartupHelper {
     /**
      * @param prefsLocation the location of the prefs
      * @param prefsFactory the factory in which to store it.
      * @param prefsInstantiator the instantiator of prefs
      */
-    public LoggingPrefsStartupHelper(
-            final PrefsLocation prefsLocation, 
+    public GuiPrefsStartupHelper(
+            final PrefsLocation prefsLocation,
             final PrefsFactory prefsFactory,
             final PrefsInstantiator prefsInstantiator) {
         super(prefsLocation, prefsFactory, prefsInstantiator);
@@ -43,9 +44,21 @@ public final class LoggingPrefsStartupHelper extends AbstractPrefsStartupHelper 
      */
     @Override
     protected void warnUserOfPrefsDirCreationFailure() {
-        for (final String message : createErrorMessage()) {
-            LOGGER.fatal(message);
-        }
+        GUIUtils.runOnEventThread(new Runnable() {
+            public void run() {
+                showPrefsDirCreationFailureMessage();
+            }
+        });
+    }
+    
+    private void showPrefsDirCreationFailureMessage() {
+        final String errorMessage = StringUtils.join(createErrorMessage(), "");
+        JOptionPane.showMessageDialog(null, 
+            // NOTE user-centric message
+            // I18N
+            errorMessage,
+            "Could not create settings folder",
+            JOptionPane.ERROR_MESSAGE);
         
         System.exit(0);
     }
