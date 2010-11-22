@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<bean id="springLoader" class="org.devzendo.commonspring.springloader.SpringLoaderImpl">
+<bean id="springLoader" class="org.devzendo.commonapp.spring.springloader.SpringLoaderImpl">
 	
 </bean>
 </beans>

@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="testChainedBean" class="org.devzendo.commonspring.springloader.ChainedSpringLoadedBean">
+	<bean id="testChainedBean" class="org.devzendo.commonapp.spring.springloader.ChainedSpringLoadedBean">
 	</bean>
 	
-	<bean id="testBean" class="org.devzendo.commonspring.springloader.OverriddenSpringLoadedBean">
+	<bean id="testBean" class="org.devzendo.commonapp.spring.springloader.OverriddenSpringLoadedBean">
 	</bean>
 </beans>

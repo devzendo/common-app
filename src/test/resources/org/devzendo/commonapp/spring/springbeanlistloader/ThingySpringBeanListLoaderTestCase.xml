@@ -14,15 +14,15 @@
 		</property>
 	</bean>
 	
-	<bean id="beanListLoader" class="org.devzendo.commonspring.springbeanlistloader.ThingySpringBeanListLoader">
+	<bean id="beanListLoader" class="org.devzendo.commonapp.spring.springbeanlistloader.ThingySpringBeanListLoader">
 		<constructor-arg ref="springLoader" />
 		<constructor-arg ref="simpleList" />	
 	</bean>
 
-	<bean id="one" class="org.devzendo.commonspring.springbeanlistloader.OneThingy">
+	<bean id="one" class="org.devzendo.commonapp.spring.springbeanlistloader.OneThingy">
 	</bean>
 	
-	<bean id="two" class="org.devzendo.commonspring.springbeanlistloader.TwoThingy">
+	<bean id="two" class="org.devzendo.commonapp.spring.springbeanlistloader.TwoThingy">
 	</bean>
 	
 	<!-- uninstantiatable beans don't get used -->
@@ -36,7 +36,7 @@
 		</property>
 	</bean>
 	
-	<bean id="badLoadLifecycleManager" class="org.devzendo.commonspring.springbeanlistloader.ThingySpringBeanListLoader">
+	<bean id="badLoadLifecycleManager" class="org.devzendo.commonapp.spring.springbeanlistloader.ThingySpringBeanListLoader">
 		<constructor-arg ref="springLoader" />
 		<constructor-arg ref="badLoadLifecycleList" />	
 	</bean>

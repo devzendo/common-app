@@ -16,7 +16,6 @@
 
 package org.devzendo.commonapp.spring.springloader;
 
-import org.devzendo.commonapp.spring.springloader.SpringLoader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +25,7 @@ import org.junit.Test;
  *
  * @author matt
  */
-@ApplicationContext("org/devzendo/commonspring/springloader/TestSpringLoaderLoadingTestBeans.xml")
+@ApplicationContext("org/devzendo/commonapp/spring/springloader/TestSpringLoaderLoadingTestBeans.xml")
 public final class TestSpringLoaderLoadingTestBeans extends SpringLoaderUnittestCase {
 
     /**

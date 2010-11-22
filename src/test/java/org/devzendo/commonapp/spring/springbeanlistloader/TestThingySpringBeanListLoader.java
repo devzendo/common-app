@@ -30,7 +30,7 @@ import org.junit.Test;
  * @author matt
  *
  */
-@ApplicationContext("org/devzendo/commonspring/springbeanlistloader/ThingySpringBeanListLoaderTestCase.xml")
+@ApplicationContext("org/devzendo/commonapp/spring/springbeanlistloader/ThingySpringBeanListLoaderTestCase.xml")
 public final class TestThingySpringBeanListLoader extends SpringLoaderUnittestCase {
 
     private ThingySpringBeanListLoader beanListLoader;

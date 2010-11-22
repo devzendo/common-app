@@ -16,7 +16,6 @@
 
 package org.devzendo.commonapp.spring.springloader;
 
-import org.devzendo.commonapp.spring.springloader.SpringLoader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -29,7 +28,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
  *
  * @author matt
  */
-@ApplicationContext("org/devzendo/commonspring/springloader/TestSpringLoaderLoadingTestBeans.xml")
+@ApplicationContext("org/devzendo/commonapp/spring/springloader/TestSpringLoaderLoadingTestBeans.xml")
 public final class TestSpringLoaderChainingAppContexts extends SpringLoaderUnittestCase {
 
     /**
@@ -54,7 +53,7 @@ public final class TestSpringLoaderChainingAppContexts extends SpringLoaderUnitt
             SpringLoadedBean.class);
         Assert.assertNotNull(o1);
 
-        sl.addApplicationContext("org/devzendo/commonspring/springloader/TestSpringLoaderLoadingTestBeansChaining.xml");
+        sl.addApplicationContext("org/devzendo/commonapp/spring/springloader/TestSpringLoaderLoadingTestBeansChaining.xml");
 
         final ChainedSpringLoadedBean c1 = sl.getBean("testChainedBean", ChainedSpringLoadedBean.class);
         Assert.assertEquals(42, c1.getTheAnswer());
@@ -69,7 +68,7 @@ public final class TestSpringLoaderChainingAppContexts extends SpringLoaderUnitt
         final SpringLoader sl = getSpringLoader();
         Assert.assertNotNull(sl);
 
-        sl.addApplicationContext("org/devzendo/commonspring/springloader/TestSpringLoaderLoadingTestBeansChaining.xml");
+        sl.addApplicationContext("org/devzendo/commonapp/spring/springloader/TestSpringLoaderLoadingTestBeansChaining.xml");
 
         final ChainedSpringLoadedBean c1 = sl.getBean("testChainedBean", ChainedSpringLoadedBean.class);
         Assert.assertEquals(42, c1.getTheAnswer());
@@ -91,7 +90,7 @@ public final class TestSpringLoaderChainingAppContexts extends SpringLoaderUnitt
             AnswerProvider.class);
         Assert.assertEquals(31415, o1.getTheAnswer());
 
-        sl.addApplicationContext("org/devzendo/commonspring/springloader/TestSpringLoaderLoadingTestBeansChainingOverrides.xml");
+        sl.addApplicationContext("org/devzendo/commonapp/spring/springloader/TestSpringLoaderLoadingTestBeansChainingOverrides.xml");
 
         final AnswerProvider o2 = sl.getBean("testBean",
             AnswerProvider.class);
