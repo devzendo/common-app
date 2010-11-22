@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
-import org.apache.log4j.Logger;
+import java.util.List;
+
+import org.devzendo.commonapp.spring.springbeanlistloader.AbstractSpringBeanListLoaderImpl;
+import org.devzendo.commonapp.spring.springloader.SpringLoader;
 
 /**
- * A simple bean loaded form the SpringLoader, for testing purposes.
  * @author matt
  *
  */
-public final class OverriddenSpringLoadedBean implements AnswerProvider {
-    private static final Logger LOGGER = Logger.getLogger(OverriddenSpringLoadedBean.class);
+public class ThingySpringBeanListLoader extends AbstractSpringBeanListLoaderImpl<Thingy> {
     /**
-     * Just say hello
+     * @param springLoader the spring loader
+     * @param beanNames the bean names
      */
-    public OverriddenSpringLoadedBean() {
-        LOGGER.info("Hello from OverriddenSpringLoaderTestBean");
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public int getTheAnswer() {
-        return 16384;
+    public ThingySpringBeanListLoader(final SpringLoader springLoader, final List<String> beanNames) {
+        super(springLoader, beanNames);
     }
 }

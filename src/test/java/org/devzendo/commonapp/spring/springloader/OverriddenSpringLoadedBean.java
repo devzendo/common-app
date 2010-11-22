@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-/**
- * 
- */
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.apache.log4j.Logger;
 
 /**
- * Annotation set at a type level that declares a set of Spring Application
- * Context XML files to be used when creating the SpringLoader.
- * 
+ * A simple bean loaded form the SpringLoader, for testing purposes.
  * @author matt
+ *
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface ApplicationContext {
-    String[] value();
+public final class OverriddenSpringLoadedBean implements AnswerProvider {
+    private static final Logger LOGGER = Logger.getLogger(OverriddenSpringLoadedBean.class);
+    /**
+     * Just say hello
+     */
+    public OverriddenSpringLoadedBean() {
+        LOGGER.info("Hello from OverriddenSpringLoaderTestBean");
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public int getTheAnswer() {
+        return 16384;
+    }
 }

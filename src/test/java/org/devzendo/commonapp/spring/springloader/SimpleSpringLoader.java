@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.devzendo.commonapp.spring.springloader.SpringLoader;
 
 /**
  * A simple SpringLoader that just stores beans, for unit tests

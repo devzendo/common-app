@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import org.apache.log4j.Logger;
 
 /**
- * A simple bean loaded form the SpringLoader, for testing purposes.
+ * A simple bean loaded from a chained SpringLoader, for testing
+ * purposes.
  * @author matt
  *
  */
-public final class SpringLoadedBean implements AnswerProvider {
-    private static final Logger LOGGER = Logger.getLogger(SpringLoadedBean.class);
+public final class ChainedSpringLoadedBean implements AnswerProvider {
+    private static final Logger LOGGER = Logger.getLogger(ChainedSpringLoadedBean.class);
     /**
      * Just say hello
      */
-    public SpringLoadedBean() {
-        LOGGER.info("Hello from SpringLoaderTestBean");
+    public ChainedSpringLoadedBean() {
+        LOGGER.info("Hello from ChainedSpringLoaderTestBean");
     }
     /**
-     * {@inheritDoc}
+     * @return the answer to life, the universe, and everything
      */
     public int getTheAnswer() {
-        return 31415;
+        return 42;
     }
 }

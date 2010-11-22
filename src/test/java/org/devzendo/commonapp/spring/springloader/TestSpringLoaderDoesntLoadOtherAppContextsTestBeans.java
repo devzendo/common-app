@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commonapp.spring.springloader.SpringLoader;
 import org.junit.Assert;
 import org.junit.Test;
 

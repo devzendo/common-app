@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 /**
- * A component that gets loaded by the ThingySpringBeanListLoader.
- * Just using it to test loading. 
- * 
  * @author matt
  *
  */
-public interface Thingy {
+public class TwoThingy implements Thingy {
+    /**
+     */
+    public TwoThingy() {
+    }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+/**
+ * 
+ */
+package org.devzendo.commonapp.spring.springloader;
 
-import org.apache.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
-
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Test the SpringLoader
+ * Annotation set at a type level that declares a set of Spring Application
+ * Context XML files to be used when creating the SpringLoader.
+ * 
  * @author matt
- *
  */
-public final class TestSpringLoader extends SpringLoaderUnittestCase {
-    private static final Logger LOGGER = Logger.getLogger(TestSpringLoader.class);
-    /**
-     * 
-     */
-    @Test
-    public void testGetSpringLoader() {
-        Assert.assertNotNull(getSpringLoader());
-        LOGGER.info("Spring Loader is " + getSpringLoader().hashCode());
-    }
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface ApplicationContext {
+    String[] value();
 }

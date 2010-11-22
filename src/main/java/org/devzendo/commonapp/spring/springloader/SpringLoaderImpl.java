@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

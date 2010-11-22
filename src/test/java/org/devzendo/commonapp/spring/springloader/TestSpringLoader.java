@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.junit.Test;
+
 
 /**
- * A simple bean loaded from a chained SpringLoader, for testing
- * purposes.
+ * Test the SpringLoader
  * @author matt
  *
  */
-public final class ChainedSpringLoadedBean implements AnswerProvider {
-    private static final Logger LOGGER = Logger.getLogger(ChainedSpringLoadedBean.class);
+public final class TestSpringLoader extends SpringLoaderUnittestCase {
+    private static final Logger LOGGER = Logger.getLogger(TestSpringLoader.class);
     /**
-     * Just say hello
+     * 
      */
-    public ChainedSpringLoadedBean() {
-        LOGGER.info("Hello from ChainedSpringLoaderTestBean");
-    }
-    /**
-     * @return the answer to life, the universe, and everything
-     */
-    public int getTheAnswer() {
-        return 42;
+    @Test
+    public void testGetSpringLoader() {
+        Assert.assertNotNull(getSpringLoader());
+        LOGGER.info("Spring Loader is " + getSpringLoader().hashCode());
     }
 }

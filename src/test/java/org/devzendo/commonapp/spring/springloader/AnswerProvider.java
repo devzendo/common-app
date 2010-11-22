@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
+package org.devzendo.commonapp.spring.springloader;
 
 /**
+ * Simple test interface for testing overriding by chained
+ * app contexts.
  * @author matt
  *
  */
-public class OneThingy implements Thingy {
+public interface AnswerProvider {
     /**
+     * What does it mean, master?
+     * @return some answer
      */
-    public OneThingy() {
-    }
+    int getTheAnswer();
 }

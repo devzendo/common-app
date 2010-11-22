@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commonspring.springloader.SpringLoader;
+import org.devzendo.commonapp.spring.springloader.SpringLoader;
 
 
 /**

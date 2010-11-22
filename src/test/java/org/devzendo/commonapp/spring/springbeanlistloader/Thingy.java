@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 /**
- * Simple test interface for testing overriding by chained
- * app contexts.
+ * A component that gets loaded by the ThingySpringBeanListLoader.
+ * Just using it to test loading. 
+ * 
  * @author matt
  *
  */
-public interface AnswerProvider {
-    /**
-     * What does it mean, master?
-     * @return some answer
-     */
-    int getTheAnswer();
+public interface Thingy {
 }

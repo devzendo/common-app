@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
-
-import java.util.List;
-
-import org.devzendo.commonspring.springloader.SpringLoader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 /**
  * @author matt
  *
  */
-public class ThingySpringBeanListLoader extends AbstractSpringBeanListLoaderImpl<Thingy> {
+public class OneThingy implements Thingy {
     /**
-     * @param springLoader the spring loader
-     * @param beanNames the bean names
      */
-    public ThingySpringBeanListLoader(final SpringLoader springLoader, final List<String> beanNames) {
-        super(springLoader, beanNames);
+    public OneThingy() {
     }
 }

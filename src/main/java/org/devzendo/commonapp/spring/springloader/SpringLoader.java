@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 /**
  * An abstraction around the Spring DI container

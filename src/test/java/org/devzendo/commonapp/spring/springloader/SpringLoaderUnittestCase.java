@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springloader;
+package org.devzendo.commonapp.spring.springloader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commonapp.spring.springloader.SpringLoader;
+import org.devzendo.commonapp.spring.springloader.SpringLoaderFactory;
 import org.devzendo.commoncode.logging.LoggingUnittestHelper;
 import org.devzendo.commoncode.string.StringUtils;
 import org.junit.After;

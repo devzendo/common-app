@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 import java.util.List;
 
-import org.devzendo.commonspring.springloader.ApplicationContext;
-import org.devzendo.commonspring.springloader.SpringLoaderUnittestCase;
+import org.devzendo.commonapp.spring.springloader.ApplicationContext;
+import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.junit.Assert;
 import org.junit.Test;
 

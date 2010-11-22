@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.devzendo.commonspring.springbeanlistloader;
+package org.devzendo.commonapp.spring.springbeanlistloader;
 
 import java.util.List;
 
