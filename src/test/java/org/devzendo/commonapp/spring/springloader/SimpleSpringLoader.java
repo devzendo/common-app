@@ -19,8 +19,6 @@ package org.devzendo.commonapp.spring.springloader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.devzendo.commonapp.spring.springloader.SpringLoader;
-
 /**
  * A simple SpringLoader that just stores beans, for unit tests
  * without the overhead of the real SpringLoader. Only handles

@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commonapp.prefs.PrefsLocation;
 import org.devzendo.commoncode.logging.LoggingUnittestHelper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -59,7 +58,7 @@ public final class TestPrefsLocation  {
      */
     @Test
     public void testPrefsDirCreationFails() {
-        final PrefsLocation prefsLocation = new PrefsLocation(PREFS_DIRECTORY, PREFS_FILE,"/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new PrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.createPrefsDirectory());
     }
     

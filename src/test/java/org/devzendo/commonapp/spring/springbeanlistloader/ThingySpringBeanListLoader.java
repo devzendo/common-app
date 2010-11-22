@@ -18,7 +18,6 @@ package org.devzendo.commonapp.spring.springbeanlistloader;
 
 import java.util.List;
 
-import org.devzendo.commonapp.spring.springbeanlistloader.AbstractSpringBeanListLoaderImpl;
 import org.devzendo.commonapp.spring.springloader.SpringLoader;
 
 /**

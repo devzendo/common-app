@@ -16,7 +16,6 @@
 package org.devzendo.commonapp.prefs;
 
 import org.apache.log4j.Logger;
-import org.devzendo.commonapp.prefs.Prefs;
 import org.devzendo.commoncode.file.INIFile;
 
 /**
