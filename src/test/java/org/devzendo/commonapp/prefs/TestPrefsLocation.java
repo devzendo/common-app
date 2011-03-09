@@ -49,7 +49,7 @@ public final class TestPrefsLocation  {
      */
     @Test
     public void testNonexistantPrefsLocation() {
-        final DefaultPrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
     }
     
@@ -58,7 +58,7 @@ public final class TestPrefsLocation  {
      */
     @Test
     public void testPrefsDirCreationFails() {
-        final DefaultPrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
+        final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.createPrefsDirectory());
     }
     
@@ -71,7 +71,7 @@ public final class TestPrefsLocation  {
         tempDirFile.deleteOnExit();
         final String tempDir = tempDirFile.getParent();
         LOGGER.info("Temporary directory is " + tempDir);
-        final DefaultPrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, tempDir);
+        final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, tempDir);
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
         final File prefsDir = prefsLocation.getPrefsDir();
         final File prefsFile = prefsLocation.getPrefsFile();

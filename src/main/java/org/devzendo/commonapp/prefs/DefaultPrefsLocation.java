@@ -22,11 +22,13 @@ import org.devzendo.commoncode.string.StringUtils;
 
 
 /**
- * Utility for working with the directory that holds preference storage.
+ * Abstraction for working with the directory that holds preference storage,
+ * this implementation stores the preferences under the user's home directory.
+ * 
  * @author matt
  *
  */
-public final class DefaultPrefsLocation {
+public final class DefaultPrefsLocation implements PrefsLocation {
     private File mAbsolutePrefsDir;
     private File mAbsolutePrefsFile;
     private String mUserHome;
@@ -36,7 +38,9 @@ public final class DefaultPrefsLocation {
     /**
      * Initialise a PrefsLocation with the standard user home directory.
      * 
-     * @param prefsDir the directory under the home where the prefs file is to be stored.
+     * @param prefsDir the directory under the home where the prefs file is to
+     * be stored. Note that this should be a relative path, not absolute.
+     * 
      * @param prefsFile the name of the prefs file.
      */
     public DefaultPrefsLocation(final String prefsDir, final String prefsFile) {
@@ -66,32 +70,28 @@ public final class DefaultPrefsLocation {
     }
     
     /**
-     * Does the directory containing the preferences file exist?
-     * @return true if it exists, false if it doesn't.
+     * {@inheritDoc}
      */
     public boolean prefsDirectoryExists() {
         return mAbsolutePrefsDir.exists();
     }
     
     /**
-     * Create the prefs directory.
-     * @return true iff the directory was created; false if it was not. Note
-     * that if it existed anyway, you'd get false.
-     * @see File.mkdir
+     * {@inheritDoc}
      */
     public boolean createPrefsDirectory() {
         return mAbsolutePrefsDir.mkdir();
     }
 
     /**
-     * @return the prefsDir
+     * {@inheritDoc}
      */
     public File getPrefsDir() {
         return mAbsolutePrefsDir;
     }
 
     /**
-     * @return the prefsFile
+     * {@inheritDoc}
      */
     public File getPrefsFile() {
         return mAbsolutePrefsFile;
