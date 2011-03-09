@@ -32,7 +32,7 @@ public final class LoggingPrefsStartupHelper extends AbstractPrefsStartupHelper 
      * @param prefsInstantiator the instantiator of prefs
      */
     public LoggingPrefsStartupHelper(
-            final PrefsLocation prefsLocation, 
+            final DefaultPrefsLocation prefsLocation, 
             final PrefsFactory prefsFactory,
             final PrefsInstantiator prefsInstantiator) {
         super(prefsLocation, prefsFactory, prefsInstantiator);

@@ -27,7 +27,7 @@ public interface PrefsInstantiator {
      * @param prefsLocation the location of the Prefs for this application.
      * @return a freshly-instantiated Prefs object for this applciation.
      */
-    Prefs instantiatePrefs(PrefsLocation prefsLocation);
+    Prefs instantiatePrefs(DefaultPrefsLocation prefsLocation);
     
     /**
      * @return the class used by this application for storing prefs; to be

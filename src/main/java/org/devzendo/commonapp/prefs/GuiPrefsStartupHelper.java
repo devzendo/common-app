@@ -33,7 +33,7 @@ public final class GuiPrefsStartupHelper extends AbstractPrefsStartupHelper {
      * @param prefsInstantiator the instantiator of prefs
      */
     public GuiPrefsStartupHelper(
-            final PrefsLocation prefsLocation,
+            final DefaultPrefsLocation prefsLocation,
             final PrefsFactory prefsFactory,
             final PrefsInstantiator prefsInstantiator) {
         super(prefsLocation, prefsFactory, prefsInstantiator);

@@ -26,7 +26,7 @@ public abstract class AbstractPrefsStartupHelper {
     private static final Logger LOGGER = Logger
             .getLogger(AbstractPrefsStartupHelper.class);
     private final PrefsFactory mPrefsFactory;
-    private final PrefsLocation mPrefsLocation;
+    private final DefaultPrefsLocation mPrefsLocation;
     private final PrefsInstantiator mPrefsInstantiator;
 
     /**
@@ -36,7 +36,7 @@ public abstract class AbstractPrefsStartupHelper {
      * @param prefsInstantiator the instantiator for new Prefs objects
      */
     public AbstractPrefsStartupHelper(
-            final PrefsLocation prefsLocation, 
+            final DefaultPrefsLocation prefsLocation, 
             final PrefsFactory prefsFactory, 
             final PrefsInstantiator prefsInstantiator) {
         mPrefsLocation = prefsLocation;

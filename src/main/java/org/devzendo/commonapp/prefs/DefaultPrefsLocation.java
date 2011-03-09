@@ -26,7 +26,7 @@ import org.devzendo.commoncode.string.StringUtils;
  * @author matt
  *
  */
-public final class PrefsLocation {
+public final class DefaultPrefsLocation {
     private File mAbsolutePrefsDir;
     private File mAbsolutePrefsFile;
     private String mUserHome;
@@ -39,7 +39,7 @@ public final class PrefsLocation {
      * @param prefsDir the directory under the home where the prefs file is to be stored.
      * @param prefsFile the name of the prefs file.
      */
-    public PrefsLocation(final String prefsDir, final String prefsFile) {
+    public DefaultPrefsLocation(final String prefsDir, final String prefsFile) {
         mPrefsDir = prefsDir;
         mPrefsFile = prefsFile;
         mUserHome = System.getProperty("user.home");
@@ -59,7 +59,7 @@ public final class PrefsLocation {
      * @param prefsFile the name of the prefs file.
      * @param home the home directory to use
      */
-    public PrefsLocation(final String prefsDir, final String prefsFile, final String home) {
+    public DefaultPrefsLocation(final String prefsDir, final String prefsFile, final String home) {
         this(prefsDir, prefsFile);
         mUserHome = home;
         initialise();
