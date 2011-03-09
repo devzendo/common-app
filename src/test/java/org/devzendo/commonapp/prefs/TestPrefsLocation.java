@@ -36,26 +36,18 @@ public final class TestPrefsLocation  {
             .getLogger(TestPrefsLocation.class);
     private static final String PREFS_FILE = "minimiser.prefs";
     private static final String PREFS_DIRECTORY = ".minimiser";
-    /**
-     * 
-     */
+
     @BeforeClass
     public static void setupLogging() {
         LoggingUnittestHelper.setupLogging();
     }
 
-    /**
-     * 
-     */
     @Test
     public void testNonexistantPrefsLocation() {
         final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.prefsDirectoryExists());
     }
     
-    /**
-     * 
-     */
     @Test
     public void testPrefsDirCreationFails() {
         final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
