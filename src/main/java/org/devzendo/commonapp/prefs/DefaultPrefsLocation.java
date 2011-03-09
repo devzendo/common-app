@@ -44,20 +44,20 @@ public final class DefaultPrefsLocation implements PrefsLocation {
      * @param prefsFile the name of the prefs file.
      */
     public DefaultPrefsLocation(final String prefsDir, final String prefsFile) {
+        if (new File(prefsDir).isAbsolute()) {
+            throw new IllegalArgumentException("Preferences directory '" + prefsDir + "' must not be absolute");
+        }
         mPrefsDir = prefsDir;
         mPrefsFile = prefsFile;
         mUserHome = System.getProperty("user.home");
         initialise();
     }
 
-    private void initialise() {
-        mAbsolutePrefsDir = new File(StringUtils.slashTerminate(mUserHome) + mPrefsDir);
-        mAbsolutePrefsFile = new File(StringUtils.slashTerminate(mAbsolutePrefsDir.getAbsolutePath()) + mPrefsFile);
-    }
-    
     /**
      * Initialise a PrefsLocation with a specific directory for the user home.
-     * This variant of the constructor is used for unit testing.
+     * Note that this should be a relative path, not absolute.
+     * This variant of the constructor is used for unit testing (although since
+     * there is the PrefsLocation interface, a mock could be used)
      * 
      * @param prefsDir the directory under the home where the prefs file is to be stored.
      * @param prefsFile the name of the prefs file.
@@ -67,6 +67,11 @@ public final class DefaultPrefsLocation implements PrefsLocation {
         this(prefsDir, prefsFile);
         mUserHome = home;
         initialise();
+    }
+    
+    private void initialise() {
+        mAbsolutePrefsDir = new File(StringUtils.slashTerminate(mUserHome) + mPrefsDir);
+        mAbsolutePrefsFile = new File(StringUtils.slashTerminate(mAbsolutePrefsDir.getAbsolutePath()) + mPrefsFile);
     }
     
     /**

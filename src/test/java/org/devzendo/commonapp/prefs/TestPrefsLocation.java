@@ -53,7 +53,12 @@ public final class TestPrefsLocation  {
         final PrefsLocation prefsLocation = new DefaultPrefsLocation(PREFS_DIRECTORY, PREFS_FILE, "/this/directory/does/not/exist");
         Assert.assertFalse(prefsLocation.createPrefsDirectory());
     }
-    
+
+    @Test(expected = IllegalArgumentException.class)
+    public void absoluteDirectoryCannotBeUsedForPrefsDir() {
+        new DefaultPrefsLocation("/tmp/foo", PREFS_FILE, "/irrelevant");
+    }
+
     /**
      * @throws IOException on failure
      */
