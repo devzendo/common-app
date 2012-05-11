@@ -145,4 +145,21 @@ public final class TestLifecycleManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("b shutdown", shutdownOrdering.get(1));
         Assert.assertEquals("a shutdown", shutdownOrdering.get(2));
     }
+
+    @Test
+    public void prepareShutdownMethodsCalledInSequence() {
+        lifecycleManager = getSpringLoader().getBean("prepareShutdownLifecycleManager", LifecycleManager.class);
+        Assert.assertNotNull(lifecycleManager);
+
+        final PrepareShutdownLifecycle shutdownPreparable = getSpringLoader().getBean("shutdownPreparable", PrepareShutdownLifecycle.class);
+        Assert.assertNotNull(shutdownPreparable);
+
+        lifecycleManager.startup();
+        lifecycleManager.shutdown();
+
+        Assert.assertEquals(0, shutdownPreparable.getCtorCount());
+        Assert.assertEquals(1, shutdownPreparable.getStartupCount());
+        Assert.assertEquals(2, shutdownPreparable.getPrepareForShutdownCount());
+        Assert.assertEquals(3, shutdownPreparable.getShutdownCount());
+    }
 }

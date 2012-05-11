@@ -24,8 +24,8 @@
 	<bean id="two" class="org.devzendo.commonapp.lifecycle.TwoLifecycle">
 		<constructor-arg ref="one" />	
 	</bean>
-	
-	<!-- uninstantiatable beans don't get used -->
+
+    <!-- uninstantiatable beans don't get used -->
 	<bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
 		<property name="sourceList">
 			<list>
@@ -69,5 +69,22 @@
 		<constructor-arg ref="springLoader" />
 		<constructor-arg ref="orderingLifecycleList" />	
 	</bean>
-	
+
+    <!-- prepare shutdown test -->
+    <bean id="prepareShutdownLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>shutdownPreparable</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="prepareShutdownLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="prepareShutdownLifecycleList" />
+    </bean>
+
+    <bean id="shutdownPreparable" class="org.devzendo.commonapp.lifecycle.PrepareShutdownLifecycle">
+    </bean>
+
 </beans>
