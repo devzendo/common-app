@@ -37,26 +37,17 @@ public final class TestLifecycleManager extends SpringLoaderUnittestCase {
 
     private LifecycleManager lifecycleManager;
 
-    /**
-     *
-     */
     public void getSimpleTestPrerequisites() {
         lifecycleManager = getSpringLoader().getBean("lifecycleManager", LifecycleManager.class);
     }
 
-    /**
-     *
-     */
     @Test
-    public void haveLivecycleManager() {
+    public void haveLifecycleManager() {
         getSimpleTestPrerequisites();
 
         Assert.assertNotNull(lifecycleManager);
     }
 
-    /**
-     *
-     */
     @Test
     public void verifyTestResourcesGetWired() {
         getSimpleTestPrerequisites();
@@ -76,9 +67,6 @@ public final class TestLifecycleManager extends SpringLoaderUnittestCase {
         Assert.assertSame(one, twoLifecycle.getOne());
     }
 
-    /**
-     *
-     */
     @Test
     public void lifeCycleManagerGetsRightConfig() {
         getSimpleTestPrerequisites();
@@ -89,9 +77,6 @@ public final class TestLifecycleManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("two", beanNames.get(0));
     }
 
-    /**
-     *
-     */
     @Test
     public void instantiationOfLifecycles() {
         getSimpleTestPrerequisites();
@@ -100,9 +85,6 @@ public final class TestLifecycleManager extends SpringLoaderUnittestCase {
         Assert.assertSame(two, lifecycleManager.getBean("two"));
     }
 
-    /**
-     *
-     */
     @Test
     public void startupStartsUpAndShutdownShutsDown() {
         getSimpleTestPrerequisites();
