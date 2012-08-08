@@ -67,7 +67,7 @@ public final class DefaultLifecycleManagerImpl extends AbstractSpringBeanListLoa
         LOGGER.info("LifecycleManager preparing to shut down Lifecycle/ShutdownPreparable beans...");
         for (int i = getBeanNames().size() - 1; i >= 0; i--) {
             final String beanName = getBeanNames().get(i);
-            LOGGER.info("Shutting down Lifecycle bean '" + beanName + "'");
+            LOGGER.info("Preparing to shut down Lifecycle bean '" + beanName + "'");
             try {
                 final Lifecycle lifecycleBean = getBean(beanName);
                 if (lifecycleBean != null && lifecycleBean instanceof ShutdownPreparable) {
