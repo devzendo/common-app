@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-lazy-init="true">
+
+    <!-- simple tests -->
+    <bean id="serviceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <!-- <value>two</value> -->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="serviceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="serviceList" />
+    </bean>
+
+    <!--
+    <bean id="one" class="org.devzendo.commonapp.lifecycle.OneLifecycle">
+    </bean>
+
+    <bean id="two" class="org.devzendo.commonapp.lifecycle.TwoLifecycle">
+        <constructor-arg ref="one" />
+    </bean>
+    -->
+
+    <!-- uninstantiatable beans don't get used -->
+    <!-- <bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>nonexistant</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="badLoadLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="badLoadLifecycleList" />
+    </bean>
+    -->
+
+    <!-- ordering test -->
+    <!-- <bean id="orderMonitor" class="org.devzendo.commonapp.util.OrderMonitor">
+    </bean>
+
+    <bean id="a" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+        <constructor-arg ref="orderMonitor" />
+        <constructor-arg value="a" />
+    </bean>
+    <bean id="b" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+        <constructor-arg ref="orderMonitor" />
+        <constructor-arg value="b" />
+    </bean>
+    <bean id="c" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+        <constructor-arg ref="orderMonitor" />
+        <constructor-arg value="c" />
+    </bean>
+    <bean id="orderingLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>a</value>
+                <value>b</value>
+                <value>c</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="orderingLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="orderingLifecycleList" />
+    </bean>
+    -->
+
+    <!-- prepare shutdown test -->
+    <!-- <bean id="prepareShutdownLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>shutdownPreparable</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="prepareShutdownLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="prepareShutdownLifecycleList" />
+    </bean>
+
+    <bean id="shutdownPreparable" class="org.devzendo.commonapp.lifecycle.PrepareShutdownLifecycle">
+    </bean>
+    -->
+
+</beans>
