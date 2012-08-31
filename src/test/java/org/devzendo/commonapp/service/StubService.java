@@ -17,15 +17,10 @@ package org.devzendo.commonapp.service;
  */
 public class StubService implements Service {
     private String state = "new-init";
-    private StubService dependency = null;
     private boolean prepareShutdownCalled = false;
 
     public StubService() {
         state = "ctor";
-    }
-    public StubService(StubService dependency) {
-        state = "ctor";
-        this.dependency = dependency;
     }
 
     public void shutdown() {
@@ -42,10 +37,6 @@ public class StubService implements Service {
 
     public String getState() {
         return state;
-    }
-
-    public StubService getDependency() {
-        return dependency;
     }
 
     public boolean wasPrepareShutdownCalled() {

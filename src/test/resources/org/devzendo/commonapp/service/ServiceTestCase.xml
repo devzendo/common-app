@@ -23,7 +23,6 @@
     </bean>
 
     <bean id="two" class="org.devzendo.commonapp.service.StubService">
-        <constructor-arg ref="one" />
     </bean>
 
     <!-- uninstantiatable beans don't get used -->
