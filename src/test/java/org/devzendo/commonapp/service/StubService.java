@@ -1,5 +1,7 @@
 package org.devzendo.commonapp.service;
 
+import org.apache.log4j.Logger;
+
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
  * <p/>
@@ -16,10 +18,15 @@ package org.devzendo.commonapp.service;
  * limitations under the License.
  */
 public class StubService implements Service {
+    private static final Logger LOGGER = Logger.getLogger(StubService.class);
+
     private String state = "new-init";
     private boolean prepareShutdownCalled = false;
+    private final String name;
 
-    public StubService() {
+    public StubService(final String name) {
+        this.name = name;
+        LOGGER.info("Constructed StubService '" + name + "'");
         state = "ctor";
     }
 
