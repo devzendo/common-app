@@ -16,4 +16,21 @@
 package org.devzendo.commonapp.service;
 
 public interface Service {
+
+    /**
+     * Start up the service.
+     */
+    void startup();
+
+    /**
+     * Prepare to shut down the component. This method called before any services
+     * are shut down.
+     */
+    void prepareForShutdown();
+
+    /**
+     * Shut down the service.
+     */
+    void shutdown();
+
 }

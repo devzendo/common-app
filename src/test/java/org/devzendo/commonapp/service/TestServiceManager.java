@@ -1,5 +1,7 @@
 package org.devzendo.commonapp.service;
 
+import org.devzendo.commonapp.lifecycle.Lifecycle;
+import org.devzendo.commonapp.lifecycle.TwoLifecycle;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.junit.Assert;
@@ -35,5 +37,27 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertNotNull(serviceManager);
     }
 
+    @Test
+    public void startupStartsUpAndShutdownShutsDown() {
+        getSimpleTestPrerequisites();
 
+        final Service one = getSpringLoader().getBean("one", Service.class);
+        final StubService oneService = (StubService) one;
+        Assert.assertEquals("ctor", oneService.getState());
+
+        final Service two = getSpringLoader().getBean("two", Service.class);
+        final StubService twoService = (StubService) two;
+        Assert.assertEquals("ctor", twoService.getState());
+        Assert.assertFalse(twoService.wasPrepareShutdownCalled());
+
+        serviceManager.startup();
+
+        Assert.assertEquals("started", twoService.getState());
+        Assert.assertFalse(twoService.wasPrepareShutdownCalled());
+
+        serviceManager.shutdown();
+
+        Assert.assertEquals("shut down", twoService.getState());
+        Assert.assertTrue(twoService.wasPrepareShutdownCalled());
+    }
 }

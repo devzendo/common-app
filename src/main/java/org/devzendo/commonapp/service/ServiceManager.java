@@ -26,4 +26,13 @@ package org.devzendo.commonapp.service;
  * </ul>
  */
 public interface ServiceManager {
+    /**
+     * Start up all Services.
+     */
+    void startup();
+
+    /**
+     * Prepare all Services for shutdown then shut them all down.
+     */
+    void shutdown();
 }

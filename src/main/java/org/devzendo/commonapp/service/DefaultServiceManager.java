@@ -16,6 +16,8 @@
 package org.devzendo.commonapp.service;
 
 import org.apache.log4j.Logger;
+import org.devzendo.commonapp.lifecycle.Lifecycle;
+import org.devzendo.commonapp.lifecycle.ShutdownPreparable;
 import org.devzendo.commonapp.spring.springbeanlistloader.AbstractSpringBeanListLoaderImpl;
 import org.devzendo.commonapp.spring.springloader.SpringLoader;
 
@@ -32,4 +34,49 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         super(springLoader, serviceBeanNames);
     }
 
+    public void startup() {
+        LOGGER.info("ServiceManager starting Service beans...");
+        for (final String beanName : getBeanNames()) {
+            LOGGER.info("Starting Service bean '" + beanName + "'");
+            try {
+                final Service serviceBean = getBean(beanName);
+                if (serviceBean != null) {
+                    serviceBean.startup();
+                }
+            } catch (final RuntimeException re) {
+                LOGGER.warn("Could not start up '" + beanName + ": " + re.getMessage(), re);
+            }
+        }
+        LOGGER.info("End of ServiceManager startup");
+    }
+
+    public void shutdown() {
+        LOGGER.info("ServiceManager preparing to shut down Service beans...");
+        for (int i = getBeanNames().size() - 1; i >= 0; i--) {
+            final String beanName = getBeanNames().get(i);
+            LOGGER.info("Preparing to shut down Service bean '" + beanName + "'");
+            try {
+                final Service serviceBean = getBean(beanName);
+                if (serviceBean != null) {
+                    serviceBean.prepareForShutdown();
+                }
+            } catch (final RuntimeException re) {
+                LOGGER.warn("Could not prepare '" + beanName + " for shut down : " + re.getMessage(), re);
+            }
+        }
+        LOGGER.info("ServiceManager shutting down Service beans...");
+        for (int i = getBeanNames().size() - 1; i >= 0; i--) {
+            final String beanName = getBeanNames().get(i);
+            LOGGER.info("Shutting down Service bean '" + beanName + "'");
+            try {
+                final Service serviceBean = getBean(beanName);
+                if (serviceBean != null) {
+                    serviceBean.shutdown();
+                }
+            } catch (final RuntimeException re) {
+                LOGGER.warn("Could not shut down '" + beanName + ": " + re.getMessage(), re);
+            }
+        }
+        LOGGER.info("End of ServiceManager shutdown");
+    }
 }

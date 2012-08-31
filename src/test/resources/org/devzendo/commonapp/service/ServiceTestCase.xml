@@ -8,7 +8,8 @@
     <bean id="serviceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <!-- <value>two</value> -->
+                <value>one</value>
+                <value>two</value>
             </list>
         </property>
     </bean>
@@ -18,14 +19,12 @@
         <constructor-arg ref="serviceList" />
     </bean>
 
-    <!--
-    <bean id="one" class="org.devzendo.commonapp.lifecycle.OneLifecycle">
+    <bean id="one" class="org.devzendo.commonapp.service.StubService">
     </bean>
 
-    <bean id="two" class="org.devzendo.commonapp.lifecycle.TwoLifecycle">
+    <bean id="two" class="org.devzendo.commonapp.service.StubService">
         <constructor-arg ref="one" />
     </bean>
-    -->
 
     <!-- uninstantiatable beans don't get used -->
     <!-- <bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
