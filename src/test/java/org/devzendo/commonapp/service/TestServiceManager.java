@@ -106,15 +106,22 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test
     public void normalStartupAndShutdownEventsAreEmitted() {
         getSimpleTestPrerequisites();
-        final ServiceListener listener = EasyMock.createMock(ServiceListener.class);
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
         listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "one", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "two", "Starting")));
         listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTED, "one", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "two", "Starting")));
         listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTED, "two", "Started")));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, "two", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, "two", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, "one", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, "one", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
         serviceManager.startup();
+        serviceManager.shutdown();
 
         EasyMock.verify(listener);
     }

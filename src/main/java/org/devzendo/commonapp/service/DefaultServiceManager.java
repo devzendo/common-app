@@ -76,7 +76,9 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             try {
                 final Service serviceBean = getBean(beanName);
                 if (serviceBean != null) {
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, beanName, "Stopping"));
                     serviceBean.shutdown();
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, beanName, "Stopped"));
                 }
             } catch (final RuntimeException re) {
                 LOGGER.warn("Could not shut down '" + beanName + ": " + re.getMessage(), re);
