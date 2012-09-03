@@ -49,7 +49,8 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, beanName, "Started"));
                 }
             } catch (final RuntimeException re) {
-                LOGGER.warn("Could not start up '" + beanName + ": " + re.getMessage(), re);
+                LOGGER.warn("Could not start up '" + beanName + "': " + re.getMessage(), re);
+                serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re));
             }
         }
         LOGGER.info("End of ServiceManager startup");
@@ -66,7 +67,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     serviceBean.prepareForShutdown();
                 }
             } catch (final RuntimeException re) {
-                LOGGER.warn("Could not prepare '" + beanName + " for shut down : " + re.getMessage(), re);
+                LOGGER.warn("Could not prepare '" + beanName + "' for shut down : " + re.getMessage(), re);
             }
         }
         LOGGER.info("ServiceManager shutting down Service beans...");
@@ -81,7 +82,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, beanName, "Stopped"));
                 }
             } catch (final RuntimeException re) {
-                LOGGER.warn("Could not shut down '" + beanName + ": " + re.getMessage(), re);
+                LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
             }
         }
         LOGGER.info("End of ServiceManager shutdown");

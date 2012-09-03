@@ -23,11 +23,17 @@ public class ServiceEvent implements ObservableEvent {
     private final ServiceEventType eventType;
     private final String serviceName;
     private final String description;
+    private final Exception fault;
 
     public ServiceEvent(final ServiceEventType eventType, final String serviceName, final String description) {
+        this(eventType, serviceName, description, null);
+    }
+
+    public ServiceEvent(final ServiceEventType eventType, final String serviceName, final String description, final Exception fault) {
         this.eventType = eventType;
         this.serviceName = serviceName;
         this.description = description;
+        this.fault = fault;
     }
 
     public ServiceEventType getEventType() {
@@ -42,9 +48,26 @@ public class ServiceEvent implements ObservableEvent {
         return serviceName;
     }
 
+    public Exception getFault() {
+        return fault;
+    }
+
     @Override
     public String toString() {
-        return eventType + ": " + serviceName + " - '" + description + "'";
+        final StringBuilder sb = new StringBuilder();
+        sb.append(eventType);
+        sb.append(": ");
+        sb.append(serviceName);
+        sb.append(" - '");
+        sb.append(description);
+        sb.append("'");
+        if (fault != null) {
+            sb.append(" [");
+            sb.append(fault.getMessage());
+            sb.append("]");
+        }
+
+        return sb.toString();
     }
 
     @Override
@@ -52,7 +75,8 @@ public class ServiceEvent implements ObservableEvent {
         return new HashCodeBuilder(1, 31).
                 append(eventType).
                 append(serviceName).
-                append(description).toHashCode();
+                append(description).
+                append(fault).toHashCode();
     }
 
     @Override
@@ -69,7 +93,7 @@ public class ServiceEvent implements ObservableEvent {
                 append(this.eventType, other.eventType).
                 append(this.serviceName, other.serviceName).
                 append(this.description, other.description).
+                append(this.fault, other.fault).
                 isEquals();
     }
-
 }

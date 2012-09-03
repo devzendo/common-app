@@ -125,4 +125,25 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         EasyMock.verify(listener);
     }
+
+    @Test
+    public void faultingStartupEvent() {
+        serviceManager = getSpringLoader().getBean("faultingServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "fault", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION)));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, "fault", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, "fault", "Stopped")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+        serviceManager.shutdown();
+
+        EasyMock.verify(listener);
+    }
 }

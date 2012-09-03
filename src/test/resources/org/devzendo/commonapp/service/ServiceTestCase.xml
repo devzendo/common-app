@@ -92,4 +92,21 @@
     </bean>
     -->
 
+    <!-- faulting service -->
+    <bean id="faultingServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>fault</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="faultingServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="faultingServiceList" />
+    </bean>
+
+    <bean id="fault" class="org.devzendo.commonapp.service.FaultService">
+    </bean>
+
 </beans>
