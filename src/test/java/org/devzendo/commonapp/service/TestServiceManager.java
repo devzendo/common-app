@@ -1,11 +1,15 @@
 package org.devzendo.commonapp.service;
 
 import org.devzendo.commonapp.lifecycle.Lifecycle;
+import org.devzendo.commonapp.lifecycle.LifecycleManager;
 import org.devzendo.commonapp.lifecycle.TwoLifecycle;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
+import org.devzendo.commonapp.util.OrderMonitor;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
@@ -60,4 +64,42 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("shut down", twoService.getState());
         Assert.assertTrue(twoService.wasPrepareShutdownCalled());
     }
+
+    /**
+     * Tests for correct sequencing of startup and shutdown (forward and
+     * reverse.
+     */
+    @Test
+    public void startupAndShutdownSequence() {
+        serviceManager = getSpringLoader().getBean("orderingServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+
+        final OrderMonitor orderMonitor = getSpringLoader().getBean("orderMonitor", OrderMonitor.class);
+        Assert.assertNotNull(orderMonitor);
+
+        final List<String> initialOrdering = orderMonitor.getOrdering();
+        Assert.assertEquals(0, initialOrdering.size());
+
+        serviceManager.startup();
+
+        final List<String> startupOrdering = orderMonitor.getOrdering();
+        Assert.assertEquals(3, startupOrdering.size());
+        Assert.assertEquals("a startup", startupOrdering.get(0));
+        Assert.assertEquals("b startup", startupOrdering.get(1));
+        Assert.assertEquals("c startup", startupOrdering.get(2));
+
+        orderMonitor.reset();
+
+        serviceManager.shutdown();
+
+        final List<String> shutdownOrdering = orderMonitor.getOrdering();
+        Assert.assertEquals(6, shutdownOrdering.size());
+        Assert.assertEquals("c prepareForShutdown", shutdownOrdering.get(0));
+        Assert.assertEquals("b prepareForShutdown", shutdownOrdering.get(1));
+        Assert.assertEquals("a prepareForShutdown", shutdownOrdering.get(2));
+        Assert.assertEquals("c shutdown", shutdownOrdering.get(3));
+        Assert.assertEquals("b shutdown", shutdownOrdering.get(4));
+        Assert.assertEquals("a shutdown", shutdownOrdering.get(5));
+    }
+
 }

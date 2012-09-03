@@ -42,23 +42,24 @@
     </bean>
     -->
 
-    <!-- ordering test -->
-    <!-- <bean id="orderMonitor" class="org.devzendo.commonapp.util.OrderMonitor">
+    <!-- ordering tests -->
+    <bean id="orderMonitor" class="org.devzendo.commonapp.util.OrderMonitor">
     </bean>
 
-    <bean id="a" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+    <!-- ordering test -->
+    <bean id="a" class="org.devzendo.commonapp.service.OrderService">
         <constructor-arg ref="orderMonitor" />
         <constructor-arg value="a" />
     </bean>
-    <bean id="b" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+    <bean id="b" class="org.devzendo.commonapp.service.OrderService">
         <constructor-arg ref="orderMonitor" />
         <constructor-arg value="b" />
     </bean>
-    <bean id="c" class="org.devzendo.commonapp.lifecycle.NamedLifecycle">
+    <bean id="c" class="org.devzendo.commonapp.service.OrderService">
         <constructor-arg ref="orderMonitor" />
         <constructor-arg value="c" />
     </bean>
-    <bean id="orderingLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="orderingServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>a</value>
@@ -68,11 +69,10 @@
         </property>
     </bean>
 
-    <bean id="orderingLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+    <bean id="orderingServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="orderingLifecycleList" />
+        <constructor-arg ref="orderingServiceList" />
     </bean>
-    -->
 
     <!-- prepare shutdown test -->
     <!-- <bean id="prepareShutdownLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
