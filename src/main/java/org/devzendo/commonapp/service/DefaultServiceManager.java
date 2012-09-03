@@ -46,6 +46,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                 if (serviceBean != null) {
                     serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTING, beanName, "Starting"));
                     serviceBean.startup();
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, beanName, "Started"));
                 }
             } catch (final RuntimeException re) {
                 LOGGER.warn("Could not start up '" + beanName + ": " + re.getMessage(), re);
