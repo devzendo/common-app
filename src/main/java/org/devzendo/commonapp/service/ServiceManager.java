@@ -35,4 +35,8 @@ public interface ServiceManager {
      * Prepare all Services for shutdown then shut them all down.
      */
     void shutdown();
+
+    void addServiceListener(ServiceListener listener);
+
+    void removeServiceListener(ServiceListener listener);
 }

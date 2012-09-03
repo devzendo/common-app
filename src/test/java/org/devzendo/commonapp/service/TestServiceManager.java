@@ -6,6 +6,7 @@ import org.devzendo.commonapp.lifecycle.TwoLifecycle;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.devzendo.commonapp.util.OrderMonitor;
+import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -102,4 +103,19 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("a shutdown", shutdownOrdering.get(5));
     }
 
+    @Test
+    public void correctEventsAreEmitted() {
+        getSimpleTestPrerequisites();
+        final ServiceListener listener = EasyMock.createMock(ServiceListener.class);
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(
+                ServiceEventType.SERVICE_STARTING, "one", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(
+                ServiceEventType.SERVICE_STARTING, "two", "Starting")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+
+        EasyMock.verify(listener);
+    }
 }

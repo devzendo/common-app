@@ -20,11 +20,14 @@ import org.devzendo.commonapp.lifecycle.Lifecycle;
 import org.devzendo.commonapp.lifecycle.ShutdownPreparable;
 import org.devzendo.commonapp.spring.springbeanlistloader.AbstractSpringBeanListLoaderImpl;
 import org.devzendo.commonapp.spring.springloader.SpringLoader;
+import org.devzendo.commoncode.patterns.observer.ObserverList;
 
 import java.util.List;
 
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
+
+    private ObserverList<ServiceEvent> serviceListeners = new ObserverList<ServiceEvent>();
 
     /**
      * @param springLoader the Spring loader
@@ -41,6 +44,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             try {
                 final Service serviceBean = getBean(beanName);
                 if (serviceBean != null) {
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTING, beanName, "Starting"));
                     serviceBean.startup();
                 }
             } catch (final RuntimeException re) {
@@ -78,5 +82,13 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             }
         }
         LOGGER.info("End of ServiceManager shutdown");
+    }
+
+    public void addServiceListener(final ServiceListener listener) {
+        serviceListeners.addObserver(listener);
+    }
+
+    public void removeServiceListener(final ServiceListener listener) {
+        serviceListeners.removeListener(listener);
     }
 }
