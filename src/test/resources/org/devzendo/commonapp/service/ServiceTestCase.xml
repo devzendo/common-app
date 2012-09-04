@@ -109,4 +109,21 @@
     <bean id="fault" class="org.devzendo.commonapp.service.FaultService">
     </bean>
 
+    <!-- service control thread is used to call into service -->
+    <bean id="threadingServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>thread</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="threadingServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="threadingServiceList" />
+    </bean>
+
+    <bean id="thread" class="org.devzendo.commonapp.service.ThreadService">
+    </bean>
+
 </beans>

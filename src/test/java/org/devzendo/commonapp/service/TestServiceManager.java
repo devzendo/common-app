@@ -146,4 +146,19 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         EasyMock.verify(listener);
     }
+
+    @Test
+    public void serviceMethodsCalledByServiceControlThread() {
+        serviceManager = getSpringLoader().getBean("threadingServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+
+        final ThreadService threadService = getSpringLoader().getBean("thread", ThreadService.class);
+
+        serviceManager.startup();
+        serviceManager.shutdown();
+
+        Assert.assertTrue(threadService.startupOnServiceControlThread);
+        Assert.assertTrue(threadService.prepareForShutdownOnServiceControlThread);
+        Assert.assertTrue(threadService.shutdownOnServiceControlThread);
+    }
 }
