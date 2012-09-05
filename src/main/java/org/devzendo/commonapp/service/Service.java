@@ -20,7 +20,7 @@ public interface Service {
     /**
      * Start up the service.
      */
-    void startup();
+    void startup(ServiceManagerProxy serviceManagerProxy);
 
     /**
      * Prepare to shut down the component. This method called before any services

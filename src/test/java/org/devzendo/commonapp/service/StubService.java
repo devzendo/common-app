@@ -34,7 +34,7 @@ public class StubService implements Service {
         state = "shut down";
     }
 
-    public void startup() {
+    public void startup(final ServiceManagerProxy proxy) {
         state = "started";
     }
 

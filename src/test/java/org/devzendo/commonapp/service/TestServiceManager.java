@@ -161,4 +161,26 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertTrue(threadService.prepareForShutdownOnServiceControlThread);
         Assert.assertTrue(threadService.shutdownOnServiceControlThread);
     }
+
+    @Test
+    public void serviceCanWaitOnStartup() {
+        serviceManager = getSpringLoader().getBean("waitingServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "waitStartup", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTED, "waitStartup", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_WAITING, "waitStartup", "Waiting for Godot")));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, "waitStartup", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, "waitStartup", "Stopped")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+        serviceManager.shutdown();
+
+        EasyMock.verify(listener);
+    }
 }

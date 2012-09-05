@@ -17,7 +17,7 @@ package org.devzendo.commonapp.service;
  */
 public class FaultService implements Service {
     public static final RuntimeException FAULT_EXCEPTION = new RuntimeException("some exception");
-    public void startup() {
+    public void startup(final ServiceManagerProxy proxy) {
         throw FAULT_EXCEPTION;
     }
 

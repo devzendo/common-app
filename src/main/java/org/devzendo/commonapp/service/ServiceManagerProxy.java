@@ -1,7 +1,5 @@
 package org.devzendo.commonapp.service;
 
-import org.devzendo.commonapp.util.OrderMonitor;
-
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
  * <p/>
@@ -17,24 +15,6 @@ import org.devzendo.commonapp.util.OrderMonitor;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class OrderService implements Service {
-    private final OrderMonitor monitor;
-    private final String name;
-
-    public OrderService(final OrderMonitor monitor, final String name) {
-        this.monitor = monitor;
-        this.name = name;
-    }
-
-    public void startup(final ServiceManagerProxy proxy) {
-        monitor.add(name + " startup");
-    }
-
-    public void prepareForShutdown() {
-        monitor.add(name + " prepareForShutdown");
-    }
-
-    public void shutdown() {
-        monitor.add(name + " shutdown");
-    }
+public interface ServiceManagerProxy {
+    void waiting(String description);
 }

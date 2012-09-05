@@ -61,6 +61,22 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         }
     }
 
+    private class DefaultServiceManagerProxy implements ServiceManagerProxy {
+        private final String serviceBeanName;
+
+        public DefaultServiceManagerProxy(final String serviceBeanName) {
+            this.serviceBeanName = serviceBeanName;
+        }
+
+        public void waiting(final String description) {
+            enqueue(new Runnable() {
+                public void run() {
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_WAITING, serviceBeanName, description));
+                }
+            });
+        }
+    }
+
     private void enqueue(final Runnable runnable) {
         try {
             queue.put(runnable);
@@ -93,7 +109,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
                             serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTING, beanName, "Starting"));
-                            serviceBean.startup();
+                            serviceBean.startup(new DefaultServiceManagerProxy(beanName));
                             serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, beanName, "Started"));
                         }
                     } catch (final RuntimeException re) {

@@ -15,24 +15,14 @@ package org.devzendo.commonapp.service;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ThreadService implements Service {
-    public volatile boolean startupOnServiceControlThread = false;
-    public volatile boolean prepareForShutdownOnServiceControlThread = false;
-    public volatile boolean shutdownOnServiceControlThread = false;
-
-    private boolean onServiceControlThread() {
-        return Thread.currentThread().getName().equals("Service Manager");
-    }
-
-    public void startup(final ServiceManagerProxy proxy) {
-        startupOnServiceControlThread = onServiceControlThread();
+public class WaitingStartupService implements Service {
+    public void startup(final ServiceManagerProxy serviceManagerProxy) {
+        serviceManagerProxy.waiting("Waiting for Godot");
     }
 
     public void prepareForShutdown() {
-        prepareForShutdownOnServiceControlThread = onServiceControlThread();
     }
 
     public void shutdown() {
-        shutdownOnServiceControlThread = onServiceControlThread();
     }
 }
