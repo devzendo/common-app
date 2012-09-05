@@ -75,6 +75,14 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                 }
             });
         }
+
+        public void started(final String description) {
+            enqueue(new Runnable() {
+                public void run() {
+                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, serviceBeanName, description));
+                }
+            });
+        }
     }
 
     private void enqueue(final Runnable runnable) {

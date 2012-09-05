@@ -143,4 +143,21 @@
     <bean id="waitStartup" class="org.devzendo.commonapp.service.WaitingStartupService">
     </bean>
 
+    <!-- services can wait on startup then indicate started -->
+    <bean id="waitThenStartupServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>waitThenStartup</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="waitThenStartupServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="waitThenStartupServiceList" />
+    </bean>
+
+    <bean id="waitThenStartup" class="org.devzendo.commonapp.service.WaitThenStartupService">
+    </bean>
+
 </beans>

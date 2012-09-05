@@ -35,14 +35,14 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager = getSpringLoader().getBean("serviceManager", ServiceManager.class);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void haveServiceManager() {
         getSimpleTestPrerequisites();
 
         Assert.assertNotNull(serviceManager);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void startupStartsUpAndShutdownShutsDown() {
         getSimpleTestPrerequisites();
 
@@ -70,7 +70,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
      * Tests for correct sequencing of startup and shutdown (forward and
      * reverse.
      */
-    @Test
+    @Test(timeout = 1000)
     public void startupAndShutdownSequence() {
         serviceManager = getSpringLoader().getBean("orderingServiceManager", ServiceManager.class);
         Assert.assertNotNull(serviceManager);
@@ -103,7 +103,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("a shutdown", shutdownOrdering.get(5));
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void normalStartupAndShutdownEventsAreEmitted() {
         getSimpleTestPrerequisites();
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
@@ -126,7 +126,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         EasyMock.verify(listener);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void faultingStartupEvent() {
         serviceManager = getSpringLoader().getBean("faultingServiceManager", ServiceManager.class);
         Assert.assertNotNull(serviceManager);
@@ -147,7 +147,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         EasyMock.verify(listener);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void serviceMethodsCalledByServiceControlThread() {
         serviceManager = getSpringLoader().getBean("threadingServiceManager", ServiceManager.class);
         Assert.assertNotNull(serviceManager);
@@ -162,7 +162,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertTrue(threadService.shutdownOnServiceControlThread);
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void serviceCanWaitOnStartup() {
         serviceManager = getSpringLoader().getBean("waitingServiceManager", ServiceManager.class);
         Assert.assertNotNull(serviceManager);
@@ -179,6 +179,32 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.addServiceListener(listener);
 
         serviceManager.startup();
+        serviceManager.shutdown();
+
+        EasyMock.verify(listener);
+    }
+
+    @Test(timeout = 1000)
+    public void serviceCanWaitThenIndicateStartedOnStartup() {
+        serviceManager = getSpringLoader().getBean("waitThenStartupServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+
+        final WaitThenStartupService waitThenStartupService = getSpringLoader().getBean("waitThenStartup", WaitThenStartupService.class);
+
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTING, "waitThenStartup", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTED, "waitThenStartup", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_WAITING, "waitThenStartup", "Short wait")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STARTED, "waitThenStartup", "Finally started")));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, "waitThenStartup", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, "waitThenStartup", "Stopped")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+        waitThenStartupService.waitForFinish();
         serviceManager.shutdown();
 
         EasyMock.verify(listener);

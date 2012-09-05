@@ -17,4 +17,6 @@ package org.devzendo.commonapp.service;
  */
 public interface ServiceManagerProxy {
     void waiting(String description);
+
+    void started(String description);
 }
