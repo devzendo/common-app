@@ -18,18 +18,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public final class ServiceEventType {
-    public static final ServiceEventType SERVICE_BEFORESTARTUP = new ServiceEventType("BeforeStartup");
-    public static final ServiceEventType SERVICE_STARTING = new ServiceEventType("Starting");
-    public static final ServiceEventType SERVICE_STARTED = new ServiceEventType("Started");
-    public static final ServiceEventType SERVICE_FAULTY = new ServiceEventType("Faulty");
-    public static final ServiceEventType SERVICE_WAITING = new ServiceEventType("Waiting");
-    public static final ServiceEventType SERVICE_STOPPING = new ServiceEventType("Stopping");
-    public static final ServiceEventType SERVICE_STOPPED = new ServiceEventType("Stopped");
+public final class ServiceState {
+    public static final ServiceState SERVICE_BEFORESTARTUP = new ServiceState("BeforeStartup");
+    public static final ServiceState SERVICE_STARTING = new ServiceState("Starting");
+    public static final ServiceState SERVICE_STARTED = new ServiceState("Started");
+    public static final ServiceState SERVICE_FAULTY = new ServiceState("Faulty");
+    public static final ServiceState SERVICE_WAITING = new ServiceState("Waiting");
+    public static final ServiceState SERVICE_STOPPING = new ServiceState("Stopping");
+    public static final ServiceState SERVICE_STOPPED = new ServiceState("Stopped");
 
     private final String serviceEventName;
 
-    private ServiceEventType(final String serviceEventName) {
+    private ServiceState(final String serviceEventName) {
         this.serviceEventName = serviceEventName;
     }
 
@@ -51,7 +51,7 @@ public final class ServiceEventType {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final ServiceEventType other = (ServiceEventType) obj;
+        final ServiceState other = (ServiceState) obj;
 
         final EqualsBuilder e = new EqualsBuilder();
         e.append(this.serviceEventName, other.serviceEventName);

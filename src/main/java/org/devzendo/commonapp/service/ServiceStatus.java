@@ -20,24 +20,24 @@ import org.devzendo.commoncode.patterns.observer.ObservableEvent;
  * limitations under the License.
  */
 public class ServiceStatus implements ObservableEvent {
-    private final ServiceEventType eventType;
+    private final ServiceState state;
     private final String serviceName;
     private final String description;
     private final Exception fault;
 
-    public ServiceStatus(final ServiceEventType eventType, final String serviceName, final String description) {
-        this(eventType, serviceName, description, null);
+    public ServiceStatus(final ServiceState state, final String serviceName, final String description) {
+        this(state, serviceName, description, null);
     }
 
-    public ServiceStatus(final ServiceEventType eventType, final String serviceName, final String description, final Exception fault) {
-        this.eventType = eventType;
+    public ServiceStatus(final ServiceState state, final String serviceName, final String description, final Exception fault) {
+        this.state = state;
         this.serviceName = serviceName;
         this.description = description;
         this.fault = fault;
     }
 
-    public ServiceEventType getEventType() {
-        return eventType;
+    public ServiceState getState() {
+        return state;
     }
 
     public String getDescription() {
@@ -55,7 +55,7 @@ public class ServiceStatus implements ObservableEvent {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(eventType);
+        sb.append(state);
         sb.append(": ");
         sb.append(serviceName);
         sb.append(" - '");
@@ -73,7 +73,7 @@ public class ServiceStatus implements ObservableEvent {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(1, 31).
-                append(eventType).
+                append(state).
                 append(serviceName).
                 append(description).
                 append(fault).toHashCode();
@@ -90,7 +90,7 @@ public class ServiceStatus implements ObservableEvent {
         final ServiceStatus other = (ServiceStatus) obj;
 
         return new EqualsBuilder().
-                append(this.eventType, other.eventType).
+                append(this.state, other.state).
                 append(this.serviceName, other.serviceName).
                 append(this.description, other.description).
                 append(this.fault, other.fault).

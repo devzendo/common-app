@@ -104,15 +104,15 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         getSimpleTestPrerequisites();
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTING, "one", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTED, "one", "Started")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTING, "two", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTED, "two", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "one", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "one", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "two", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "two", "Started")));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPING, "two", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPED, "two", "Stopped")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPING, "one", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPED, "one", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "two", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "two", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "one", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "one", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
@@ -128,11 +128,11 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTING, "fault", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION)));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "fault", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION)));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPING, "fault", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPED, "fault", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "fault", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "fault", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
@@ -162,12 +162,12 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTING, "waitStartup", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTED, "waitStartup", "Started")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_WAITING, "waitStartup", "Waiting for Godot")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "waitStartup", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "waitStartup", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_WAITING, "waitStartup", "Waiting for Godot")));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPING, "waitStartup", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPED, "waitStartup", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "waitStartup", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "waitStartup", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
@@ -185,13 +185,13 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTING, "waitThenStartup", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTED, "waitThenStartup", "Started")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_WAITING, "waitThenStartup", "Short wait")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STARTED, "waitThenStartup", "Finally started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "waitThenStartup", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "waitThenStartup", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_WAITING, "waitThenStartup", "Short wait")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "waitThenStartup", "Finally started")));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPING, "waitThenStartup", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceEventType.SERVICE_STOPPED, "waitThenStartup", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "waitThenStartup", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "waitThenStartup", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
@@ -206,9 +206,9 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     public void serviceStatusesCanBeObtained() {
         serviceManager = getSpringLoader().getBean("getStatusesServiceManager", ServiceManager.class);
 
-        final ServiceStatus initialWaitStartupStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "waitStartup", "Before startup", null);
-        final ServiceStatus initialFaultStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "fault", "Before startup", null);
-        final ServiceStatus initialOneStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "one", "Before startup", null);
+        final ServiceStatus initialWaitStartupStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "waitStartup", "Before startup", null);
+        final ServiceStatus initialFaultStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "fault", "Before startup", null);
+        final ServiceStatus initialOneStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "one", "Before startup", null);
         final List<ServiceStatus> initialStatuses = serviceManager.getStatuses();
         Assert.assertEquals(initialWaitStartupStatus, initialStatuses.get(0));
         Assert.assertEquals(initialFaultStatus, initialStatuses.get(1));
@@ -216,9 +216,9 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
 
-        final ServiceStatus waitStartupStatus = new ServiceStatus(ServiceEventType.SERVICE_WAITING, "waitStartup", "Waiting for Godot", null);
-        final ServiceStatus faultStatus = new ServiceStatus(ServiceEventType.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION);
-        final ServiceStatus oneStatus = new ServiceStatus(ServiceEventType.SERVICE_STARTED, "one", "Started", null);
+        final ServiceStatus waitStartupStatus = new ServiceStatus(ServiceState.SERVICE_WAITING, "waitStartup", "Waiting for Godot", null);
+        final ServiceStatus faultStatus = new ServiceStatus(ServiceState.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION);
+        final ServiceStatus oneStatus = new ServiceStatus(ServiceState.SERVICE_STARTED, "one", "Started", null);
         final List<ServiceStatus> statuses = serviceManager.getStatuses();
         Assert.assertEquals(waitStartupStatus, statuses.get(0));
         Assert.assertEquals(faultStatus, statuses.get(1));

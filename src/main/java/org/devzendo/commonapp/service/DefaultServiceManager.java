@@ -51,7 +51,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         super(springLoader, serviceBeanNames);
         synchronized (serviceStatusMap) {
             for (final String serviceName : serviceBeanNames) {
-                serviceStatusMap.put(serviceName, new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, serviceName, "Before startup", null));
+                serviceStatusMap.put(serviceName, new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, serviceName, "Before startup", null));
             }
         }
         thread = new Thread(new DefaultServiceManagerRunnable());
@@ -86,7 +86,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void waiting(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceUpdate(ServiceEventType.SERVICE_WAITING, serviceBeanName, description, null);
+                    emitServiceUpdate(ServiceState.SERVICE_WAITING, serviceBeanName, description, null);
                 }
             });
         }
@@ -94,15 +94,15 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void started(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceUpdate(ServiceEventType.SERVICE_STARTED, serviceBeanName, description, null);
+                    emitServiceUpdate(ServiceState.SERVICE_STARTED, serviceBeanName, description, null);
                 }
             });
         }
     }
 
-    private void emitServiceUpdate(final ServiceEventType serviceEventType, final String serviceBeanName, final String description, final Exception fault) {
+    private void emitServiceUpdate(final ServiceState serviceState, final String serviceBeanName, final String description, final Exception fault) {
         // TODO do we need two identical types here?
-        final ServiceStatus serviceStatus = new ServiceStatus(serviceEventType, serviceBeanName, description, fault);
+        final ServiceStatus serviceStatus = new ServiceStatus(serviceState, serviceBeanName, description, fault);
         synchronized (serviceStatusMap) {
             serviceStatusMap.put(serviceBeanName, serviceStatus);
         }
@@ -140,13 +140,13 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            emitServiceUpdate(ServiceEventType.SERVICE_STARTING, beanName, "Starting", null);
+                            emitServiceUpdate(ServiceState.SERVICE_STARTING, beanName, "Starting", null);
                             serviceBean.startup(new DefaultServiceManagerProxy(beanName));
-                            emitServiceUpdate(ServiceEventType.SERVICE_STARTED, beanName, "Started", null);
+                            emitServiceUpdate(ServiceState.SERVICE_STARTED, beanName, "Started", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not start up '" + beanName + "': " + re.getMessage(), re);
-                        emitServiceUpdate(ServiceEventType.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re);
+                        emitServiceUpdate(ServiceState.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re);
                     }
                 }
                 LOGGER.info("End of ServiceManager startup");
@@ -178,9 +178,9 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            emitServiceUpdate(ServiceEventType.SERVICE_STOPPING, beanName, "Stopping", null);
+                            emitServiceUpdate(ServiceState.SERVICE_STOPPING, beanName, "Stopping", null);
                             serviceBean.shutdown();
-                            emitServiceUpdate(ServiceEventType.SERVICE_STOPPED, beanName, "Stopped", null);
+                            emitServiceUpdate(ServiceState.SERVICE_STOPPED, beanName, "Stopped", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
