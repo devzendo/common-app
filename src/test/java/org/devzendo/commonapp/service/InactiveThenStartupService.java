@@ -17,13 +17,13 @@ import java.util.concurrent.CountDownLatch;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class WaitThenStartupService implements Service {
+public class InactiveThenStartupService implements Service {
     private final CountDownLatch latch = new CountDownLatch(1);
 
     public void startup(final ServiceManagerProxy serviceManagerProxy) {
         final Thread thread = new Thread(new Runnable() {
             public void run() {
-                serviceManagerProxy.waiting("Short wait");
+                serviceManagerProxy.inactive("Short wait");
                 try {
                     Thread.sleep(500);
                 } catch (final InterruptedException e) {

@@ -15,9 +15,9 @@ package org.devzendo.commonapp.service;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class WaitingStartupService implements Service {
+public class InactiveStartupService implements Service {
     public void startup(final ServiceManagerProxy serviceManagerProxy) {
-        serviceManagerProxy.waiting("Waiting for Godot");
+        serviceManagerProxy.inactive("Waiting for Godot");
     }
 
     public void prepareForShutdown() {

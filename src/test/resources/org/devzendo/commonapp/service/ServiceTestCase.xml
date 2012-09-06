@@ -126,38 +126,38 @@
     <bean id="thread" class="org.devzendo.commonapp.service.ThreadService">
     </bean>
 
-    <!-- services can wait on startup -->
-    <bean id="waitingServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <!-- services can indicate that they are inactive on startup -->
+    <bean id="inactiveServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>waitStartup</value>
+                <value>inactiveStartup</value>
             </list>
         </property>
     </bean>
 
-    <bean id="waitingServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+    <bean id="inactiveServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="waitingServiceList" />
+        <constructor-arg ref="inactiveServiceList" />
     </bean>
 
-    <bean id="waitStartup" class="org.devzendo.commonapp.service.WaitingStartupService">
+    <bean id="inactiveStartup" class="org.devzendo.commonapp.service.InactiveStartupService">
     </bean>
 
-    <!-- services can wait on startup then indicate started -->
-    <bean id="waitThenStartupServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <!-- services can go active on startup then indicate started -->
+    <bean id="inactiveThenStartupServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>waitThenStartup</value>
+                <value>inactiveThenStartup</value>
             </list>
         </property>
     </bean>
 
-    <bean id="waitThenStartupServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+    <bean id="inactiveThenStartupServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="waitThenStartupServiceList" />
+        <constructor-arg ref="inactiveThenStartupServiceList" />
     </bean>
 
-    <bean id="waitThenStartup" class="org.devzendo.commonapp.service.WaitThenStartupService">
+    <bean id="inactiveThenStartup" class="org.devzendo.commonapp.service.InactiveThenStartupService">
     </bean>
 
     <!-- the status of services can be obtained -->
@@ -165,7 +165,7 @@
         <property name="sourceList">
             <list>
                 <!-- using other service beans defined above -->
-                <value>waitStartup</value>
+                <value>inactiveStartup</value>
                 <value>fault</value>
                 <value>one</value>
             </list>

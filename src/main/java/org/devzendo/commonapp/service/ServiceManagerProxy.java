@@ -16,7 +16,7 @@ package org.devzendo.commonapp.service;
  * limitations under the License.
  */
 public interface ServiceManagerProxy {
-    void waiting(String description);
+    void inactive(String description);
 
     void started(String description);
 }

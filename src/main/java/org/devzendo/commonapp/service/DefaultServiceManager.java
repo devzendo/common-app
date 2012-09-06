@@ -30,7 +30,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // TODO update description
 // TODO documention
-// TODO rename waiting to inactive
 // TODO add active state
 // TODO remove ability for service to indicate it has started up; that state is
 // set by the manager alone.
@@ -83,10 +82,10 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             this.serviceBeanName = serviceBeanName;
         }
 
-        public void waiting(final String description) {
+        public void inactive(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceStatus(ServiceState.SERVICE_WAITING, serviceBeanName, description, null);
+                    emitServiceStatus(ServiceState.SERVICE_INACTIVE, serviceBeanName, description, null);
                 }
             });
         }
