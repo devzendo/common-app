@@ -160,4 +160,21 @@
     <bean id="waitThenStartup" class="org.devzendo.commonapp.service.WaitThenStartupService">
     </bean>
 
+    <!-- the status of services can be obtained -->
+    <bean id="getStatusesServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <!-- using other service beans defined above -->
+                <value>waitStartup</value>
+                <value>fault</value>
+                <value>one</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="getStatusesServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="getStatusesServiceList" />
+    </bean>
+
 </beans>

@@ -15,6 +15,8 @@
  */
 package org.devzendo.commonapp.service;
 
+import java.util.List;
+
 /**
  * The ServiceManager controls the lifecycle of services:
  * <ul>
@@ -39,4 +41,8 @@ public interface ServiceManager {
     void addServiceListener(ServiceListener listener);
 
     void removeServiceListener(ServiceListener listener);
+
+    List<ServiceStatus> getStatuses();
+
+    ServiceStatus getStatus(String serviceName);
 }

@@ -73,7 +73,6 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test(timeout = 1000)
     public void startupAndShutdownSequence() {
         serviceManager = getSpringLoader().getBean("orderingServiceManager", ServiceManager.class);
-        Assert.assertNotNull(serviceManager);
 
         final OrderMonitor orderMonitor = getSpringLoader().getBean("orderMonitor", OrderMonitor.class);
         Assert.assertNotNull(orderMonitor);
@@ -129,7 +128,6 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test(timeout = 1000)
     public void faultingStartupEvent() {
         serviceManager = getSpringLoader().getBean("faultingServiceManager", ServiceManager.class);
-        Assert.assertNotNull(serviceManager);
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
@@ -150,7 +148,6 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test(timeout = 1000)
     public void serviceMethodsCalledByServiceControlThread() {
         serviceManager = getSpringLoader().getBean("threadingServiceManager", ServiceManager.class);
-        Assert.assertNotNull(serviceManager);
 
         final ThreadService threadService = getSpringLoader().getBean("thread", ThreadService.class);
 
@@ -165,7 +162,6 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test(timeout = 1000)
     public void serviceCanWaitOnStartup() {
         serviceManager = getSpringLoader().getBean("waitingServiceManager", ServiceManager.class);
-        Assert.assertNotNull(serviceManager);
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
@@ -187,7 +183,6 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     @Test(timeout = 1000)
     public void serviceCanWaitThenIndicateStartedOnStartup() {
         serviceManager = getSpringLoader().getBean("waitThenStartupServiceManager", ServiceManager.class);
-        Assert.assertNotNull(serviceManager);
 
         final WaitThenStartupService waitThenStartupService = getSpringLoader().getBean("waitThenStartup", WaitThenStartupService.class);
 
@@ -208,5 +203,33 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.shutdown();
 
         EasyMock.verify(listener);
+    }
+
+    @Test(timeout = 1000)
+    public void serviceStatusesCanBeObtained() {
+        serviceManager = getSpringLoader().getBean("getStatusesServiceManager", ServiceManager.class);
+
+        final ServiceStatus initialWaitStartupStatus = new ServiceStatus("waitStartup", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
+        final ServiceStatus initialFaultStatus = new ServiceStatus("fault", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
+        final ServiceStatus initialOneStatus = new ServiceStatus("one", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
+        final List<ServiceStatus> initialStatuses = serviceManager.getStatuses();
+        Assert.assertEquals(initialWaitStartupStatus, initialStatuses.get(0));
+        Assert.assertEquals(initialFaultStatus, initialStatuses.get(1));
+        Assert.assertEquals(initialOneStatus, initialStatuses.get(2));
+
+        serviceManager.startup();
+
+        final ServiceStatus waitStartupStatus = new ServiceStatus("waitStartup", ServiceEventType.SERVICE_WAITING, "Waiting for Godot", null);
+        final ServiceStatus faultStatus = new ServiceStatus("fault", ServiceEventType.SERVICE_FAULTY, "Fault: some exception", FaultService.FAULT_EXCEPTION);
+        final ServiceStatus oneStatus = new ServiceStatus("one", ServiceEventType.SERVICE_STARTED, "Started", null);
+        final List<ServiceStatus> statuses = serviceManager.getStatuses();
+        Assert.assertEquals(waitStartupStatus, statuses.get(0));
+        Assert.assertEquals(faultStatus, statuses.get(1));
+        Assert.assertEquals(oneStatus, statuses.get(2));
+
+        Assert.assertEquals(waitStartupStatus, serviceManager.getStatus("waitStartup"));
+        Assert.assertEquals(faultStatus, serviceManager.getStatus("fault"));
+        Assert.assertEquals(oneStatus, serviceManager.getStatus("one"));
+        serviceManager.shutdown();
     }
 }

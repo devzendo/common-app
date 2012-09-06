@@ -20,11 +20,20 @@ import org.devzendo.commonapp.spring.springbeanlistloader.AbstractSpringBeanList
 import org.devzendo.commonapp.spring.springloader.SpringLoader;
 import org.devzendo.commoncode.patterns.observer.ObserverList;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
+// TODO update description
+// TODO documention
+// TODO rename waiting to inactive
+// TODO add active state
+// TODO remove ability for service to indicate it has started up; that state is
+// set by the manager alone.
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
 
@@ -32,6 +41,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
     private final Thread thread;
     private volatile boolean stopThread = false;
+    private final Map<String, ServiceStatus> serviceStatusMap = new HashMap<String, ServiceStatus>();
 
     /**
      * @param springLoader the Spring loader
@@ -39,6 +49,11 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
      */
     public DefaultServiceManager(final SpringLoader springLoader, final List<String> serviceBeanNames) {
         super(springLoader, serviceBeanNames);
+        synchronized (serviceStatusMap) {
+            for (final String serviceName : serviceBeanNames) {
+                serviceStatusMap.put(serviceName, new ServiceStatus(serviceName, ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null));
+            }
+        }
         thread = new Thread(new DefaultServiceManagerRunnable());
         thread.setDaemon(true);
         thread.setName("Service Manager");
@@ -71,7 +86,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void waiting(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_WAITING, serviceBeanName, description));
+                    emitServiceUpdate(ServiceEventType.SERVICE_WAITING, serviceBeanName, description, null);
                 }
             });
         }
@@ -79,10 +94,20 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void started(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, serviceBeanName, description));
+                    emitServiceUpdate(ServiceEventType.SERVICE_STARTED, serviceBeanName, description, null);
                 }
             });
         }
+    }
+
+    private void emitServiceUpdate(final ServiceEventType serviceEventType, final String serviceBeanName, final String description, final Exception fault) {
+        // TODO do we need two identical types here?
+        final ServiceEvent serviceEvent = new ServiceEvent(serviceEventType, serviceBeanName, description, fault);
+        final ServiceStatus serviceStatus = new ServiceStatus(serviceBeanName, serviceEventType, description, fault);
+        synchronized (serviceStatusMap) {
+            serviceStatusMap.put(serviceBeanName, serviceStatus);
+        }
+        serviceListeners.eventOccurred(serviceEvent);
     }
 
     private void enqueue(final Runnable runnable) {
@@ -116,13 +141,13 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTING, beanName, "Starting"));
+                            emitServiceUpdate(ServiceEventType.SERVICE_STARTING, beanName, "Starting", null);
                             serviceBean.startup(new DefaultServiceManagerProxy(beanName));
-                            serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STARTED, beanName, "Started"));
+                            emitServiceUpdate(ServiceEventType.SERVICE_STARTED, beanName, "Started", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not start up '" + beanName + "': " + re.getMessage(), re);
-                        serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re));
+                        emitServiceUpdate(ServiceEventType.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re);
                     }
                 }
                 LOGGER.info("End of ServiceManager startup");
@@ -154,9 +179,9 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STOPPING, beanName, "Stopping"));
+                            emitServiceUpdate(ServiceEventType.SERVICE_STOPPING, beanName, "Stopping", null);
                             serviceBean.shutdown();
-                            serviceListeners.eventOccurred(new ServiceEvent(ServiceEventType.SERVICE_STOPPED, beanName, "Stopped"));
+                            emitServiceUpdate(ServiceEventType.SERVICE_STOPPED, beanName, "Stopped", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
@@ -176,5 +201,20 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
 
     public void removeServiceListener(final ServiceListener listener) {
         serviceListeners.removeListener(listener);
+    }
+
+    public List<ServiceStatus> getStatuses() {
+        final List<String> beanNames = getBeanNames();
+        final List<ServiceStatus> serviceStatuses = new ArrayList<ServiceStatus>(beanNames.size());
+        for (String beanName : beanNames) {
+            serviceStatuses.add(getStatus(beanName));
+        }
+        return serviceStatuses;
+    }
+
+    public ServiceStatus getStatus(final String serviceName) {
+        synchronized (serviceStatusMap) {
+            return serviceStatusMap.get(serviceName);
+        }
     }
 }

@@ -19,6 +19,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * limitations under the License.
  */
 public final class ServiceEventType {
+    public static final ServiceEventType SERVICE_BEFORESTARTUP = new ServiceEventType("BeforeStartup");
     public static final ServiceEventType SERVICE_STARTING = new ServiceEventType("Starting");
     public static final ServiceEventType SERVICE_STARTED = new ServiceEventType("Started");
     public static final ServiceEventType SERVICE_FAULTY = new ServiceEventType("Faulty");
