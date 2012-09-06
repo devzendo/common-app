@@ -17,5 +17,5 @@ import org.devzendo.commoncode.patterns.observer.Observer;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public interface ServiceListener extends Observer<ServiceEvent> {
+public interface ServiceListener extends Observer<ServiceStatus> {
 }

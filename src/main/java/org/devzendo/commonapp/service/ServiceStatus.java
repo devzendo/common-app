@@ -19,17 +19,17 @@ import org.devzendo.commoncode.patterns.observer.ObservableEvent;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ServiceEvent implements ObservableEvent {
+public class ServiceStatus implements ObservableEvent {
     private final ServiceEventType eventType;
     private final String serviceName;
     private final String description;
     private final Exception fault;
 
-    public ServiceEvent(final ServiceEventType eventType, final String serviceName, final String description) {
+    public ServiceStatus(final ServiceEventType eventType, final String serviceName, final String description) {
         this(eventType, serviceName, description, null);
     }
 
-    public ServiceEvent(final ServiceEventType eventType, final String serviceName, final String description, final Exception fault) {
+    public ServiceStatus(final ServiceEventType eventType, final String serviceName, final String description, final Exception fault) {
         this.eventType = eventType;
         this.serviceName = serviceName;
         this.description = description;
@@ -87,7 +87,7 @@ public class ServiceEvent implements ObservableEvent {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final ServiceEvent other = (ServiceEvent) obj;
+        final ServiceStatus other = (ServiceStatus) obj;
 
         return new EqualsBuilder().
                 append(this.eventType, other.eventType).

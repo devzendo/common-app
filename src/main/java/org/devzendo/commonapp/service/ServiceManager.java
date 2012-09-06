@@ -42,7 +42,7 @@ public interface ServiceManager {
 
     void removeServiceListener(ServiceListener listener);
 
-    List<ServiceEvent> getStatuses();
+    List<ServiceStatus> getStatuses();
 
-    ServiceEvent getStatus(String serviceName);
+    ServiceStatus getStatus(String serviceName);
 }
