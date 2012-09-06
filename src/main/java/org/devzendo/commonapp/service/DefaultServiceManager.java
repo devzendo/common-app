@@ -41,7 +41,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
     private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
     private final Thread thread;
     private volatile boolean stopThread = false;
-    private final Map<String, ServiceStatus> serviceStatusMap = new HashMap<String, ServiceStatus>();
+    private final Map<String, ServiceEvent> serviceStatusMap = new HashMap<String, ServiceEvent>();
 
     /**
      * @param springLoader the Spring loader
@@ -51,7 +51,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         super(springLoader, serviceBeanNames);
         synchronized (serviceStatusMap) {
             for (final String serviceName : serviceBeanNames) {
-                serviceStatusMap.put(serviceName, new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, serviceName, "Before startup", null));
+                serviceStatusMap.put(serviceName, new ServiceEvent(ServiceEventType.SERVICE_BEFORESTARTUP, serviceName, "Before startup", null));
             }
         }
         thread = new Thread(new DefaultServiceManagerRunnable());
@@ -103,9 +103,8 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
     private void emitServiceUpdate(final ServiceEventType serviceEventType, final String serviceBeanName, final String description, final Exception fault) {
         // TODO do we need two identical types here?
         final ServiceEvent serviceEvent = new ServiceEvent(serviceEventType, serviceBeanName, description, fault);
-        final ServiceStatus serviceStatus = new ServiceStatus(serviceEventType, serviceBeanName, description, fault);
         synchronized (serviceStatusMap) {
-            serviceStatusMap.put(serviceBeanName, serviceStatus);
+            serviceStatusMap.put(serviceBeanName, serviceEvent);
         }
         serviceListeners.eventOccurred(serviceEvent);
     }
@@ -203,16 +202,16 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         serviceListeners.removeListener(listener);
     }
 
-    public List<ServiceStatus> getStatuses() {
+    public List<ServiceEvent> getStatuses() {
         final List<String> beanNames = getBeanNames();
-        final List<ServiceStatus> serviceStatuses = new ArrayList<ServiceStatus>(beanNames.size());
+        final List<ServiceEvent> serviceStatuses = new ArrayList<ServiceEvent>(beanNames.size());
         for (String beanName : beanNames) {
             serviceStatuses.add(getStatus(beanName));
         }
         return serviceStatuses;
     }
 
-    public ServiceStatus getStatus(final String serviceName) {
+    public ServiceEvent getStatus(final String serviceName) {
         synchronized (serviceStatusMap) {
             return serviceStatusMap.get(serviceName);
         }
