@@ -51,7 +51,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         super(springLoader, serviceBeanNames);
         synchronized (serviceStatusMap) {
             for (final String serviceName : serviceBeanNames) {
-                serviceStatusMap.put(serviceName, new ServiceStatus(serviceName, ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null));
+                serviceStatusMap.put(serviceName, new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, serviceName, "Before startup", null));
             }
         }
         thread = new Thread(new DefaultServiceManagerRunnable());
@@ -103,7 +103,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
     private void emitServiceUpdate(final ServiceEventType serviceEventType, final String serviceBeanName, final String description, final Exception fault) {
         // TODO do we need two identical types here?
         final ServiceEvent serviceEvent = new ServiceEvent(serviceEventType, serviceBeanName, description, fault);
-        final ServiceStatus serviceStatus = new ServiceStatus(serviceBeanName, serviceEventType, description, fault);
+        final ServiceStatus serviceStatus = new ServiceStatus(serviceEventType, serviceBeanName, description, fault);
         synchronized (serviceStatusMap) {
             serviceStatusMap.put(serviceBeanName, serviceStatus);
         }

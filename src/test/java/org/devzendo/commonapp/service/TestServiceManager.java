@@ -1,8 +1,5 @@
 package org.devzendo.commonapp.service;
 
-import org.devzendo.commonapp.lifecycle.Lifecycle;
-import org.devzendo.commonapp.lifecycle.LifecycleManager;
-import org.devzendo.commonapp.lifecycle.TwoLifecycle;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.devzendo.commonapp.util.OrderMonitor;
@@ -209,9 +206,9 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     public void serviceStatusesCanBeObtained() {
         serviceManager = getSpringLoader().getBean("getStatusesServiceManager", ServiceManager.class);
 
-        final ServiceStatus initialWaitStartupStatus = new ServiceStatus("waitStartup", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
-        final ServiceStatus initialFaultStatus = new ServiceStatus("fault", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
-        final ServiceStatus initialOneStatus = new ServiceStatus("one", ServiceEventType.SERVICE_BEFORESTARTUP, "Before startup", null);
+        final ServiceStatus initialWaitStartupStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "waitStartup", "Before startup", null);
+        final ServiceStatus initialFaultStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "fault", "Before startup", null);
+        final ServiceStatus initialOneStatus = new ServiceStatus(ServiceEventType.SERVICE_BEFORESTARTUP, "one", "Before startup", null);
         final List<ServiceStatus> initialStatuses = serviceManager.getStatuses();
         Assert.assertEquals(initialWaitStartupStatus, initialStatuses.get(0));
         Assert.assertEquals(initialFaultStatus, initialStatuses.get(1));
@@ -219,9 +216,9 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
 
-        final ServiceStatus waitStartupStatus = new ServiceStatus("waitStartup", ServiceEventType.SERVICE_WAITING, "Waiting for Godot", null);
-        final ServiceStatus faultStatus = new ServiceStatus("fault", ServiceEventType.SERVICE_FAULTY, "Fault: some exception", FaultService.FAULT_EXCEPTION);
-        final ServiceStatus oneStatus = new ServiceStatus("one", ServiceEventType.SERVICE_STARTED, "Started", null);
+        final ServiceStatus waitStartupStatus = new ServiceStatus(ServiceEventType.SERVICE_WAITING, "waitStartup", "Waiting for Godot", null);
+        final ServiceStatus faultStatus = new ServiceStatus(ServiceEventType.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION);
+        final ServiceStatus oneStatus = new ServiceStatus(ServiceEventType.SERVICE_STARTED, "one", "Started", null);
         final List<ServiceStatus> statuses = serviceManager.getStatuses();
         Assert.assertEquals(waitStartupStatus, statuses.get(0));
         Assert.assertEquals(faultStatus, statuses.get(1));

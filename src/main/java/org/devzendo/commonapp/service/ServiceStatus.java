@@ -24,7 +24,11 @@ public class ServiceStatus {
     private final String description;
     private final Exception fault;
 
-    public ServiceStatus(final String serviceName, final ServiceEventType serviceState, final String description, final Exception fault) {
+    public ServiceStatus(final ServiceEventType serviceState, final String serviceName, final String description) {
+        this(serviceState, serviceName, description, null);
+    }
+
+    public ServiceStatus(final ServiceEventType serviceState, final String serviceName, final String description, final Exception fault) {
         this.serviceName = serviceName;
         this.serviceState = serviceState;
         this.description = description;
