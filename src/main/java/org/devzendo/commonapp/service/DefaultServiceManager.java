@@ -86,7 +86,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void waiting(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceUpdate(ServiceState.SERVICE_WAITING, serviceBeanName, description, null);
+                    emitServiceStatus(ServiceState.SERVICE_WAITING, serviceBeanName, description, null);
                 }
             });
         }
@@ -94,14 +94,13 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
         public void started(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceUpdate(ServiceState.SERVICE_STARTED, serviceBeanName, description, null);
+                    emitServiceStatus(ServiceState.SERVICE_STARTED, serviceBeanName, description, null);
                 }
             });
         }
     }
 
-    private void emitServiceUpdate(final ServiceState serviceState, final String serviceBeanName, final String description, final Exception fault) {
-        // TODO do we need two identical types here?
+    private void emitServiceStatus(final ServiceState serviceState, final String serviceBeanName, final String description, final Exception fault) {
         final ServiceStatus serviceStatus = new ServiceStatus(serviceState, serviceBeanName, description, fault);
         synchronized (serviceStatusMap) {
             serviceStatusMap.put(serviceBeanName, serviceStatus);
@@ -140,13 +139,13 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            emitServiceUpdate(ServiceState.SERVICE_STARTING, beanName, "Starting", null);
+                            emitServiceStatus(ServiceState.SERVICE_STARTING, beanName, "Starting", null);
                             serviceBean.startup(new DefaultServiceManagerProxy(beanName));
-                            emitServiceUpdate(ServiceState.SERVICE_STARTED, beanName, "Started", null);
+                            emitServiceStatus(ServiceState.SERVICE_STARTED, beanName, "Started", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not start up '" + beanName + "': " + re.getMessage(), re);
-                        emitServiceUpdate(ServiceState.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re);
+                        emitServiceStatus(ServiceState.SERVICE_FAULTY, beanName, "Fault: " + re.getMessage(), re);
                     }
                 }
                 LOGGER.info("End of ServiceManager startup");
@@ -178,9 +177,9 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                     try {
                         final Service serviceBean = getBean(beanName);
                         if (serviceBean != null) {
-                            emitServiceUpdate(ServiceState.SERVICE_STOPPING, beanName, "Stopping", null);
+                            emitServiceStatus(ServiceState.SERVICE_STOPPING, beanName, "Stopping", null);
                             serviceBean.shutdown();
-                            emitServiceUpdate(ServiceState.SERVICE_STOPPED, beanName, "Stopped", null);
+                            emitServiceStatus(ServiceState.SERVICE_STOPPED, beanName, "Stopped", null);
                         }
                     } catch (final RuntimeException re) {
                         LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
