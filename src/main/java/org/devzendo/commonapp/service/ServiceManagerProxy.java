@@ -18,5 +18,5 @@ package org.devzendo.commonapp.service;
 public interface ServiceManagerProxy {
     void inactive(String description);
 
-    void started(String description);
+    void active(String description);
 }

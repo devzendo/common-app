@@ -178,25 +178,25 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
     }
 
     @Test(timeout = 1000)
-    public void serviceCanBecomeInactiveThenIndicateStartedOnStartup() {
-        serviceManager = getSpringLoader().getBean("inactiveThenStartupServiceManager", ServiceManager.class);
+    public void serviceCanBecomeInactiveThenIndicateActiveOnStartup() {
+        serviceManager = getSpringLoader().getBean("inactiveThenActiveServiceManager", ServiceManager.class);
 
-        final InactiveThenStartupService inactiveThenStartupService = getSpringLoader().getBean("inactiveThenStartup", InactiveThenStartupService.class);
+        final InactiveThenActiveService inactiveThenActiveService = getSpringLoader().getBean("inactiveThenActive", InactiveThenActiveService.class);
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "inactiveThenStartup", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "inactiveThenStartup", "Started")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_INACTIVE, "inactiveThenStartup", "Short wait")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "inactiveThenStartup", "Finally started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "inactiveThenActive", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "inactiveThenActive", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_INACTIVE, "inactiveThenActive", "Short wait")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_ACTIVE, "inactiveThenActive", "Finally started")));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "inactiveThenStartup", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "inactiveThenStartup", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "inactiveThenActive", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "inactiveThenActive", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
         serviceManager.startup();
-        inactiveThenStartupService.waitForFinish();
+        inactiveThenActiveService.waitForFinish();
         serviceManager.shutdown();
 
         EasyMock.verify(listener);

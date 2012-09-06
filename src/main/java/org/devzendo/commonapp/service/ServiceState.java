@@ -24,6 +24,7 @@ public final class ServiceState {
     public static final ServiceState SERVICE_STARTED = new ServiceState("Started");
     public static final ServiceState SERVICE_FAULTY = new ServiceState("Faulty");
     public static final ServiceState SERVICE_INACTIVE = new ServiceState("Inactive");
+    public static final ServiceState SERVICE_ACTIVE = new ServiceState("Active");
     public static final ServiceState SERVICE_STOPPING = new ServiceState("Stopping");
     public static final ServiceState SERVICE_STOPPED = new ServiceState("Stopped");
 

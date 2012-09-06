@@ -143,21 +143,21 @@
     <bean id="inactiveStartup" class="org.devzendo.commonapp.service.InactiveStartupService">
     </bean>
 
-    <!-- services can go active on startup then indicate started -->
-    <bean id="inactiveThenStartupServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <!-- services can go active on startup then indicate active -->
+    <bean id="inactiveThenActiveServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>inactiveThenStartup</value>
+                <value>inactiveThenActive</value>
             </list>
         </property>
     </bean>
 
-    <bean id="inactiveThenStartupServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+    <bean id="inactiveThenActiveServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="inactiveThenStartupServiceList" />
+        <constructor-arg ref="inactiveThenActiveServiceList" />
     </bean>
 
-    <bean id="inactiveThenStartup" class="org.devzendo.commonapp.service.InactiveThenStartupService">
+    <bean id="inactiveThenActive" class="org.devzendo.commonapp.service.InactiveThenActiveService">
     </bean>
 
     <!-- the status of services can be obtained -->

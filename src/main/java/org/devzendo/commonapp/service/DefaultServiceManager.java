@@ -30,9 +30,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 // TODO update description
 // TODO documention
-// TODO add active state
-// TODO remove ability for service to indicate it has started up; that state is
-// set by the manager alone.
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
 
@@ -90,10 +87,10 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             });
         }
 
-        public void started(final String description) {
+        public void active(final String description) {
             enqueue(new Runnable() {
                 public void run() {
-                    emitServiceStatus(ServiceState.SERVICE_STARTED, serviceBeanName, description, null);
+                    emitServiceStatus(ServiceState.SERVICE_ACTIVE, serviceBeanName, description, null);
                 }
             });
         }

@@ -17,7 +17,7 @@ import java.util.concurrent.CountDownLatch;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class InactiveThenStartupService implements Service {
+public class InactiveThenActiveService implements Service {
     private final CountDownLatch latch = new CountDownLatch(1);
 
     public void startup(final ServiceManagerProxy serviceManagerProxy) {
@@ -29,7 +29,7 @@ public class InactiveThenStartupService implements Service {
                 } catch (final InterruptedException e) {
                     // noop
                 }
-                serviceManagerProxy.started("Finally started");
+                serviceManagerProxy.active("Finally started");
                 latch.countDown();
             }
         });
