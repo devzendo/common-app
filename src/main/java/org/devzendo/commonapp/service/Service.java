@@ -15,22 +15,43 @@
  */
 package org.devzendo.commonapp.service;
 
+/**
+ * A Service is an application service whose lifecycle is managed by the
+ * ServiceManager. It exists in one of several states, and typically is active,
+ * having its own thread, listening to other system state in order to direct its
+ * activities, and switching into the active/inactive state as necessary.
+ *
+ * The constructor of the Service (as declared in the application context)
+ * should take any system objects to which the Service connects, and wire up
+ * listeners etc. A Service's main thread should be created, and possibly
+ * started (this can also happen in startup). No other activity should take
+ * place there.
+ *
+ * The mechanism via which Services receive requests for processing is not
+ * part of the Service interface.
+ */
 public interface Service {
 
     /**
-     * Start up the service.
+     * Start up the Service. Start threads, etc.
+     * As part of the startup, all Services should indicate whether the Service
+     * is active/inactive via the serviceManagerProxy.
+     *
+     * @param serviceManagerProxy the interface to the ServiceManager, by which
+     *                            a Service can indicate changes in its
+     *                            active/inactive state, and set its current
+     *                            description.
      */
     void startup(ServiceManagerProxy serviceManagerProxy);
 
     /**
-     * Prepare to shut down the component. This method called before any services
-     * are shut down.
+     * Prepare to shut down the component. This method is called on all Services
+     * before all Services are shut down.
      */
     void prepareForShutdown();
 
     /**
-     * Shut down the service.
+     * Shut down the Service.
      */
     void shutdown();
-
 }

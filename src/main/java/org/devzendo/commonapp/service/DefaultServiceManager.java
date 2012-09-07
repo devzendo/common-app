@@ -28,6 +28,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
+// TODO need to send stopped irrespective of whether an exception occurs in shutdown
 // TODO documention
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
@@ -105,6 +106,7 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
 
     private void emitServiceStatus(final ServiceState serviceState, final String serviceBeanName, final String description, final Exception fault) {
         final ServiceStatus serviceStatus = new ServiceStatus(serviceState, serviceBeanName, description, fault);
+        LOGGER.info(serviceStatus);
         synchronized (serviceStatusMap) {
             serviceStatusMap.put(serviceBeanName, serviceStatus);
         }

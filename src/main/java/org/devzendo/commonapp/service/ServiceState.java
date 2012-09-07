@@ -19,13 +19,51 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * limitations under the License.
  */
 public final class ServiceState {
+    /**
+     * The state a Service is in when the ServiceManager is constructed, before
+     * it is started.
+     */
     public static final ServiceState SERVICE_BEFORESTARTUP = new ServiceState("BeforeStartup");
+    /**
+     * Before a Service's startup method is called.
+     */
     public static final ServiceState SERVICE_STARTING = new ServiceState("Starting");
+    /**
+     * After the Service's startup method has been called successfully.
+     */
     public static final ServiceState SERVICE_STARTED = new ServiceState("Started");
+    /**
+     * After the Service's startup method has been called unsuccessfully, i.e.
+     * a RuntimeException has been thrown in startup. The service management
+     * subsystem currently defines no recovery mechanism for this state.
+     * The RuntimeException thrown is sent with this state change.
+     */
     public static final ServiceState SERVICE_FAULTY = new ServiceState("Faulty");
+    /**
+     * During startup, the Service declares itself inactive. This will be
+     * emitted after the SERVICE_STARTED event.
+     *
+     * Can also be seen after startup at any time, as the Service detects it
+     * cannot work for some reason.
+     */
     public static final ServiceState SERVICE_INACTIVE = new ServiceState("Inactive");
+    /**
+     * During startup, the Service declares itself active. This will be
+     * emitted after the SERVICE_STARTED event.
+     *
+     * Can also be seen after startup at any time, as the Service detects it
+     * can now work as its necessities have been satisfied.
+     */
     public static final ServiceState SERVICE_ACTIVE = new ServiceState("Active");
+    /**
+     * Sent after the Service's prepareForShutdown method is called, and before
+     * its shutdown method is called.
+     */
     public static final ServiceState SERVICE_STOPPING = new ServiceState("Stopping");
+    /**
+     * Sent after the Service's shutdown method is called. (Whether or not a
+     * RuntimeException was thrown in shutdown.
+     */
     public static final ServiceState SERVICE_STOPPED = new ServiceState("Stopped");
 
     private final String serviceEventName;

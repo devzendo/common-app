@@ -20,29 +20,48 @@ import java.util.List;
 /**
  * The ServiceManager controls the lifecycle of services:
  * <ul>
- * <li> starting and stopping them as directed</li>
- * <li> ordering the startup and shutdown according to their declared dependencies</li>
- * <li> notifying listeners of start and stop events</li>
- * <li> allowing callers to query the status of services, start them (with their
- * dependencies), and stop them (stopping their dependencies first)</li>
+ * <li> starting and stopping them as directed, in the declared order</li>
+ * <li> notifying listeners of starting/started/faulty, active/inactive, stopping/stopped events</li>
+ * <li> allowing callers to query the status of services</li>
  * </ul>
  */
 public interface ServiceManager {
     /**
-     * Start up all Services.
+     * Start up all Services in the order declared in the application context.
      */
     void startup();
 
     /**
-     * Prepare all Services for shutdown then shut them all down.
+     * Prepare all Services for shutdown then shut them all down, in reverse
+     * order as declared in the application context.
      */
     void shutdown();
 
+    /**
+     * Add a listener to service events. This will be called when services
+     * change their state.
+     * @param listener the listener to add.
+     */
     void addServiceListener(ServiceListener listener);
 
+    /**
+     * Remove a service event listener. This listener will no longer be
+     * notified of service events.
+     * @param listener the listener to remove.
+     */
     void removeServiceListener(ServiceListener listener);
 
+    /**
+     * Obtain the current statuses of all declared services.
+     * @return a list of service status descriptions.
+     */
     List<ServiceStatus> getStatuses();
 
+    /**
+     * Obtain the current status of a named service.
+     * @param serviceName the name of the service bean as declared in the
+     *                    application context.
+     * @return the service status or null if this service is not known.
+     */
     ServiceStatus getStatus(String serviceName);
 }

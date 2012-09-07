@@ -1,9 +1,3 @@
-package org.devzendo.commonapp.service;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.devzendo.commoncode.patterns.observer.ObservableEvent;
-
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
  * <p/>
@@ -18,6 +12,16 @@ import org.devzendo.commoncode.patterns.observer.ObservableEvent;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+package org.devzendo.commonapp.service;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.devzendo.commoncode.patterns.observer.ObservableEvent;
+
+/**
+ * The current status of a Service, can be obtained via the ServiceManager, or
+ * emitted to ServiceListeners upon ServiceState change.
  */
 public class ServiceStatus implements ObservableEvent {
     private final ServiceState state;
@@ -36,18 +40,35 @@ public class ServiceStatus implements ObservableEvent {
         this.fault = fault;
     }
 
+    /**
+     * Obtain the current state of the Service.
+     * @return the state the Service is in
+     */
     public ServiceState getState() {
         return state;
     }
 
+    /**
+     * Obtain the human-readable description of the current Service.
+     * @return what it's feeling
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Obtain the name of the Service, as declared in the application context.
+     * @return the Service bean name
+     */
     public String getServiceName() {
         return serviceName;
     }
 
+    /**
+     * If the ServiceState obtained by getState is SERVICE_FAULTY, this gives
+     * the Exception that has rendered the Service faulty on startup.
+     * @return
+     */
     public Exception getFault() {
         return fault;
     }
