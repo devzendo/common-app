@@ -28,8 +28,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
-// TODO need to send stopped irrespective of whether an exception occurs in shutdown
-// TODO documention
+// TODO bad bean load
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
 
@@ -179,15 +178,15 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
                 for (int i = getBeanNames().size() - 1; i >= 0; i--) {
                     final String beanName = getBeanNames().get(i);
                     LOGGER.info("Shutting down Service bean '" + beanName + "'");
-                    try {
-                        final Service serviceBean = getBean(beanName);
-                        if (serviceBean != null) {
+                    final Service serviceBean = getBean(beanName);
+                    if (serviceBean != null) {
+                        try {
                             emitServiceStatus(ServiceState.SERVICE_STOPPING, beanName, "Stopping", null);
                             serviceBean.shutdown();
-                            emitServiceStatus(ServiceState.SERVICE_STOPPED, beanName, "Stopped", null);
+                        } catch (final RuntimeException re) {
+                            LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
                         }
-                    } catch (final RuntimeException re) {
-                        LOGGER.warn("Could not shut down '" + beanName + "': " + re.getMessage(), re);
+                        emitServiceStatus(ServiceState.SERVICE_STOPPED, beanName, "Stopped", null);
                     }
                 }
                 LOGGER.info("End of ServiceManager shutdown");

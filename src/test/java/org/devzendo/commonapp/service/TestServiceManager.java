@@ -124,15 +124,35 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
     @Test(timeout = 1000)
     public void faultingStartupEvent() {
-        serviceManager = getSpringLoader().getBean("faultingServiceManager", ServiceManager.class);
+        serviceManager = getSpringLoader().getBean("faultingStartupServiceManager", ServiceManager.class);
 
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
         // startup events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "fault", "Starting")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION)));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "faultStartup", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_FAULTY, "faultStartup", "Fault: some exception", FaultStartupService.FAULT_EXCEPTION)));
         // shutdown events
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "fault", "Stopping")));
-        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "fault", "Stopped")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "faultStartup", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "faultStartup", "Stopped")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+        serviceManager.shutdown();
+
+        EasyMock.verify(listener);
+    }
+
+    @Test(timeout = 1000)
+    public void faultingShutdownEvent() {
+        serviceManager = getSpringLoader().getBean("faultingShutdownServiceManager", ServiceManager.class);
+
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "faultShutdown", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "faultShutdown", "Started")));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "faultShutdown", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "faultShutdown", "Stopped")));
         EasyMock.replay(listener);
         serviceManager.addServiceListener(listener);
 
@@ -207,7 +227,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager = getSpringLoader().getBean("getStatusesServiceManager", ServiceManager.class);
 
         final ServiceStatus initialInactiveStartupStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "inactiveStartup", "Before startup", null);
-        final ServiceStatus initialFaultStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "fault", "Before startup", null);
+        final ServiceStatus initialFaultStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "faultStartup", "Before startup", null);
         final ServiceStatus initialOneStatus = new ServiceStatus(ServiceState.SERVICE_BEFORESTARTUP, "one", "Before startup", null);
         final List<ServiceStatus> initialStatuses = serviceManager.getStatuses();
         Assert.assertEquals(initialInactiveStartupStatus, initialStatuses.get(0));
@@ -217,7 +237,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.startup();
 
         final ServiceStatus inactiveStartupStatus = new ServiceStatus(ServiceState.SERVICE_INACTIVE, "inactiveStartup", "Waiting for Godot", null);
-        final ServiceStatus faultStatus = new ServiceStatus(ServiceState.SERVICE_FAULTY, "fault", "Fault: some exception", FaultService.FAULT_EXCEPTION);
+        final ServiceStatus faultStatus = new ServiceStatus(ServiceState.SERVICE_FAULTY, "faultStartup", "Fault: some exception", FaultStartupService.FAULT_EXCEPTION);
         final ServiceStatus oneStatus = new ServiceStatus(ServiceState.SERVICE_STARTED, "one", "Started", null);
         final List<ServiceStatus> statuses = serviceManager.getStatuses();
         Assert.assertEquals(inactiveStartupStatus, statuses.get(0));
@@ -225,7 +245,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals(oneStatus, statuses.get(2));
 
         Assert.assertEquals(inactiveStartupStatus, serviceManager.getStatus("inactiveStartup"));
-        Assert.assertEquals(faultStatus, serviceManager.getStatus("fault"));
+        Assert.assertEquals(faultStatus, serviceManager.getStatus("faultStartup"));
         Assert.assertEquals(oneStatus, serviceManager.getStatus("one"));
         serviceManager.shutdown();
     }

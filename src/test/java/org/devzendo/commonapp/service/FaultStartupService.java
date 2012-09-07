@@ -15,7 +15,7 @@ package org.devzendo.commonapp.service;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class FaultService implements Service {
+public class FaultStartupService implements Service {
     public static final RuntimeException FAULT_EXCEPTION = new RuntimeException("some exception");
     public void startup(final ServiceManagerProxy proxy) {
         throw FAULT_EXCEPTION;

@@ -92,21 +92,38 @@
     </bean>
     -->
 
-    <!-- faulting service -->
-    <bean id="faultingServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <!-- faulting startup service -->
+    <bean id="faultingStartupServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
-                <value>fault</value>
+                <value>faultStartup</value>
             </list>
         </property>
     </bean>
 
-    <bean id="faultingServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+    <bean id="faultingStartupServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="faultingServiceList" />
+        <constructor-arg ref="faultingStartupServiceList" />
     </bean>
 
-    <bean id="fault" class="org.devzendo.commonapp.service.FaultService">
+    <bean id="faultStartup" class="org.devzendo.commonapp.service.FaultStartupService">
+    </bean>
+
+    <!-- faulting shutdown service -->
+    <bean id="faultingShutdownServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>faultShutdown</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="faultingShutdownServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="faultingShutdownServiceList" />
+    </bean>
+
+    <bean id="faultShutdown" class="org.devzendo.commonapp.service.FaultShutdownService">
     </bean>
 
     <!-- service control thread is used to call into service -->
@@ -166,7 +183,7 @@
             <list>
                 <!-- using other service beans defined above -->
                 <value>inactiveStartup</value>
-                <value>fault</value>
+                <value>faultStartup</value>
                 <value>one</value>
             </list>
         </property>
