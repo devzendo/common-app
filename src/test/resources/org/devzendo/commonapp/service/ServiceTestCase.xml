@@ -28,7 +28,7 @@
     </bean>
 
     <!-- uninstantiatable beans don't get used -->
-    <!-- <bean id="badLoadLifecycleList" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <bean id="badLoadServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
             <list>
                 <value>nonexistant</value>
@@ -36,11 +36,10 @@
         </property>
     </bean>
 
-    <bean id="badLoadLifecycleManager" class="org.devzendo.commonapp.lifecycle.DefaultLifecycleManagerImpl">
+    <bean id="badLoadServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
         <constructor-arg ref="springLoader" />
-        <constructor-arg ref="badLoadLifecycleList" />
+        <constructor-arg ref="badLoadServiceList" />
     </bean>
-    -->
 
     <!-- ordering tests -->
     <bean id="orderMonitor" class="org.devzendo.commonapp.util.OrderMonitor">

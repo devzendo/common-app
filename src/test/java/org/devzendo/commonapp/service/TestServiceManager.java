@@ -1,5 +1,6 @@
 package org.devzendo.commonapp.service;
 
+import org.devzendo.commonapp.lifecycle.LifecycleManager;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.devzendo.commonapp.util.OrderMonitor;
@@ -37,6 +38,16 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         getSimpleTestPrerequisites();
 
         Assert.assertNotNull(serviceManager);
+    }
+
+    /**
+     * this service manager has a bad bean - nonexistant
+     */
+    @Test(timeout = 1000)
+    public void dontStartupBadBeans() {
+        serviceManager = getSpringLoader().getBean("badLoadServiceManager", ServiceManager.class);
+        Assert.assertNotNull(serviceManager);
+        Assert.assertEquals(0, serviceManager.getStatuses().size());
     }
 
     @Test(timeout = 1000)
