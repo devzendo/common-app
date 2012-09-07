@@ -288,4 +288,19 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         EasyMock.verify(listener);
     }
+
+    @Test(timeout = 1000)
+    public void servicesCanBeObtainedByNameAndClass() {
+        getSimpleTestPrerequisites();
+
+        final Service one = getSpringLoader().getBean("one", Service.class);
+        final StubService oneService = (StubService) one;
+
+        serviceManager.startup();
+
+        final StubService obtained = serviceManager.getService("one", StubService.class);
+        Assert.assertSame(oneService, obtained);
+
+        serviceManager.shutdown();
+    }
 }

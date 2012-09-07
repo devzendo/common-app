@@ -64,4 +64,13 @@ public interface ServiceManager {
      * @return the service status or null if this service is not known.
      */
     ServiceStatus getStatus(String serviceName);
+
+    /**
+     * Obtain a Service by name
+     * @param serviceName the name of the Service
+     * @param serviceClass the subclass of Service you expect
+     * @param <S> the Service subclass type parameter
+     * @return the Service instance, or null if the Service is unknown.
+     */
+    <S extends Service> S getService(String serviceName, Class<S> serviceClass);
 }

@@ -218,4 +218,9 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             return serviceStatusMap.get(serviceName);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public <S extends Service> S getService(final String serviceName, Class<S> serviceClass) {
+        return (S) getBean(serviceName);
+    }
 }
