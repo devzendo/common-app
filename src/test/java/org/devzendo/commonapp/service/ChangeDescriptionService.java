@@ -1,7 +1,5 @@
 package org.devzendo.commonapp.service;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
  * <p/>
@@ -17,8 +15,7 @@ import java.util.concurrent.CountDownLatch;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ChangeDescriptionService implements Service {
-    private final CountDownLatch latch = new CountDownLatch(1);
+public class ChangeDescriptionService extends WaitForEndOfActivityService implements Service {
 
     public void startup(final ServiceManagerProxy serviceManagerProxy) {
         final Thread thread = new Thread(new Runnable() {
@@ -28,18 +25,10 @@ public class ChangeDescriptionService implements Service {
                 serviceManagerProxy.inactive("Asleep");
                 serviceManagerProxy.changeDescription("Dreaming");
                 serviceManagerProxy.inactive("Still sleeping");
-                latch.countDown();
+                countDown();
             }
         });
         thread.start();
-    }
-
-    public void waitForFinish() {
-        try {
-            latch.await();
-        } catch (final InterruptedException e) {
-            // noop
-        }
     }
 
     public void prepareForShutdown() {

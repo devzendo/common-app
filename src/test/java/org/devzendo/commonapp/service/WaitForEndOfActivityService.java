@@ -1,5 +1,7 @@
 package org.devzendo.commonapp.service;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Copyright (C) 2008-2012 Matt Gumbley, DevZendo.org <http://devzendo.org>
  * <p/>
@@ -15,27 +17,18 @@ package org.devzendo.commonapp.service;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class InactiveThenActiveService extends WaitForEndOfActivityService implements Service {
+public class WaitForEndOfActivityService {
+    private final CountDownLatch latch = new CountDownLatch(1);
 
-    public void startup(final ServiceManagerProxy serviceManagerProxy) {
-        final Thread thread = new Thread(new Runnable() {
-            public void run() {
-                serviceManagerProxy.inactive("Short wait");
-                try {
-                    Thread.sleep(500);
-                } catch (final InterruptedException e) {
-                    // noop
-                }
-                serviceManagerProxy.active("Finally started");
-                countDown();
-            }
-        });
-        thread.start();
+    public void waitForFinish() {
+        try {
+            latch.await();
+        } catch (final InterruptedException e) {
+            // noop
+        }
     }
 
-    public void prepareForShutdown() {
-    }
-
-    public void shutdown() {
+    public void countDown() {
+        latch.countDown();
     }
 }
