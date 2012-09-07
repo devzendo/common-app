@@ -19,4 +19,6 @@ public interface ServiceManagerProxy {
     void inactive(String description);
 
     void active(String description);
+
+    void changeDescription(String description);
 }

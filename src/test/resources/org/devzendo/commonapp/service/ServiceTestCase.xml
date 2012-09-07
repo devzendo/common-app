@@ -177,4 +177,21 @@
         <constructor-arg ref="getStatusesServiceList" />
     </bean>
 
+    <!-- services can change the description of their current state -->
+    <bean id="changeDescriptionServiceList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>changeDescription</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="changeDescriptionServiceManager" class="org.devzendo.commonapp.service.DefaultServiceManager">
+        <constructor-arg ref="springLoader" />
+        <constructor-arg ref="changeDescriptionServiceList" />
+    </bean>
+
+    <bean id="changeDescription" class="org.devzendo.commonapp.service.ChangeDescriptionService">
+    </bean>
+
 </beans>

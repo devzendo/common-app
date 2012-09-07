@@ -229,4 +229,32 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals(oneStatus, serviceManager.getStatus("one"));
         serviceManager.shutdown();
     }
+
+    @Test(timeout = 1000)
+    public void serviceCanChangeDescription() {
+        serviceManager = getSpringLoader().getBean("changeDescriptionServiceManager", ServiceManager.class);
+
+        final ChangeDescriptionService changeDescriptionService = getSpringLoader().getBean("changeDescription", ChangeDescriptionService.class);
+
+        final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
+        // startup events
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTING, "changeDescription", "Starting")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STARTED, "changeDescription", "Started")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_ACTIVE, "changeDescription", "I'm alive")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_ACTIVE, "changeDescription", "Eating food")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_INACTIVE, "changeDescription", "Asleep")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_INACTIVE, "changeDescription", "Dreaming")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_INACTIVE, "changeDescription", "Still sleeping")));
+        // shutdown events
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPING, "changeDescription", "Stopping")));
+        listener.eventOccurred(EasyMock.eq(new ServiceStatus(ServiceState.SERVICE_STOPPED, "changeDescription", "Stopped")));
+        EasyMock.replay(listener);
+        serviceManager.addServiceListener(listener);
+
+        serviceManager.startup();
+        changeDescriptionService.waitForFinish();
+        serviceManager.shutdown();
+
+        EasyMock.verify(listener);
+    }
 }

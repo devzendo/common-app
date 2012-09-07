@@ -28,7 +28,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
-// TODO update description
 // TODO documention
 public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Service> implements ServiceManager {
     private static final Logger LOGGER = Logger.getLogger(DefaultServiceManager.class);
@@ -91,6 +90,14 @@ public class DefaultServiceManager extends AbstractSpringBeanListLoaderImpl<Serv
             enqueue(new Runnable() {
                 public void run() {
                     emitServiceStatus(ServiceState.SERVICE_ACTIVE, serviceBeanName, description, null);
+                }
+            });
+        }
+
+        public void changeDescription(final String description) {
+            enqueue(new Runnable() {
+                public void run() {
+                    emitServiceStatus(getStatus(serviceBeanName).getState(), serviceBeanName, description, null);
                 }
             });
         }
