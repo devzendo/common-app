@@ -1,9 +1,9 @@
 package org.devzendo.commonapp.service;
 
-import org.devzendo.commonapp.lifecycle.LifecycleManager;
 import org.devzendo.commonapp.spring.springloader.ApplicationContext;
 import org.devzendo.commonapp.spring.springloader.SpringLoaderUnittestCase;
 import org.devzendo.commonapp.util.OrderMonitor;
+import org.devzendo.commoncode.concurrency.ThreadUtils;
 import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Test;
@@ -233,7 +233,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         EasyMock.verify(listener);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void serviceStatusesCanBeObtained() {
         serviceManager = getSpringLoader().getBean("getStatusesServiceManager", ServiceManager.class);
 
@@ -246,6 +246,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals(initialOneStatus, initialStatuses.get(2));
 
         serviceManager.startup();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         final ServiceStatus inactiveStartupStatus = new ServiceStatus(ServiceState.SERVICE_INACTIVE, "inactiveStartup", "Waiting for Godot", null);
         final ServiceStatus faultStatus = new ServiceStatus(ServiceState.SERVICE_FAULTY, "faultStartup", "Fault: some exception", FaultStartupService.FAULT_EXCEPTION);
