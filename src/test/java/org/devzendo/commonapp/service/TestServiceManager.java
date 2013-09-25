@@ -78,7 +78,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
      * Tests for correct sequencing of startup and shutdown (forward and
      * reverse.
      */
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void startupAndShutdownSequence() {
         serviceManager = getSpringLoader().getBean("orderingServiceManager", ServiceManager.class);
 
@@ -99,6 +99,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         orderMonitor.reset();
 
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         final List<String> shutdownOrdering = orderMonitor.getOrdering();
         Assert.assertEquals(6, shutdownOrdering.size());
@@ -110,7 +111,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         Assert.assertEquals("a shutdown", shutdownOrdering.get(5));
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void normalStartupAndShutdownEventsAreEmitted() {
         getSimpleTestPrerequisites();
         final ServiceListener listener = EasyMock.createStrictMock(ServiceListener.class);
@@ -129,11 +130,12 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void faultingStartupEvent() {
         serviceManager = getSpringLoader().getBean("faultingStartupServiceManager", ServiceManager.class);
 
@@ -149,11 +151,12 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void faultingShutdownEvent() {
         serviceManager = getSpringLoader().getBean("faultingShutdownServiceManager", ServiceManager.class);
 
@@ -169,11 +172,12 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void serviceMethodsCalledByServiceControlThread() {
         serviceManager = getSpringLoader().getBean("threadingServiceManager", ServiceManager.class);
 
@@ -181,13 +185,14 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         Assert.assertTrue(threadService.startupOnServiceControlThread);
         Assert.assertTrue(threadService.prepareForShutdownOnServiceControlThread);
         Assert.assertTrue(threadService.shutdownOnServiceControlThread);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void serviceCanBecomeInactiveOnStartup() {
         serviceManager = getSpringLoader().getBean("inactiveServiceManager", ServiceManager.class);
 
@@ -204,11 +209,12 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
 
         serviceManager.startup();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void serviceCanBecomeInactiveThenIndicateActiveOnStartup() {
         serviceManager = getSpringLoader().getBean("inactiveThenActiveServiceManager", ServiceManager.class);
 
@@ -229,6 +235,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.startup();
         inactiveThenActiveService.waitForFinish();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
@@ -262,7 +269,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.shutdown();
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void serviceCanChangeDescription() {
         serviceManager = getSpringLoader().getBean("changeDescriptionServiceManager", ServiceManager.class);
 
@@ -286,6 +293,7 @@ public class TestServiceManager extends SpringLoaderUnittestCase {
         serviceManager.startup();
         changeDescriptionService.waitForFinish();
         serviceManager.shutdown();
+        ThreadUtils.waitNoInterruption(500); // give it a little time to get services into the state we expect.
 
         EasyMock.verify(listener);
     }
