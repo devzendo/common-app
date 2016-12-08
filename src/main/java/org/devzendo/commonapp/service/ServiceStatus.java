@@ -67,7 +67,7 @@ public class ServiceStatus implements ObservableEvent {
     /**
      * If the ServiceState obtained by getState is SERVICE_FAULTY, this gives
      * the Exception that has rendered the Service faulty on startup.
-     * @return
+     * @return the Exception causing the Service to be faulty.
      */
     public Exception getFault() {
         return fault;

@@ -34,7 +34,7 @@ public interface PrefsLocation {
      * Create the prefs directory.
      * @return true iff the directory was created; false if it was not. Note
      * that if it existed anyway, you'd get false.
-     * @see File.mkdir
+     * @see File#mkdir
      */
     boolean createPrefsDirectory();
 
