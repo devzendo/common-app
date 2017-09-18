@@ -6,7 +6,7 @@
     <name>Common application code</name>
     <version>1.1.0-SNAPSHOT</version>
     <description>Common application code
-        (Apache License v2) 2008-2015 Matt Gumbley, DevZendo.org
+        (Apache License v2) 2008-2017 Matt Gumbley, DevZendo.org
     </description>
     <url>http://www.devzendo.org/content/commonapp</url>
 
@@ -24,11 +24,8 @@
     </licenses>
     <scm>
         <url>https://bitbucket.org/devzendo/common-app</url>
-        <connection>scm:hg:https://bitbucket.org/devzendo/common-app
-        </connection>
-        <developerConnection>
-            scm:hg:https://bitbucket.org/devzendo/common-app
-        </developerConnection>
+        <connection>scm:hg:https://bitbucket.org/devzendo/common-app</connection>
+        <developerConnection>scm:hg:https://bitbucket.org/devzendo/common-app</developerConnection>
     </scm>
     <developers>
         <developer>
