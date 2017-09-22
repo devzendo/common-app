@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2008-2010 Matt Gumbley, DevZendo.org <http://devzendo.org>
+ * Copyright (C) 2008-2010 Matt Gumbley, DevZendo.org http://devzendo.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,7 @@ import org.junit.BeforeClass;
 /**
  * A base class for Junit 4 test cases that specify a set of Spring application
  * context XML files to be used by the ClassPathApplicationContextLoader using
- * the
- * 
- * @ApplicationContext annotation.
+ * the ApplicationContext annotation.
  * @author matt
  */
 public abstract class SpringLoaderUnittestCase {
@@ -52,10 +50,7 @@ public abstract class SpringLoaderUnittestCase {
 
     /**
      * Set up the SpringLoader with all application context files
-     * given in any annotations.
-     * 
-     * @ApplicatonContext annotations on this test class, and any in its
-     *                    inheritance hierarchy.
+     * given in any ApplicatonContext annotations on this test class, and any in its inheritance hierarchy.
      */
     @Before
     public final void initApplicationContexts() {
