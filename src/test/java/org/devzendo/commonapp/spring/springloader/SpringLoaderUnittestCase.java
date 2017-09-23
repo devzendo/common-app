@@ -50,7 +50,7 @@ public abstract class SpringLoaderUnittestCase {
 
     /**
      * Set up the SpringLoader with all application context files
-     * given in any ApplicatonContext annotations on this test class, and any in its inheritance hierarchy.
+     * given in any ApplicationContext annotations on this test class, and any in its inheritance hierarchy.
      */
     @Before
     public final void initApplicationContexts() {
