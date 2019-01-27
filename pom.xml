@@ -4,7 +4,7 @@
     <groupId>org.devzendo</groupId>
     <artifactId>common-app</artifactId>
     <name>Common application code</name>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <description>Common application code
         (Apache License v2) 2008-2019 Matt Gumbley, DevZendo.org
     </description>
@@ -26,7 +26,7 @@
         <url>https://bitbucket.org/devzendo/common-app</url>
         <connection>scm:hg:https://bitbucket.org/devzendo/common-app</connection>
         <developerConnection>scm:hg:https://bitbucket.org/devzendo/common-app</developerConnection>
-      <tag>common-app-1.1.0</tag>
+      <tag>HEAD</tag>
   </scm>
     <developers>
         <developer>
