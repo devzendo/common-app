@@ -23,9 +23,9 @@
         </license>
     </licenses>
     <scm>
-        <url>https://bitbucket.org/devzendo/common-app</url>
-        <connection>scm:hg:https://bitbucket.org/devzendo/common-app</connection>
-        <developerConnection>scm:hg:https://bitbucket.org/devzendo/common-app</developerConnection>
+        <url>https://github.com/devzendo/common-app.git</url>
+        <connection>scm:git:https://github.com/devzendo/common-app.git</connection>
+        <developerConnection>scm:git:git@github.com:devzendo/common-app.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
     <developers>
